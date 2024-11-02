@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model":"modular_machinery_reborn:block/chemicalinputhatch_ludicrous"
+      "model":"modular_machinery_reborn_mekanism:block/chemicalinputhatch_ludicrous"
     }
   }
 }

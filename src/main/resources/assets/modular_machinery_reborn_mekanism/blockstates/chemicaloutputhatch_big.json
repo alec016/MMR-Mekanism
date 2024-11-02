@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model":"modular_machinery_reborn:block/chemicaloutputhatch_big"
+      "model":"modular_machinery_reborn_mekanism:block/chemicaloutputhatch_big"
     }
   }
 }

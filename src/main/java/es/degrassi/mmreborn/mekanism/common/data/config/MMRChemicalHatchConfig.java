@@ -6,7 +6,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
-@Config(name = "fluid_hatch")
+@Config(name = "chemical_hatch")
 public class MMRChemicalHatchConfig implements ConfigData {
   @ConfigEntry.Gui.CollapsibleObject(startExpanded = true)
   public Tier TINY = new Tier(ChemicalHatchSize.TINY);

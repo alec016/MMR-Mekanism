@@ -1,6 +1,7 @@
 package es.degrassi.mmreborn.mekanism.data;
 
 import es.degrassi.mmreborn.ModularMachineryReborn;
+import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -10,11 +11,11 @@ import net.minecraft.world.level.block.Block;
 
 public class MMRMekanismTags {
   private static TagKey<Block> blockTag(String name, boolean isNeoForge) {
-    return BlockTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryReborn.rl(name));
+    return BlockTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryRebornMekanism.rl(name));
   }
 
   private static TagKey<Item> itemTag(String name, boolean isNeoForge) {
-    return ItemTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryReborn.rl(name));
+    return ItemTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryRebornMekanism.rl(name));
   }
 
   private static class Tag<T> {
@@ -30,7 +31,7 @@ public class MMRMekanismTags {
 
   public static class Blocks extends Tag<Block> {
     public static final TagKey<Block> CHEMICAL_INPUT = new Blocks(false, "chemicalinputhatch").get();
-    public static final TagKey<Block> CHEMICAL_OUTPUT = new Blocks(false, "fluidoutputhatch").get();
+    public static final TagKey<Block> CHEMICAL_OUTPUT = new Blocks(false, "chemicaloutputhatch").get();
 
     private Blocks(boolean isNeoForge, String name) {
       super(blockTag(name, isNeoForge));

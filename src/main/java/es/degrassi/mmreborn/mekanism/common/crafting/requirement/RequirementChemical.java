@@ -168,7 +168,6 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     BasicChemicalTank handler = (BasicChemicalTank) component.providedComponent();
     return switch (getActionType()) {
       case INPUT -> {
-        MMRLogger.INSTANCE.info("requirement: {}", requirementCheck);
         if (!handler.isTypeEqual(this.requirementCheck))
           yield CraftCheck.failure("craftcheck.failure.chemical.input.type_missmatch");
         //If it doesn't consume the item, we only need to see if it's actually there.

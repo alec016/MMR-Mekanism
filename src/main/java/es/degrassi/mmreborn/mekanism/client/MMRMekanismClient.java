@@ -20,7 +20,7 @@ public class MMRMekanismClient {
       if(tile instanceof ChemicalTankEntity controller)
         return controller;
     }
-    throw new IllegalStateException("Trying to open a Fluid Hatch container without clicking on a Custom Machine block");
+    throw new IllegalStateException("Trying to open a Chemical Hatch container without clicking on a Custom Machine block");
   }
 
   @SubscribeEvent
