@@ -10,16 +10,16 @@ import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
 import es.degrassi.mmreborn.common.crafting.helper.ProcessingComponent;
 import es.degrassi.mmreborn.common.crafting.helper.RecipeCraftingContext;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
-import es.degrassi.mmreborn.common.util.MMRLogger;
-import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
+import es.degrassi.mmreborn.common.crafting.requirement.jei.IJeiRequirement;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
-import es.degrassi.mmreborn.mekanism.common.util.CopyHandlerHelper;
 import es.degrassi.mmreborn.common.util.ResultChance;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.machine.ChemicalHatch;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
+import es.degrassi.mmreborn.mekanism.common.util.CopyHandlerHelper;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
@@ -39,9 +39,10 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(ComponentRequirement::getActionType),
     NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance),
     NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt", new CompoundTag()).forGetter(RequirementChemical::getTagMatch),
-    NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt-display").forGetter(req -> Optional.ofNullable(req.getTagDisplay()))
-  ).apply(instance, (fluid, mode, chance, nbt, nbt_display) -> {
-    RequirementChemical requirementChemical = new RequirementChemical(mode, fluid, fluid.getAmount());
+    NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt-display").forGetter(req -> Optional.ofNullable(req.getTagDisplay())),
+      IJeiRequirement.POSITION_CODEC.fieldOf("position").forGetter(ComponentRequirement::getPosition)
+  ).apply(instance, (fluid, mode, chance, nbt, nbt_display, position) -> {
+    RequirementChemical requirementChemical = new RequirementChemical(mode, fluid, fluid.getAmount(), position);
     requirementChemical.setChance(chance);
     requirementChemical.setMatchNBTTag(nbt);
     requirementChemical.setDisplayNBTTag(nbt_display.orElse(nbt));
@@ -77,12 +78,12 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     return new JeiChemicalComponent(this);
   }
 
-  public RequirementChemical(IOType ioType, ChemicalStack chemical, long amount) {
-    this(RequirementTypeRegistration.CHEMICAL.get(), ioType, chemical, amount);
+  public RequirementChemical(IOType ioType, ChemicalStack chemical, long amount, IJeiRequirement.JeiPositionedRequirement position) {
+    this(RequirementTypeRegistration.CHEMICAL.get(), ioType, chemical, amount, position);
   }
 
-  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, ChemicalStack chemical, long amount) {
-    super(type, ioType);
+  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, ChemicalStack chemical, long amount, IJeiRequirement.JeiPositionedRequirement position) {
+    super(type, ioType, position);
     this.ingredient = chemical;
     this.required = chemical.copy();
     this.amount = amount;
@@ -94,7 +95,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
 
   @Override
   public RequirementChemical deepCopy() {
-    RequirementChemical fluid = new RequirementChemical(this.getActionType(), ingredient.copy(), amount);
+    RequirementChemical fluid = new RequirementChemical(this.getActionType(), ingredient.copy(), amount, getPosition());
     fluid.chance = this.chance;
     fluid.tagMatch = getTagMatch();
     fluid.tagDisplay = getTagDisplay();
@@ -104,7 +105,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
   @Override
   public RequirementChemical deepCopyModified(List<RecipeModifier> modifiers) {
     int amount = Math.round(RecipeModifier.applyModifiers(modifiers, this, this.amount, false));
-    RequirementChemical fluid = new RequirementChemical(this.getActionType(), ingredient.copy(), amount);
+    RequirementChemical fluid = new RequirementChemical(this.getActionType(), ingredient.copy(), amount, getPosition());
 
     fluid.chance = RecipeModifier.applyModifiers(modifiers, this, this.chance, true);
     fluid.tagMatch = getTagMatch();
@@ -168,7 +169,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     BasicChemicalTank handler = (BasicChemicalTank) component.providedComponent();
     return switch (getActionType()) {
       case INPUT -> {
-        if (!handler.isTypeEqual(this.requirementCheck))
+        if (!handler.getStack().is(this.requirementCheck.getChemical()))
           yield CraftCheck.failure("craftcheck.failure.chemical.input.type_missmatch");
         //If it doesn't consume the item, we only need to see if it's actually there.
         ChemicalStack drained = handler.extract(this.requirementCheck.copy().getAmount(), Action.EXECUTE, AutomationType.INTERNAL);

@@ -64,10 +64,9 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
   }
 
   @Override
-  public void setRecipeInput(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
-    category.updateByProcessed(category.processedInputComponents, getWidth(), getHeight(), true);
+  public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
     builder
-      .addInputSlot(category.x.get() + 1, category.y.get() + 1)
+      .addSlot(role(), getPosition().x(), getPosition().y())
       .setOverlay(
         MMRJeiPlugin.jeiHelpers.getGuiHelper().createDrawable(texture(), getUOffset(), getVOffset(), getWidth() + 2, getHeight() + 2),
         -1,
@@ -76,28 +75,5 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
       .setCustomRenderer(MekanismJEI.TYPE_CHEMICAL, new ChemicalStackRenderer(getRequirement().amount, getWidth(), getHeight()))
       .addIngredient(MekanismJEI.TYPE_CHEMICAL, new ChemicalStack(getRequirement().required.getChemical(), getRequirement().amount))
       .addRichTooltipCallback((slot, tooltip) -> tooltip.addAll(getTooltip(ingredients().get(0), TooltipFlag.NORMAL)));
-    category.x.getAndAdd(category.gapX);
-    category.x.getAndAdd(getWidth());
-    category.textsToRender.add(Component.translatable("modular_machinery_reborn.jei.ingredient.chemical.input", ingredients().get(0).getTextComponent(), ingredients().get(0).getAmount()));
-    category.updateMaxHeightInput(this, true);
-  }
-
-  @Override
-  public void setRecipeOutput(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
-    category.updateByProcessed(category.processedOutputComponents, getWidth(), getHeight(), true);
-    builder
-      .addOutputSlot(category.x.get() + 1, category.y.get() + 1)
-      .setOverlay(
-        MMRJeiPlugin.jeiHelpers.getGuiHelper().createDrawable(texture(), getUOffset(), getVOffset(), getWidth() + 2, getHeight() + 2),
-        -1,
-        -1
-      )
-      .setCustomRenderer(MekanismJEI.TYPE_CHEMICAL, new ChemicalStackRenderer(getRequirement().amount, getWidth(), getHeight()))
-      .addIngredient(MekanismJEI.TYPE_CHEMICAL, new ChemicalStack(getRequirement().required.getChemical(), getRequirement().amount))
-      .addRichTooltipCallback((slot, tooltip) -> tooltip.addAll(getTooltip(ingredients().get(0), TooltipFlag.NORMAL)));
-    category.x.getAndAdd(category.gapX);
-    category.x.getAndAdd(getWidth());
-    category.textsToRender.add(Component.translatable("modular_machinery_reborn.jei.ingredient.chemical.output", ingredients().get(0).getTextComponent(), ingredients().get(0).getAmount()));
-    category.updateMaxHeightOutput(this, true);
   }
 }

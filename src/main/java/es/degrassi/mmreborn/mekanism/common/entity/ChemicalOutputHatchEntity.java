@@ -26,7 +26,7 @@ public class ChemicalOutputHatchEntity extends ChemicalTankEntity implements Mac
   @Nullable
   @Override
   public MachineComponent provideComponent() {
-    return new ChemicalHatch(IOType.INPUT) {
+    return new ChemicalHatch(IOType.OUTPUT) {
       @Override
       public BasicChemicalTank getContainerProvider() {
         return getTank();

@@ -4,6 +4,7 @@ import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateChemicalComponentPacket;
 import lombok.Getter;
+import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.attribute.ChemicalAttributeValidator;
 import mekanism.api.functions.ConstantPredicates;
@@ -53,8 +54,8 @@ public enum ChemicalHatchSize implements StringRepresentable {
   private BasicChemicalTank buildDefaultTank(ChemicalTankEntity tileEntity, boolean canFill, boolean canDrain) {
     return (BasicChemicalTank) BasicChemicalTank.create(
       size,
-      ((chemical, automationType) -> canDrain),
-      ((chemical, automationType) -> canFill),
+      ((chemical, automationType) -> canDrain || automationType == AutomationType.INTERNAL),
+      ((chemical, automationType) -> canFill || automationType == AutomationType.INTERNAL),
       ConstantPredicates.alwaysTrue(),
       ChemicalAttributeValidator.ALWAYS_ALLOW,
       () -> {
