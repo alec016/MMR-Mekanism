@@ -1,0 +1,65 @@
+{
+  "itemGroup.modular_machinery_reborn_mekanism.group": "Modular Machinery Reborn Mekanism",
+
+  "modular_machinery_reborn.gui.title.chemical_hatch": "Chemical Hatch",
+
+  "craftcheck.failure.chemical.input.type_missmatch": "El Químico de entrada no es el mismo!",
+  "craftcheck.failure.chemical.input.handler_empty": "No hay quíco de entrada",
+  "craftcheck.failure.chemical.output.space": "No hay suficiente espacio para la salida de químico(s)!",
+
+  "component.missing.chemical.output": "No se ha encontrado Chemical Output Hatch!",
+  "component.missing.chemical.input": "No se ha encontrado Chemical Input Hatch!",
+
+  "tooltip.machinery.chance.in": "Probabilidad de consumición: %s",
+  "tooltip.machinery.chance.out": "Probabilidad de producción: %s",
+  "tooltip.machinery.chance.in.never": "No será consumido.",
+  "tooltip.machinery.chance.out.never": "No será producido.",
+
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_tiny": "Tiny Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_small": "Small Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_normal": "Normal Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_reinforced": "Reinforced Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_big": "Big Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_huge": "Huge Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_ludicrous": "Ludicrous Chemical Input Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_vacuum": "Vacuum Chemical Input Hatch",
+
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_tiny": "Tiny Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_small": "Small Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_normal": "Normal Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_reinforced": "Reinforced Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_big": "Big Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_huge": "Huge Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_ludicrous": "Ludicrous Chemical Output Hatch",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_vacuum": "Vacuum Chemical Output Hatch",
+
+  "text.autoconfig.modular_machinery_reborn.category.chemical_hatch": "Chemical Hatch",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY": "Chemical Hatch Tiny",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL": "Chemical Hatch Small",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL": "Chemical Hatch Normal",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED": "Chemical Hatch Reinforced",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG": "Chemical Hatch Big",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE": "Chemical Hatch Huge",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS": "Chemical Hatch Ludicrous",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS.size": "Size",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM": "Chemical Hatch Vacuum",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM.size": "Size",
+
+  "modular_machinery_reborn.jei.ingredient.chemical.input": "Requiere %s %s mB",
+  "modular_machinery_reborn.jei.ingredient.chemical.output": "Produce %s %s mB"
+}
+

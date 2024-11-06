@@ -31,7 +31,7 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
 
   @Override
   public int getHeight() {
-    return 61;
+    return 16;
   }
 
   @Override
