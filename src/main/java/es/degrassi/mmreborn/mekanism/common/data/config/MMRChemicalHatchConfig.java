@@ -35,14 +35,14 @@ public class MMRChemicalHatchConfig implements ConfigData {
   public static class Tier {
     @ConfigEntry.BoundedDiscrete(max = Integer.MAX_VALUE)
     @Comment("Defines the tank size of fluid hatch in mB")
-    public int size;
+    public long size;
 
     public Tier(ChemicalHatchSize tier) {
       this.size = tier.defaultConfigurationValue;
     }
   }
 
-  public int chemicalSize(ChemicalHatchSize size) {
+  public long chemicalSize(ChemicalHatchSize size) {
     return switch(size) {
       case TINY -> TINY.size;
       case SMALL -> SMALL.size;

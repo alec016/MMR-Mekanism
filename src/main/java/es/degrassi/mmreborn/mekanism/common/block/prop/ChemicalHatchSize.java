@@ -26,11 +26,11 @@ public enum ChemicalHatchSize implements StringRepresentable {
   VACUUM(32000);
 
   @Getter
-  private int size;
+  private long size;
 
-  public final int defaultConfigurationValue;
+  public final long defaultConfigurationValue;
 
-  ChemicalHatchSize(int defaultConfigurationValue) {
+  ChemicalHatchSize(long defaultConfigurationValue) {
     this.defaultConfigurationValue = defaultConfigurationValue;
   }
 
@@ -48,10 +48,6 @@ public enum ChemicalHatchSize implements StringRepresentable {
   }
 
   public BasicChemicalTank buildTank(ChemicalTankEntity tileEntity, boolean canFill, boolean canDrain) {
-    return buildDefaultTank(tileEntity, canFill, canDrain);
-  }
-
-  private BasicChemicalTank buildDefaultTank(ChemicalTankEntity tileEntity, boolean canFill, boolean canDrain) {
     return (BasicChemicalTank) BasicChemicalTank.create(
       size,
       ((chemical, automationType) -> canDrain || automationType == AutomationType.INTERNAL),

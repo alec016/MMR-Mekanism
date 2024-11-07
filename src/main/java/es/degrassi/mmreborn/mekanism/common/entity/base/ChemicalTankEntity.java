@@ -22,12 +22,15 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
 
   public ChemicalTankEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
+    this.hatchSize = null;
+    this.ioType = IOType.INPUT;
   }
 
   public ChemicalTankEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, ChemicalHatchSize size, IOType ioType) {
     super(type, pos, state);
-    this.tank = size.buildTank(this, ioType == IOType.INPUT, ioType == IOType.OUTPUT);
+    this.tank = size.buildTank(this, ioType.isInput(), !ioType.isInput());
     this.hatchSize = size;
+    this.ioType = ioType;
   }
 
   @Override
@@ -35,7 +38,7 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
     super.loadAdditional(compound, provider);
     this.ioType = compound.getBoolean("input") ? IOType.INPUT : IOType.OUTPUT;
     this.hatchSize = ChemicalHatchSize.value(compound.getString("size"));
-    BasicChemicalTank newTank = hatchSize.buildTank(this, ioType == IOType.INPUT, ioType == IOType.OUTPUT);
+    BasicChemicalTank newTank = hatchSize.buildTank(this, ioType.isInput(), !ioType.isInput());
     CompoundTag tankTag = compound.getCompound("tank");
     newTank.deserializeNBT(provider, tankTag);
     this.tank = newTank;
@@ -44,7 +47,7 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
   @Override
   protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
     super.saveAdditional(compound, provider);
-    compound.putBoolean("input", ioType == IOType.INPUT);
+    compound.putBoolean("input", ioType.isInput());
     compound.putString("size", this.hatchSize.getSerializedName());
     CompoundTag tankTag = this.tank.serializeNBT(provider);
     compound.put("tank", tankTag);
