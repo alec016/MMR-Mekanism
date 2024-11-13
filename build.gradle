@@ -256,5 +256,21 @@ unifiedPublishing {
             }
         }
     }
+
+    var MODRINTH_API_KEY = System.getenv("MODRINTH")
+    if (MODRINTH_API_KEY != null) {
+      modrinth {
+        token = MODRINTH_API_KEY
+        id = "9RrPxPjq"
+        relations {
+          depends "cloth-config"
+          depends "mekanism"
+          depends "modular-machinery-reborn"
+          optional "kubejs"
+          optional "jei"
+          optional "jade"
+        }
+      }
+    }
   }
 }

@@ -167,7 +167,8 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
 
   @Nonnull
   @Override
-  public CraftCheck canStartCrafting(ProcessingComponent<?> component, RecipeCraftingContext context, List<ComponentOutputRestrictor> restrictions) {
+  public CraftCheck canStartCrafting(ProcessingComponent<?> component, RecipeCraftingContext context,
+                                     List<ComponentOutputRestrictor<?>> restrictions) {
     BasicChemicalTank handler = (BasicChemicalTank) component.providedComponent();
     return switch (getActionType()) {
       case INPUT -> {
@@ -187,7 +188,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
       case OUTPUT -> {
         handler = CopyHandlerHelper.copyTank(handler, context.getMachineController().getLevel().registryAccess());
 
-        for (ComponentOutputRestrictor restrictor : restrictions) {
+        for (ComponentOutputRestrictor<?> restrictor : restrictions) {
           if (restrictor instanceof ComponentOutputRestrictor.RestrictionChemical tank) {
 
             if (tank.exactComponent.equals(component)) {
