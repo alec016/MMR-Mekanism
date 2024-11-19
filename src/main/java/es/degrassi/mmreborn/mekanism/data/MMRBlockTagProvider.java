@@ -3,10 +3,8 @@ package es.degrassi.mmreborn.mekanism.data;
 import es.degrassi.mmreborn.data.MMRTags;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
-import es.degrassi.mmreborn.common.util.Mods;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -43,11 +41,11 @@ public class MMRBlockTagProvider extends BlockTagsProvider {
     );
 
     tag(MMRMekanismTags.Blocks.CHEMICAL)
-      .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
-      .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
+        .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
+        .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
 
     tag(MMRTags.Blocks.ALL_CASINGS)
-      .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
-      .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
+        .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
+        .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
   }
 }
