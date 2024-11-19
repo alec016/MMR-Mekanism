@@ -1,11 +1,14 @@
 package es.degrassi.mmreborn.mekanism.client;
 
+import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import es.degrassi.mmreborn.mekanism.client.screen.ChemicalHatchScreen;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ContainerRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ItemRegistration;
+import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -15,9 +18,9 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class MMRMekanismClient {
   public static ChemicalTankEntity getClientSideChemicalHatchEntity(BlockPos pos) {
-    if(Minecraft.getInstance().level != null) {
+    if (Minecraft.getInstance().level != null) {
       BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-      if(tile instanceof ChemicalTankEntity controller)
+      if (tile instanceof ChemicalTankEntity controller)
         return controller;
     }
     throw new IllegalStateException("Trying to open a Chemical Hatch container without clicking on a Custom Machine block");
@@ -27,11 +30,16 @@ public class MMRMekanismClient {
   public void registerMenuScreens(final RegisterMenuScreensEvent event) {
     event.register(ContainerRegistration.CHEMICAL_HATCH.get(), ChemicalHatchScreen::new);
   }
-  
+
+  @SubscribeEvent
+  public void registerJeiComponents(final RegisterJeiComponentEvent event) {
+    event.register(RequirementTypeRegistration.CHEMICAL.get(), JeiChemicalComponent::new);
+  }
+
   @SubscribeEvent
   public void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
     event.register(
-      ModularMachineryRebornClient::blockColor,
+        ModularMachineryRebornClient::blockColor,
 
         BlockRegistration.CHEMICAL_INPUT_HATCH_TINY.get(),
         BlockRegistration.CHEMICAL_INPUT_HATCH_SMALL.get(),

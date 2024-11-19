@@ -10,12 +10,12 @@ import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
 import es.degrassi.mmreborn.common.crafting.helper.ProcessingComponent;
 import es.degrassi.mmreborn.common.crafting.helper.RecipeCraftingContext;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
-import es.degrassi.mmreborn.common.crafting.requirement.jei.IJeiRequirement;
+import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiPositionedRequirement;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.util.ResultChance;
-import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.crafting.helper.RestrictionChemical;
 import es.degrassi.mmreborn.mekanism.common.machine.ChemicalHatch;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@SuppressWarnings("unchecked")
 public class RequirementChemical extends ComponentRequirement<ChemicalStack, RequirementChemical> implements ComponentRequirement.ChancedRequirement {
   public static final NamedMapCodec<RequirementChemical> CODEC = NamedCodec.record(instance -> instance.group(
       NamedCodec.of(SingleChemicalIngredient.CODEC.codec()).fieldOf("chemical").forGetter(req -> req.ingredient),
@@ -42,7 +41,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
       NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance),
       NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt", new CompoundTag()).forGetter(RequirementChemical::getTagMatch),
       NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt-display").forGetter(req -> Optional.ofNullable(req.getTagDisplay())),
-      IJeiRequirement.POSITION_CODEC.fieldOf("position").forGetter(ComponentRequirement::getPosition)
+      JeiPositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new JeiPositionedRequirement(0, 0)).forGetter(ComponentRequirement::getPosition)
   ).apply(instance, (chemical, amount, mode, chance, nbt, nbt_display, position) -> {
     RequirementChemical requirementChemical = new RequirementChemical(mode, chemical, amount.orElse(1000L), position);
     requirementChemical.setChance(chance);
@@ -75,16 +74,11 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     return json;
   }
 
-  @Override
-  public JeiChemicalComponent jeiComponent() {
-    return new JeiChemicalComponent(this);
-  }
-
-  public RequirementChemical(IOType ioType, SingleChemicalIngredient chemical, long amount, IJeiRequirement.JeiPositionedRequirement position) {
+  public RequirementChemical(IOType ioType, SingleChemicalIngredient chemical, long amount, JeiPositionedRequirement position) {
     this(RequirementTypeRegistration.CHEMICAL.get(), ioType, chemical, amount, position);
   }
 
-  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, SingleChemicalIngredient chemical, long amount, IJeiRequirement.JeiPositionedRequirement position) {
+  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, SingleChemicalIngredient chemical, long amount, JeiPositionedRequirement position) {
     super(type, ioType, position);
     this.ingredient = chemical;
     this.required = new ChemicalStack(chemical.chemical(), amount);
@@ -189,7 +183,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
         handler = CopyHandlerHelper.copyTank(handler, context.getMachineController().getLevel().registryAccess());
 
         for (ComponentOutputRestrictor<?> restrictor : restrictions) {
-          if (restrictor instanceof ComponentOutputRestrictor.RestrictionChemical tank) {
+          if (restrictor instanceof RestrictionChemical tank) {
 
             if (tank.exactComponent.equals(component)) {
               handler.insert(Objects.requireNonNull(tank.inserted).copy(), Action.SIMULATE, AutomationType.INTERNAL);
@@ -199,7 +193,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
         long filled = handler.insert(requirementCheck.copy(), Action.EXECUTE, AutomationType.INTERNAL).getAmount();
         boolean didFill = filled <= 0;
         if (didFill) {
-          context.addRestriction(new ComponentOutputRestrictor.RestrictionChemical(this.requirementCheck.copy(), component));
+          context.addRestriction(new RestrictionChemical(this.requirementCheck.copy(), component));
         }
         if (didFill) {
           yield CraftCheck.success();
