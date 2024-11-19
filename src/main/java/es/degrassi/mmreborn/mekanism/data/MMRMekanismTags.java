@@ -30,6 +30,7 @@ public class MMRMekanismTags {
   }
 
   public static class Blocks extends Tag<Block> {
+    public static final TagKey<Block> CHEMICAL = new Blocks(false, "chemicalhatch").get();
     public static final TagKey<Block> CHEMICAL_INPUT = new Blocks(false, "chemicalinputhatch").get();
     public static final TagKey<Block> CHEMICAL_OUTPUT = new Blocks(false, "chemicaloutputhatch").get();
 

@@ -42,6 +42,10 @@ public class MMRBlockTagProvider extends BlockTagsProvider {
         BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get()
     );
 
+    tag(MMRMekanismTags.Blocks.CHEMICAL)
+      .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
+      .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
+
     tag(MMRTags.Blocks.ALL_CASINGS)
       .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
       .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
