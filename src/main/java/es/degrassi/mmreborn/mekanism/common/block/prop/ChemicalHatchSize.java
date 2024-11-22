@@ -72,7 +72,7 @@ public enum ChemicalHatchSize implements StringRepresentable {
 
   public static void loadFromConfig() {
     for (ChemicalHatchSize size : values()) {
-      size.size = MMRConfig.get().chemicalHatch.chemicalSize(size);
+      size.size = MMRConfig.get().chemicalSize(size);
     }
   }
 }

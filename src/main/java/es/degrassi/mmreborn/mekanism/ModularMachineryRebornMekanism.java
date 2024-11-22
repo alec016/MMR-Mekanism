@@ -5,15 +5,14 @@ import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.Registration;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import mekanism.common.capabilities.Capabilities;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionResult;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.CommandEvent;
@@ -27,23 +26,29 @@ public class ModularMachineryRebornMekanism {
   public static final String MODID = "modular_machinery_reborn_mekanism";
   public static final Logger LOGGER = LogManager.getLogger("Modular Machinery Reborn Mekanism");
 
-  public ModularMachineryRebornMekanism(final IEventBus MOD_BUS) {
-    ConfigHolder<MMRConfig> config = AutoConfig.register(MMRConfig.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
-
-    config.registerSaveListener((holder, mmrConfig) -> {
-      ChemicalHatchSize.loadFromConfig();
-      return InteractionResult.SUCCESS;
-    });
+  public ModularMachineryRebornMekanism(final ModContainer CONTAINER, final IEventBus MOD_BUS) {
+    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec());
 
     Registration.register(MOD_BUS);
 
+    MOD_BUS.addListener(this::commonSetup);
+
     MOD_BUS.register(new MMRMekanismClient());
     MOD_BUS.addListener(this::registerCapabilities);
+    MOD_BUS.addListener(this::reloadConfig);
 
     final IEventBus GAME_BUS = NeoForge.EVENT_BUS;
     GAME_BUS.addListener(this::onReloadStart);
+  }
 
+  private void commonSetup(final FMLCommonSetupEvent event) {
     ChemicalHatchSize.loadFromConfig();
+  }
+
+  private void reloadConfig(final ModConfigEvent.Reloading event) {
+    if(event.getConfig().getSpec() == MMRConfig.getSpec()) {
+      ChemicalHatchSize.loadFromConfig();
+    }
   }
 
   private void registerCapabilities(final RegisterCapabilitiesEvent event) {

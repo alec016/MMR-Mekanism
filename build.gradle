@@ -128,9 +128,6 @@ dependencies {
   implementation "net.neoforged:neoforge:${neo_version}"
   compileOnly localRuntime("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
 
-  // Cloth config
-  api("me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}")
-
   // ProbeJS
   localRuntime("curse.maven:probejs-585406:5820894")
 
@@ -248,7 +245,6 @@ unifiedPublishing {
             id = "1131856"
             gameVersions.addAll "Java 21"
             relations {
-                depends "cloth-config"
                 depends "modular-machinery-reborn"
                 depends "mekanism"
                 optional "kubejs"
@@ -263,7 +259,6 @@ unifiedPublishing {
         token = MODRINTH_API_KEY
         id = "9RrPxPjq"
         relations {
-          depends "cloth-config"
           depends "mekanism"
           depends "modular-machinery-reborn"
           optional "kubejs"
