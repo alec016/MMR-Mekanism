@@ -155,8 +155,23 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
   public boolean isValidComponent(ProcessingComponent<?> component, RecipeCraftingContext ctx) {
     MachineComponent<?> cmp = component.component();
     return (cmp.getComponentType().equals(ComponentRegistration.COMPONENT_CHEMICAL.get())) &&
-        cmp instanceof ChemicalHatch &&
-        cmp.getIOType() == this.getActionType();
+        cmp instanceof ChemicalHatch hatch &&
+        hatch.getIOType() == this.getActionType() && ((
+            !getActionType().isInput() && (
+                hatch.getContainerProvider().getStack().isEmpty() || (
+                    hatch.getContainerProvider().getStack().is(required.getChemical()) &&
+                    hatch.getContainerProvider().getCapacity() - hatch.getContainerProvider().getStored() >= required.getAmount()
+                )
+            )
+        ) || (
+            getActionType().isInput() && (
+                hatch.getContainerProvider().isTypeEqual(required) && (
+                    hatch.getContainerProvider().getStack().is(required.getChemical()) &&
+                    hatch.getContainerProvider().getStored() >= required.getAmount()
+                )
+            )
+        )
+    );
   }
 
   @Nonnull
