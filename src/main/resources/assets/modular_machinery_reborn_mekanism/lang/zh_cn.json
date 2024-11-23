@@ -1,0 +1,65 @@
+{
+  "itemGroup.modular_machinery_reborn_mekanism.group": "模块化机械:重置 通用机械附属",
+
+  "modular_machinery_reborn.gui.title.chemical_hatch": "化学品仓",
+
+  "craftcheck.failure.chemical.input.type_missmatch": "缺少化学品输入！化学品不相同",
+  "craftcheck.failure.chemical.input.handler_empty": "缺少化学品输入！未找到化学品",
+  "craftcheck.failure.chemical.output.space": "没有足够的库存空间用于化学品输出！",
+
+  "component.missing.chemical.output": "未找到化学品输出仓！",
+  "component.missing.chemical.input": "未找到化学品输入仓",
+
+  "tooltip.machinery.chance.in": "有 %s 概率被消耗",
+  "tooltip.machinery.chance.out": "有 %s 概率产出",
+  "tooltip.machinery.chance.in.never": "不被消耗",
+  "tooltip.machinery.chance.out.never": "不产出",
+
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_tiny": "微型化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_small": "小型化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_normal": "中型型化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_reinforced": "强化化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_big": "大型化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_huge": "巨型化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_ludicrous": "超级化学品输入仓",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_vacuum": "真空化学品输入仓",
+
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_tiny": "微型化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_small": "小型化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_normal": "中型化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_reinforced": "强化化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_big": "大型化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_huge": "巨型化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_ludicrous": "超级化学品输出仓",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_vacuum": "真空化学品输出仓",
+
+  "text.autoconfig.modular_machinery_reborn.category.chemical_hatch": "化学品仓",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY": "微型化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL": "小型化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL": "中型化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED": "强化化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG": "大型化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE": "巨型化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS": "超级化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS.size": "最大容量",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM": "真空化学品仓",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM.size": "最大容量",
+
+  "modular_machinery_reborn.jei.ingredient.chemical.input": "需求 %s %s mB",
+  "modular_machinery_reborn.jei.ingredient.chemical.output": "产出 %s %s mB"
+}
+
