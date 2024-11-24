@@ -1,20 +1,26 @@
 package es.degrassi.mmreborn.mekanism.client;
 
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiComponentEvent;
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiRequirementToStackEvent;
 import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import es.degrassi.mmreborn.mekanism.client.screen.ChemicalHatchScreen;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ContainerRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ItemRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
+import mekanism.client.recipe_viewer.emi.ChemicalEmiStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+
+import java.util.List;
 
 public class MMRMekanismClient {
   public static ChemicalTankEntity getClientSideChemicalHatchEntity(BlockPos pos) {
@@ -34,6 +40,19 @@ public class MMRMekanismClient {
   @SubscribeEvent
   public void registerJeiComponents(final RegisterJeiComponentEvent event) {
     event.register(RequirementTypeRegistration.CHEMICAL.get(), JeiChemicalComponent::new);
+  }
+
+  @SubscribeEvent
+  public void registerEmiComponents(final RegisterEmiComponentEvent event) {
+    event.register(RequirementTypeRegistration.CHEMICAL.get(), EmiChemicalComponent::new);
+  }
+
+  @SubscribeEvent
+  public void registerEmiStack(final RegisterEmiRequirementToStackEvent event) {
+    event.register(
+        RequirementTypeRegistration.CHEMICAL.get(),
+        requirement -> List.of(ChemicalEmiStack.create(requirement.required.copyWithAmount(requirement.amount)))
+    );
   }
 
   @SubscribeEvent

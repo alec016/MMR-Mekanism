@@ -9,8 +9,8 @@ import es.degrassi.mmreborn.common.crafting.helper.ComponentRequirement;
 import es.degrassi.mmreborn.common.crafting.helper.CraftCheck;
 import es.degrassi.mmreborn.common.crafting.helper.ProcessingComponent;
 import es.degrassi.mmreborn.common.crafting.helper.RecipeCraftingContext;
+import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
-import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiPositionedRequirement;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.common.modifier.RecipeModifier;
@@ -41,7 +41,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
       NamedCodec.floatRange(0, 1).optionalFieldOf("chance", 1f).forGetter(req -> req.chance),
       NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt", new CompoundTag()).forGetter(RequirementChemical::getTagMatch),
       NamedCodec.of(CompoundTag.CODEC).optionalFieldOf("nbt-display").forGetter(req -> Optional.ofNullable(req.getTagDisplay())),
-      JeiPositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new JeiPositionedRequirement(0, 0)).forGetter(ComponentRequirement::getPosition)
+      PositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new PositionedRequirement(0, 0)).forGetter(ComponentRequirement::getPosition)
   ).apply(instance, (chemical, amount, mode, chance, nbt, nbt_display, position) -> {
     RequirementChemical requirementChemical = new RequirementChemical(mode, chemical, amount.orElse(1000L), position);
     requirementChemical.setChance(chance);
@@ -74,11 +74,11 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     return json;
   }
 
-  public RequirementChemical(IOType ioType, SingleChemicalIngredient chemical, long amount, JeiPositionedRequirement position) {
+  public RequirementChemical(IOType ioType, SingleChemicalIngredient chemical, long amount, PositionedRequirement position) {
     this(RequirementTypeRegistration.CHEMICAL.get(), ioType, chemical, amount, position);
   }
 
-  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, SingleChemicalIngredient chemical, long amount, JeiPositionedRequirement position) {
+  private RequirementChemical(RequirementType<RequirementChemical> type, IOType ioType, SingleChemicalIngredient chemical, long amount, PositionedRequirement position) {
     super(type, ioType, position);
     this.ingredient = chemical;
     this.required = new ChemicalStack(chemical.chemical(), amount);
