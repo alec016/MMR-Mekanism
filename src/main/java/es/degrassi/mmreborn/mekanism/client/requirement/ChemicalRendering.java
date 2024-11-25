@@ -1,8 +1,6 @@
-package es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi;
+package es.degrassi.mmreborn.mekanism.client.requirement;
 
 import es.degrassi.mmreborn.common.crafting.requirement.emi.Position;
-import es.degrassi.mmreborn.common.crafting.requirement.emi.RecipeHolder;
-import es.degrassi.mmreborn.common.crafting.requirement.emi.StackHolder;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.math.MathUtils;

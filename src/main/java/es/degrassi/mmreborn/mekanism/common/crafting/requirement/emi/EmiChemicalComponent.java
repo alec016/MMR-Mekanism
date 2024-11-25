@@ -7,6 +7,7 @@ import dev.emi.emi.api.stack.EmiStackInteraction;
 import dev.emi.emi.screen.EmiScreenManager;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.EmiComponent;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.SlotTooltip;
+import es.degrassi.mmreborn.mekanism.client.requirement.ChemicalRendering;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import lombok.Getter;
 import mekanism.api.chemical.Chemical;
