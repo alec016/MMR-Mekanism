@@ -20,6 +20,7 @@ import es.degrassi.mmreborn.mekanism.common.machine.ChemicalHatch;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
 import es.degrassi.mmreborn.mekanism.common.util.CopyHandlerHelper;
+import lombok.Getter;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
@@ -53,6 +54,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
   public static final int PRIORITY_WEIGHT_CHEMICAL = 50_000_000;
 
   public final ChemicalStack required;
+  @Getter
   public float chance = 1F;
   public final long amount;
 
@@ -182,7 +184,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
     return switch (getActionType()) {
       case INPUT -> {
         //If it doesn't consume the item, we only need to see if it's actually there.
-        ChemicalStack drained = handler.extract(amount, Action.EXECUTE, AutomationType.INTERNAL);
+        ChemicalStack drained = handler.extract(amount, Action.SIMULATE, AutomationType.INTERNAL);
         if (drained.isEmpty()) {
           yield CraftCheck.failure("craftcheck.failure.chemical.input.handler_empty");
         }
@@ -195,8 +197,6 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
         yield CraftCheck.failure("craftcheck.failure.chemical.input");
       }
       case OUTPUT -> {
-        handler = CopyHandlerHelper.copyTank(handler, context.getMachineController().getLevel().registryAccess());
-
         for (ComponentOutputRestrictor<?> restrictor : restrictions) {
           if (restrictor instanceof RestrictionChemical tank) {
 
@@ -205,7 +205,7 @@ public class RequirementChemical extends ComponentRequirement<ChemicalStack, Req
             }
           }
         }
-        long filled = handler.insert(requirementCheck.copy(), Action.EXECUTE, AutomationType.INTERNAL).getAmount();
+        long filled = handler.insert(requirementCheck.copy(), Action.SIMULATE, AutomationType.INTERNAL).getAmount();
         boolean didFill = filled <= 0;
         if (didFill) {
           context.addRestriction(new RestrictionChemical(this.requirementCheck.copy(), component));
