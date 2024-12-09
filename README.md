@@ -1,7 +1,7 @@
 # Modular Machinery Reborn Mekanism
 
 [![GitHub issues](https://img.shields.io/github/issues/alec016/MMR-Mekanism?style=flat-square)](https://github.com/alec016/MMR-Mekanism/issues)
-[![GitHub license](https://img.shields.io/github/license/alec016/MMR-Mekanism?color=0690ff&style=flat-square)](https://github.com/alec016/MMR-Mekanism/1211/LICENSE.md)
+[![GitHub license](https://img.shields.io/github/license/alec016/MMR-Mekanism?color=0690ff&style=flat-square)](https://github.com/alec016/MMR-Mekanism/blob/1211/LICENSE.md)
 [![](http://cf.way2muchnoise.eu/1131856.svg?badge_style=flat)](https://www.curseforge.com/minecraft/mc-mods/modular-machinery-reborn-mekanism)
 [![Modrinth](https://img.shields.io/modrinth/dt/modular-machinery-reborn-mekanism?color=00AF5C&label=downloads&style=flat&logo=modrinth)](https://modrinth.com/mod/modular-machinery-reborn-mekanism)
 [![](https://img.shields.io/discord/1071821610836828200?color=7289DA)](https://discord.gg/2XCPCVa59h)
