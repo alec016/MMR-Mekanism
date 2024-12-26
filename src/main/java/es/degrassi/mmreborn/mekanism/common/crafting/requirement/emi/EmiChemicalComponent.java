@@ -5,8 +5,10 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.EmiStackInteraction;
 import dev.emi.emi.screen.EmiScreenManager;
+import es.degrassi.mmreborn.client.requirement.ChanceRendering;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.EmiComponent;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.SlotTooltip;
+import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.mekanism.client.requirement.ChemicalRendering;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import lombok.Getter;
@@ -27,7 +29,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Getter
-public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RequirementChemical> implements ChemicalRendering, SlotTooltip {
+public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RequirementChemical> implements ChemicalRendering, SlotTooltip, ChanceRendering {
   private int width = 16, height = 16;
   private EmiRecipe recipe;
   public EmiChemicalComponent(RequirementChemical requirement) {
@@ -51,6 +53,7 @@ public class EmiChemicalComponent extends EmiComponent<ChemicalStack, Requiremen
     width -= 2;
     height -=2;
     renderChemical(guiGraphics, requirement.required);
+    drawChance(guiGraphics, false);
   }
 
   @Override
@@ -76,6 +79,7 @@ public class EmiChemicalComponent extends EmiComponent<ChemicalStack, Requiremen
       }
     }
     collectTooltip(tooltip::add);
+    addChanceTooltips(tooltip);
     return tooltip;
   }
 
@@ -110,5 +114,15 @@ public class EmiChemicalComponent extends EmiComponent<ChemicalStack, Requiremen
     }
     return EmiScreenManager.stackInteraction(new EmiStackInteraction(getStack(), getRecipe(), true),
         bind -> bind.matchesKey(keyCode, scanCode));
+  }
+
+  @Override
+  public float getChance() {
+    return requirement.getChance();
+  }
+
+  @Override
+  public IOType getActionType() {
+    return requirement.getActionType();
   }
 }

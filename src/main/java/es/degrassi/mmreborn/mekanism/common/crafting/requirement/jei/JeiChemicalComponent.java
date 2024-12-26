@@ -2,16 +2,23 @@ package es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei;
 
 
 import com.google.common.collect.Lists;
+import com.mojang.datafixers.util.Pair;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
+import es.degrassi.mmreborn.common.crafting.requirement.PositionedSizedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
+import es.degrassi.mmreborn.common.data.Config;
 import es.degrassi.mmreborn.common.integration.jei.MMRJeiPlugin;
 import es.degrassi.mmreborn.common.integration.jei.category.MMRRecipeCategory;
+import es.degrassi.mmreborn.common.integration.jei.category.drawable.DrawableWrappedText;
+import es.degrassi.mmreborn.common.util.Utils;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.client.recipe_viewer.jei.ChemicalStackRenderer;
 import mekanism.client.recipe_viewer.jei.MekanismJEI;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.recipe.IFocusGroup;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.TooltipFlag;
@@ -65,6 +72,34 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
 
   @Override
   public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
+    Component component = Component.empty();
+    String chance = Utils.decimalFormat(requirement.chance * 100);
+    if (requirement.chance > 0 && requirement.chance < 1)
+      component = Component.translatable("modular_machinery_reborn.ingredient.chance", chance, "%").withColor(Config.chanceColor);
+    else if (requirement.chance == 0)
+      component = Component.translatable("modular_machinery_reborn.ingredient.chance.nc").withColor(Config.chanceColor);
+    Font font = Minecraft.getInstance().font;
+    recipe.chanceTexts.add(
+        Pair.of(
+            new PositionedSizedRequirement(
+                getPosition().x(),
+                getPosition().y(),
+                getWidth(),
+                font.wordWrapHeight(component, getWidth())
+            ),
+            new DrawableWrappedText(List.of(component), getWidth() + 2, true)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEX, getPosition().x())
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEY, getPosition().y())
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.SCALE, 0.75)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEZ, 500)
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEX, (double) (getWidth() - 16) / 2)
+                .transform(DrawableWrappedText.Operation.ADD, DrawableWrappedText.State.TRANSLATEX, 17)
+                .transform(DrawableWrappedText.Operation.REMOVE, DrawableWrappedText.State.TRANSLATEX, Math.min(14, font.width(component)))
+                .transform(DrawableWrappedText.Operation.SET, DrawableWrappedText.State.TRANSLATEY, (double) (getHeight() - 16) / 2)
+                .transform(DrawableWrappedText.Operation.REMOVE, DrawableWrappedText.State.TRANSLATEY, 1)
+                .transform(DrawableWrappedText.Operation.ADD, DrawableWrappedText.State.TRANSLATEY, (double) font.lineHeight * 3/2)
+        )
+    );
     builder
         .addSlot(role(), getPosition().x(), getPosition().y())
         .setOverlay(
