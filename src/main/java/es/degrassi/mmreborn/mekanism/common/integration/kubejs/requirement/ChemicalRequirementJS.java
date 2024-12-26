@@ -10,12 +10,29 @@ import mekanism.api.recipes.ingredients.chemical.SingleChemicalIngredient;
 
 public interface ChemicalRequirementJS extends RecipeJSBuilder {
 
-  default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, int x, int y) {
+  default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance, int x, int y) {
     return addRequirement(new RequirementChemical(IOType.INPUT, new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)));
   }
 
-  default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, int x, int y) {
+  default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, float chance, int x, int y) {
     return addRequirement(new RequirementChemical(IOType.OUTPUT, new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)));
+  }
+
+  default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance) {
+    return requireChemical(stack, chance, 0, 0);
+  }
+
+  default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, float chance) {
+    return produceChemical(stack, chance, 0, 0);
+  }
+
+
+  default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, int x, int y) {
+    return requireChemical(stack, 1, x, y);
+  }
+
+  default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, int x, int y) {
+    return produceChemical(stack, 1, x, y);
   }
 
   default MachineRecipeBuilderJS requireChemical(ChemicalStack stack) {
