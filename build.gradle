@@ -30,6 +30,10 @@ if (transformer.exists()) {
   minecraft.accessTransformers.file transformer
 }
 
+tasks.build {
+  finalizedBy(tasks.publishToMavenLocal)
+}
+
 runs {
   configureEach {
     systemProperty 'forge.logging.markers', 'REGISTRIES'
@@ -134,6 +138,7 @@ dependencies {
   annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
   implementation "net.neoforged:neoforge:${neo_version}"
   compileOnly localRuntime("es.degrassi:modular_machinery_reborn:${minecraft_version}-${mmr_version}")
+  compileOnly localRuntime("es.degrassi:experiencelib:${minecraft_version}-${experiencelib_version}")
 
   // ProbeJS
   localRuntime("curse.maven:probejs-585406:5820894")
