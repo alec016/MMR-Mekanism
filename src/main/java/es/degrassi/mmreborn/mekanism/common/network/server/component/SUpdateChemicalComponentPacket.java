@@ -3,12 +3,14 @@ package es.degrassi.mmreborn.mekanism.common.network.server.component;
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import mekanism.api.chemical.ChemicalStack;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+@MethodsReturnNonnullByDefault
 public record SUpdateChemicalComponentPacket(ChemicalStack chemical, BlockPos pos) implements CustomPacketPayload {
 
   public static final Type<SUpdateChemicalComponentPacket> TYPE = new Type<>(ModularMachineryReborn.rl("update_chemical"));

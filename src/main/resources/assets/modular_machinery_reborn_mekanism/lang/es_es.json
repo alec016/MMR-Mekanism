@@ -3,9 +3,9 @@
 
   "modular_machinery_reborn.gui.title.chemical_hatch": "Chemical Hatch",
 
-  "craftcheck.failure.chemical.input.type_missmatch": "El Químico de entrada no es el mismo!",
-  "craftcheck.failure.chemical.input.handler_empty": "No hay quíco de entrada",
-  "craftcheck.failure.chemical.output.space": "No hay suficiente espacio para la salida de químico(s)!",
+  "craftcheck.failure.chemical.input": "El Químico de entrada no es el mismo! necesario %sx %s pero se encontró %sx %s",
+  "craftcheck.failure.chemical.output.chemical": "El Químico en el tanque no coincide, necesario: %s pero se encontró %s!",
+  "craftcheck.failure.chemical.output.space": "No hay suficiente espacio para la salida de químico(s)!, necesario: %s mB pero se encontró %s mB",
 
   "component.missing.chemical.output": "No se ha encontrado Chemical Output Hatch!",
   "component.missing.chemical.input": "No se ha encontrado Chemical Input Hatch!",

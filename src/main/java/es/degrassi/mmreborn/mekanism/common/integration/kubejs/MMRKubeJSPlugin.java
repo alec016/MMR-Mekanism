@@ -17,25 +17,25 @@ import net.neoforged.neoforge.fluids.FluidType;
 public class MMRKubeJSPlugin implements KubeJSPlugin {
   @Override
   public void registerTypeWrappers(final TypeWrapperRegistry registry) {
-    if(!ModList.get().isLoaded("kubejs_mekanism"))
+    if (!ModList.get().isLoaded("kubejs_mekanism"))
       registry.register(ChemicalStack.class, (TypeWrapperRegistry.ContextFromFunction<ChemicalStack>) (ctx, o) -> of(o));
   }
 
   private static ChemicalStack of(Object o) {
     final long BASE_AMOUNT = FluidType.BUCKET_VOLUME;
 
-    if(o instanceof Wrapper w)
+    if (o instanceof Wrapper w)
       o = w.unwrap();
 
-    if(o == null || o == ChemicalStack.EMPTY)
+    if (o == null || o == ChemicalStack.EMPTY)
       return ChemicalStack.EMPTY;
-    else if(o instanceof ChemicalStack stack)
+    else if (o instanceof ChemicalStack stack)
       return stack;
     else if (o instanceof Chemical chemical) {
       return new ChemicalStack(chemical, BASE_AMOUNT);
-    } else if(o instanceof ResourceLocation loc) {
+    } else if (o instanceof ResourceLocation loc) {
       Chemical chemical = MekanismAPI.CHEMICAL_REGISTRY.get(loc);
-      if(chemical == MekanismAPI.EMPTY_CHEMICAL)
+      if (chemical == MekanismAPI.EMPTY_CHEMICAL)
         throw new KubeRuntimeException("Chemical " + loc + " not found!");
       return new ChemicalStack(chemical, BASE_AMOUNT);
     } else {
@@ -47,7 +47,7 @@ public class MMRKubeJSPlugin implements KubeJSPlugin {
           return ChemicalStack.EMPTY;
 
         long amount = BASE_AMOUNT;
-        if(StringReader.isAllowedNumber(reader.peek())) {
+        if (StringReader.isAllowedNumber(reader.peek())) {
           double amountd = reader.readDouble();
           reader.skipWhitespace();
 

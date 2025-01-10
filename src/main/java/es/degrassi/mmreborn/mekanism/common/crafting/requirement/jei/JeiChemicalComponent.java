@@ -3,6 +3,7 @@ package es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
+import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.common.crafting.MachineRecipe;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedSizedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.jei.JeiComponent;
@@ -12,6 +13,7 @@ import es.degrassi.mmreborn.common.integration.jei.category.MMRRecipeCategory;
 import es.degrassi.mmreborn.common.integration.jei.category.drawable.DrawableWrappedText;
 import es.degrassi.mmreborn.common.util.Utils;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
+import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.client.recipe_viewer.jei.ChemicalStackRenderer;
 import mekanism.client.recipe_viewer.jei.MekanismJEI;
@@ -26,8 +28,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RequirementChemical> {
-  public JeiChemicalComponent(RequirementChemical requirement) {
+public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent, RequirementChemical>> {
+  public JeiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical> requirement) {
     super(requirement, 0, 0);
   }
 
@@ -43,24 +45,26 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
 
   @Override
   public List<ChemicalStack> ingredients() {
-    return Lists.newArrayList(requirement.required.copy());
+    return Lists.newArrayList(requirement.requirement().required.copy());
   }
 
   @Override
   @SuppressWarnings("removal")
   public @NotNull List<Component> getTooltip(@NotNull ChemicalStack ingredient, @NotNull TooltipFlag tooltipFlag) {
     List<Component> tooltip = super.getTooltip(ingredient, tooltipFlag);
-    String mode = requirement.getActionType().isInput() ? "input" : "output";
+    String mode = requirement.requirement().getMode().isInput() ? "input" : "output";
     tooltip.add(Component.translatable("modular_machinery_reborn.jei.ingredient.chemical." + mode, ingredient.getTextComponent(), ingredient.getAmount()));
-    if (requirement.chance < 1F && requirement.chance >= 0F) {
-      String keyNever = requirement.getActionType().isInput() ? "tooltip.machinery.chance.in.never" : "tooltip.machinery.chance.out.never";
-      String keyChance = requirement.getActionType().isInput() ? "tooltip.machinery.chance.in" : "tooltip.machinery.chance.out";
+    if (requirement.chance() < 1F && requirement.chance() >= 0F) {
+      String keyNever = requirement.requirement().getMode().isInput() ? "tooltip.machinery.chance.in.never" : "tooltip.machinery" +
+          ".chance.out.never";
+      String keyChance = requirement.requirement().getMode().isInput() ? "tooltip.machinery.chance.in" : "tooltip" +
+          ".machinery.chance.out";
 
-      String chanceStr = String.valueOf(Mth.floor(requirement.chance * 100F));
-      if (requirement.chance == 0F) {
+      String chanceStr = String.valueOf(Mth.floor(requirement.chance() * 100F));
+      if (requirement.chance() == 0F) {
         tooltip.add(Component.translatable(keyNever));
       } else {
-        if (requirement.chance < 0.01F) {
+        if (requirement.chance() < 0.01F) {
           chanceStr = "< 1";
         }
         chanceStr += "%";
@@ -73,10 +77,10 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
   @Override
   public void setRecipe(MMRRecipeCategory category, IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
     Component component = Component.empty();
-    String chance = Utils.decimalFormat(requirement.chance * 100);
-    if (requirement.chance > 0 && requirement.chance < 1)
+    String chance = Utils.decimalFormat(requirement.chance() * 100);
+    if (requirement.chance() > 0 && requirement.chance() < 1)
       component = Component.translatable("modular_machinery_reborn.ingredient.chance", chance, "%").withColor(Config.chanceColor);
-    else if (requirement.chance == 0)
+    else if (requirement.chance() == 0)
       component = Component.translatable("modular_machinery_reborn.ingredient.chance.nc").withColor(Config.chanceColor);
     Font font = Minecraft.getInstance().font;
     recipe.chanceTexts.add(
@@ -107,8 +111,8 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, Requiremen
             -1,
             -1
         )
-        .setCustomRenderer(MekanismJEI.TYPE_CHEMICAL, new ChemicalStackRenderer(getRequirement().amount, getWidth(), getHeight()))
-        .addIngredient(MekanismJEI.TYPE_CHEMICAL, new ChemicalStack(getRequirement().required.getChemical(), getRequirement().amount))
+        .setCustomRenderer(MekanismJEI.TYPE_CHEMICAL, new ChemicalStackRenderer(getRequirement().requirement().amount, getWidth(), getHeight()))
+        .addIngredient(MekanismJEI.TYPE_CHEMICAL, new ChemicalStack(getRequirement().requirement().required.getChemical(), getRequirement().requirement().amount))
         .addRichTooltipCallback((slot, tooltip) -> tooltip.addAll(getTooltip(ingredients().get(0), TooltipFlag.NORMAL)));
   }
 }

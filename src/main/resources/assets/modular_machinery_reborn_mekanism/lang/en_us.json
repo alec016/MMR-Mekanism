@@ -3,9 +3,9 @@
 
   "modular_machinery_reborn.gui.title.chemical_hatch": "Chemical Hatch",
 
-  "craftcheck.failure.chemical.input.type_missmatch": "Missing chemical input! Chemical is not the same",
-  "craftcheck.failure.chemical.input.handler_empty": "Missing chemical input! No Chemical provided",
-  "craftcheck.failure.chemical.output.space": "Not enough space for chemical output(s)!",
+  "craftcheck.failure.chemical.input": "Missing chemical input! required %sx %s but found %sx %s",
+  "craftcheck.failure.chemical.output.space": "Not enough space for chemical output(s)!, required: %s mB but found %s mB",
+  "craftcheck.failure.chemical.output.chemical": "Chemical in tank doesn't match, required: %s but found %s!",
 
   "component.missing.chemical.output": "No Chemical Output Hatch found!",
   "component.missing.chemical.input": "No Chemical Input Hatch found!",

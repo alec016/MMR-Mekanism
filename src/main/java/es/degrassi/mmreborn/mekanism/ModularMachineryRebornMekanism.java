@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.mekanism;
 
+import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
 import es.degrassi.mmreborn.mekanism.client.MMRMekanismClient;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
@@ -11,11 +12,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.CommandEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Contract;
@@ -31,24 +28,14 @@ public class ModularMachineryRebornMekanism {
 
     Registration.register(MOD_BUS);
 
-    MOD_BUS.addListener(this::commonSetup);
+    addConfig();
 
     MOD_BUS.register(new MMRMekanismClient());
     MOD_BUS.addListener(this::registerCapabilities);
-    MOD_BUS.addListener(this::reloadConfig);
-
-    final IEventBus GAME_BUS = NeoForge.EVENT_BUS;
-    GAME_BUS.addListener(this::onReloadStart);
   }
 
-  private void commonSetup(final FMLCommonSetupEvent event) {
-    ChemicalHatchSize.loadFromConfig();
-  }
-
-  private void reloadConfig(final ModConfigEvent.Reloading event) {
-    if(event.getConfig().getSpec() == MMRConfig.getSpec()) {
-      ChemicalHatchSize.loadFromConfig();
-    }
+  private void addConfig() {
+    ConfigLoaded.add(ChemicalHatchSize.class, size -> size.setSize(MMRConfig.get().chemicalSize(size)));
   }
 
   private void registerCapabilities(final RegisterCapabilitiesEvent event) {
@@ -67,11 +54,5 @@ public class ModularMachineryRebornMekanism {
   @Contract("_ -> new")
   public static @NotNull ResourceLocation rl(String path) {
     return ResourceLocation.fromNamespaceAndPath(MODID, path);
-  }
-
-  private void onReloadStart(final CommandEvent event) {
-    if (event.getParseResults().getReader().getString().equals("reload") && event.getParseResults().getContext().getSource().hasPermission(2)) {
-      ChemicalHatchSize.loadFromConfig();
-    }
   }
 }

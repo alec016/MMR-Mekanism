@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.mekanism.common.integration.kubejs.requirement;
 
+import es.degrassi.mmreborn.api.crafting.requirement.RecipeRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.integration.kubejs.MachineRecipeBuilderJS;
 import es.degrassi.mmreborn.common.integration.kubejs.RecipeJSBuilder;
@@ -11,11 +12,13 @@ import mekanism.api.recipes.ingredients.chemical.SingleChemicalIngredient;
 public interface ChemicalRequirementJS extends RecipeJSBuilder {
 
   default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance, int x, int y) {
-    return addRequirement(new RequirementChemical(IOType.INPUT, new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)));
+    return addRequirement(new RecipeRequirement<>(new RequirementChemical(IOType.INPUT,
+        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y))));
   }
 
   default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, float chance, int x, int y) {
-    return addRequirement(new RequirementChemical(IOType.OUTPUT, new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)));
+    return addRequirement(new RecipeRequirement<>(new RequirementChemical(IOType.OUTPUT,
+        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y))));
   }
 
   default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance) {

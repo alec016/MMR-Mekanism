@@ -51,7 +51,7 @@ public class MMRMekanismClient {
   public void registerEmiStack(final RegisterEmiRequirementToStackEvent event) {
     event.register(
         RequirementTypeRegistration.CHEMICAL.get(),
-        requirement -> List.of(ChemicalEmiStack.create(requirement.required.copyWithAmount(requirement.amount)))
+        requirement -> List.of(ChemicalEmiStack.create(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
     );
   }
 

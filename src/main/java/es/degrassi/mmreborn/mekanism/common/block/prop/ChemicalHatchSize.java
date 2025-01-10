@@ -1,9 +1,11 @@
 package es.degrassi.mmreborn.mekanism.common.block.prop;
 
+import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateChemicalComponentPacket;
 import lombok.Getter;
+import lombok.Setter;
 import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.attribute.ChemicalAttributeValidator;
@@ -12,10 +14,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.ChunkPos;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public enum ChemicalHatchSize implements StringRepresentable {
+public enum ChemicalHatchSize implements StringRepresentable, ConfigLoaded {
   TINY(100),
   SMALL(400),
   NORMAL(1000),
@@ -26,6 +29,7 @@ public enum ChemicalHatchSize implements StringRepresentable {
   VACUUM(32000);
 
   @Getter
+  @Setter
   private long size;
 
   public final long defaultConfigurationValue;
@@ -66,13 +70,7 @@ public enum ChemicalHatchSize implements StringRepresentable {
   }
 
   @Override
-  public String getSerializedName() {
+  public @NotNull String getSerializedName() {
     return name().toLowerCase();
-  }
-
-  public static void loadFromConfig() {
-    for (ChemicalHatchSize size : values()) {
-      size.size = MMRConfig.get().chemicalSize(size);
-    }
   }
 }
