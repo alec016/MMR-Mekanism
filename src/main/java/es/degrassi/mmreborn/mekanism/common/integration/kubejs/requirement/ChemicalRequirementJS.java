@@ -13,12 +13,14 @@ public interface ChemicalRequirementJS extends RecipeJSBuilder {
 
   default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance, int x, int y) {
     return addRequirement(new RecipeRequirement<>(new RequirementChemical(IOType.INPUT,
-        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y))));
+        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)),
+        chance));
   }
 
   default MachineRecipeBuilderJS produceChemical(ChemicalStack stack, float chance, int x, int y) {
     return addRequirement(new RecipeRequirement<>(new RequirementChemical(IOType.OUTPUT,
-        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y))));
+        new SingleChemicalIngredient(stack.getChemicalHolder()), stack.getAmount(), new PositionedRequirement(x, y)),
+        chance));
   }
 
   default MachineRecipeBuilderJS requireChemical(ChemicalStack stack, float chance) {
