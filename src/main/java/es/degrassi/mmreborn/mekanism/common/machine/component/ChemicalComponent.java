@@ -36,12 +36,6 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public <C extends MachineComponent<?>> boolean canMerge(C c) {
-    ChemicalComponent comp = (ChemicalComponent) c;
-    return handler.getStack().is(comp.handler.getStack().getChemical());
-  }
-
-  @Override
   @SuppressWarnings("unchecked")
   public <C extends MachineComponent<?>> C merge(C c) {
     ChemicalComponent comp = (ChemicalComponent) c;
@@ -119,5 +113,15 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
         },
         getIOType()
     );
+  }
+
+  @Override
+  public int compareTo(@NotNull MachineComponent<BasicChemicalTank> o) {
+    BasicChemicalTank one = getContainerProvider();
+    BasicChemicalTank two = o.getContainerProvider();
+    if (one.isEmpty() && two.isEmpty()) return 0;
+    if (one.isEmpty() && !two.isEmpty()) return -1;
+    if (!one.isEmpty() && !two.isEmpty()) return 0;
+    return 1;
   }
 }
