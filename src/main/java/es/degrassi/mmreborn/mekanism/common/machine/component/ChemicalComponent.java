@@ -36,6 +36,15 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
+  public <C extends MachineComponent<?>> boolean canMerge(C c) {
+    ChemicalComponent comp = (ChemicalComponent) c;
+    if (getIOType().isInput())
+      return handler.getStack().is(comp.handler.getStack().getChemical());
+    else
+      return handler.isEmpty() || comp.handler.isEmpty() || handler.getStack().is(comp.getContainerProvider().getStack().getChemical());
+  }
+
+  @Override
   @SuppressWarnings("unchecked")
   public <C extends MachineComponent<?>> C merge(C c) {
     ChemicalComponent comp = (ChemicalComponent) c;
@@ -48,6 +57,36 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
             ChemicalAttributeValidator.ALWAYS_ALLOW,
             null
         ) {
+          @Override
+          public void setStack(ChemicalStack stack) {
+
+          }
+
+          @Override
+          public void setStackUnchecked(ChemicalStack stack) {
+
+          }
+
+          @Override
+          public boolean isValid(ChemicalStack stack) {
+            return handler.isValid(stack) || comp.handler.isValid(stack);
+          }
+
+          @Override
+          public long setStackSize(long amount, Action action) {
+            return 0;
+          }
+
+          @Override
+          public long growStack(long amount, Action action) {
+            return 0;
+          }
+
+          @Override
+          public boolean isEmpty() {
+            return handler.isEmpty() && comp.handler.isEmpty();
+          }
+
           @Override
           public ChemicalStack insert(ChemicalStack stack, Action action, AutomationType automationType) {
             ChemicalStack inserted1 = handler.insert(stack, action, automationType);
