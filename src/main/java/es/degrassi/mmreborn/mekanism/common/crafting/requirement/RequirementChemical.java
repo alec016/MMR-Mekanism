@@ -173,6 +173,11 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
 
   @Override
   public boolean isComponentValid(ChemicalComponent m, ICraftingContext iCraftingContext) {
-    return getMode().equals(m.getIOType());
+    if (getMode().isInput()) {
+      if (m.getContainerProvider().isEmpty()) return false;
+    } else {
+      if (m.getContainerProvider().isEmpty()) return true;
+    }
+    return m.getContainerProvider().isTypeEqual(required);
   }
 }
