@@ -22,7 +22,7 @@ public interface ChemicalRendering extends Position {
         desiredHeight = getHeight();
       }
       Chemical chemical = stack.getChemical();
-      MekanismRenderer.color(guiGraphics, chemical);
+      MekanismRenderer.color(guiGraphics, stack.getChemicalTint());
       //Tile upwards and to the right as the majority of things we render are gauges which look better when tiling upwards
       GuiUtils.drawTiledSprite(guiGraphics, 1, 1, getHeight(), getWidth(), desiredHeight,
           MekanismRenderer.getSprite(chemical.getIcon()),

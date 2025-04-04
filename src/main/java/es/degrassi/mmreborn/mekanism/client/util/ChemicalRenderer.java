@@ -20,9 +20,8 @@ public class ChemicalRenderer {
       if (desiredHeight > height) {
         desiredHeight = height;
       }
-
       Chemical chemical = stack.getChemical();
-      MekanismRenderer.color(graphics, chemical);
+      MekanismRenderer.color(graphics, stack.getChemicalTint());
       GuiUtils.drawTiledSprite(graphics, posX, posY, height, width, desiredHeight, MekanismRenderer.getSprite(chemical.getIcon()), 16, 16, 100, GuiUtils.TilingDirection.UP_RIGHT, false);
       MekanismRenderer.resetColor(graphics);
       RenderSystem.disableBlend();
