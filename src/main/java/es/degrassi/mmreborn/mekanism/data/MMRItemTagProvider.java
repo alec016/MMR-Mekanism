@@ -1,6 +1,8 @@
 package es.degrassi.mmreborn.mekanism.data;
 
+import es.degrassi.mmreborn.data.MMRTags;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
+import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -18,6 +20,33 @@ public class MMRItemTagProvider extends ItemTagsProvider {
 
   @Override
   public void addTags(HolderLookup.@NotNull Provider provider) {
+    tag(MMRMekanismTags.Items.CHEMICAL_INPUT).add(
+        BlockRegistration.CHEMICAL_INPUT_HATCH_TINY.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_SMALL.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_NORMAL.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_REINFORCED.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_BIG.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_HUGE.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_LUDICROUS.get().asItem(),
+        BlockRegistration.CHEMICAL_INPUT_HATCH_VACUUM.get().asItem()
+    );
+    tag(MMRMekanismTags.Items.CHEMICAL_OUTPUT).add(
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_TINY.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_SMALL.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_NORMAL.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_REINFORCED.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_BIG.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_HUGE.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS.get().asItem(),
+        BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get().asItem()
+    );
 
+    tag(MMRMekanismTags.Items.CHEMICAL)
+        .addTag(MMRMekanismTags.Items.CHEMICAL_INPUT)
+        .addTag(MMRMekanismTags.Items.CHEMICAL_OUTPUT);
+
+    tag(MMRTags.Items.ALL_CASINGS)
+        .addTag(MMRMekanismTags.Items.CHEMICAL_INPUT)
+        .addTag(MMRMekanismTags.Items.CHEMICAL_OUTPUT);
   }
 }

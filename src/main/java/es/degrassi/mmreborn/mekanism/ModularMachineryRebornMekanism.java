@@ -29,8 +29,6 @@ public class ModularMachineryRebornMekanism {
     Registration.register(MOD_BUS);
 
     addConfig();
-
-    MOD_BUS.register(new MMRMekanismClient());
     MOD_BUS.addListener(this::registerCapabilities);
   }
 

@@ -9,6 +9,7 @@ import dev.latvian.mods.rhino.Wrapper;
 import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.neoforged.fml.ModList;
@@ -32,11 +33,9 @@ public class MMRKubeJSPlugin implements KubeJSPlugin {
     else if (o instanceof ChemicalStack stack)
       return stack;
     else if (o instanceof Chemical chemical) {
-      return new ChemicalStack(chemical, BASE_AMOUNT);
+      return new ChemicalStack(Holder.direct(chemical), BASE_AMOUNT);
     } else if (o instanceof ResourceLocation loc) {
-      Chemical chemical = MekanismAPI.CHEMICAL_REGISTRY.get(loc);
-      if (chemical == MekanismAPI.EMPTY_CHEMICAL)
-        throw new KubeRuntimeException("Chemical " + loc + " not found!");
+      Holder<Chemical> chemical = MekanismAPI.CHEMICAL_REGISTRY.getHolder(loc).orElseThrow(() -> new KubeRuntimeException("Chemical " + loc + " not found!"));
       return new ChemicalStack(chemical, BASE_AMOUNT);
     } else {
       try {
@@ -71,7 +70,7 @@ public class MMRKubeJSPlugin implements KubeJSPlugin {
             throw new IllegalArgumentException("Fluid amount smaller than 1 is not allowed!");
         }
         ResourceLocation chemicalId = ResourceLocation.read(reader);
-        return new ChemicalStack(MekanismAPI.CHEMICAL_REGISTRY.get(chemicalId), amount);
+        return new ChemicalStack(MekanismAPI.CHEMICAL_REGISTRY.getHolder(chemicalId).orElseThrow(() -> new KubeRuntimeException("Chemical " + chemicalId + " not found!")), amount);
       } catch (CommandSyntaxException ex) {
         throw new RuntimeException(ex);
       }

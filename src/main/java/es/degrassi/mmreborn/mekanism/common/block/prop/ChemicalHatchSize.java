@@ -52,20 +52,20 @@ public enum ChemicalHatchSize implements StringRepresentable, ConfigLoaded {
   }
 
   public BasicChemicalTank buildTank(ChemicalTankEntity tileEntity, boolean canFill, boolean canDrain) {
-    return (BasicChemicalTank) BasicChemicalTank.create(
-      size,
-      ((chemical, automationType) -> canDrain || automationType == AutomationType.INTERNAL),
-      ((chemical, automationType) -> canFill || automationType == AutomationType.INTERNAL),
-      ConstantPredicates.alwaysTrue(),
-      ChemicalAttributeValidator.ALWAYS_ALLOW,
-      () -> {
-        if (tileEntity.getLevel() instanceof ServerLevel l)
-          PacketDistributor.sendToPlayersTrackingChunk(
-            l,
-            new ChunkPos(tileEntity.getBlockPos()),
-            new SUpdateChemicalComponentPacket(tileEntity.getTank().getStack(), tileEntity.getBlockPos())
-          );
-      }
+    return (BasicChemicalTank) BasicChemicalTank.createModern(
+        size,
+        ((chemical, automationType) -> canDrain || automationType == AutomationType.INTERNAL),
+        ((chemical, automationType) -> canFill || automationType == AutomationType.INTERNAL),
+        ConstantPredicates.alwaysTrue(),
+        ChemicalAttributeValidator.ALWAYS_ALLOW,
+        () -> {
+          if (tileEntity.getLevel() instanceof ServerLevel l)
+            PacketDistributor.sendToPlayersTrackingChunk(
+                l,
+                new ChunkPos(tileEntity.getBlockPos()),
+                new SUpdateChemicalComponentPacket(tileEntity.getTank().getStack(), tileEntity.getBlockPos())
+            );
+        }
     );
   }
 
