@@ -58,16 +58,6 @@ public class MMRMekanismClient {
     );
   }
 
-  /*@SubscribeEvent
-  @OnlyIn(Dist.CLIENT)
-  public void clientSetup(final FMLClientSetupEvent event) {
-    if (Mods.isEMILoaded()) {
-      new MMRMekanismClientEmiIntegration(bus);
-    } else if (Mods.isJEILoaded()) {
-      new MMRMekanismClientJeiIntegration(bus);
-    }
-  }*/
-
   @SubscribeEvent
   public void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
     event.register(
