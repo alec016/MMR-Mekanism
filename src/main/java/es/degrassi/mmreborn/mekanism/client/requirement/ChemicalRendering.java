@@ -1,7 +1,6 @@
 package es.degrassi.mmreborn.mekanism.client.requirement;
 
 import es.degrassi.mmreborn.common.crafting.requirement.emi.Position;
-import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.math.MathUtils;
 import mekanism.client.gui.GuiUtils;
@@ -21,12 +20,11 @@ public interface ChemicalRendering extends Position {
       if (desiredHeight > getHeight()) {
         desiredHeight = getHeight();
       }
-      Chemical chemical = stack.getChemical();
-      MekanismRenderer.color(guiGraphics, stack.getChemicalTint());
+      MekanismRenderer.color(guiGraphics, stack);
       //Tile upwards and to the right as the majority of things we render are gauges which look better when tiling upwards
       GuiUtils.drawTiledSprite(guiGraphics, 1, 1, getHeight(), getWidth(), desiredHeight,
-          MekanismRenderer.getSprite(chemical.getIcon()),
-          TEXTURE_SIZE, TEXTURE_SIZE, 100, GuiUtils.TilingDirection.UP_RIGHT);
+          MekanismRenderer.getSprite(stack.getChemical().getIcon()),
+          TEXTURE_SIZE, TEXTURE_SIZE, 0, GuiUtils.TilingDirection.DOWN_RIGHT);
       MekanismRenderer.resetColor(guiGraphics);
     }
   }

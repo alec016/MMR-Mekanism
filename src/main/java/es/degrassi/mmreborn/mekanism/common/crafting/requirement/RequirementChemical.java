@@ -11,7 +11,6 @@ import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.common.machine.IOType;
-import es.degrassi.mmreborn.common.util.MMRLogger;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
@@ -36,8 +35,6 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
           PositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new PositionedRequirement(0, 0)).forGetter(IRequirement::getPosition)
       ).apply(instance, (item, amount, mode, position) -> new RequirementChemical(mode, item, amount.orElse(1000L), position)),
           "RequirementItem");
-
-  public static final int PRIORITY_WEIGHT_CHEMICAL = 50_000_000;
 
   public final ChemicalStack required;
   public final long amount;
