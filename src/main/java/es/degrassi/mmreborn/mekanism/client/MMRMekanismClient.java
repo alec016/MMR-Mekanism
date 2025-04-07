@@ -1,15 +1,22 @@
 package es.degrassi.mmreborn.mekanism.client;
 
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiComponentEvent;
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiRequirementToStackEvent;
+import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import es.degrassi.mmreborn.common.util.Mods;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.client.integration.emi.MMRMekanismClientEmiIntegration;
 import es.degrassi.mmreborn.mekanism.client.integration.jei.MMRMekanismClientJeiIntegration;
 import es.degrassi.mmreborn.mekanism.client.screen.ChemicalHatchScreen;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ContainerRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.ItemRegistration;
+import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
+import mekanism.client.recipe_viewer.emi.ChemicalEmiStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,6 +28,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+
+import java.util.List;
 
 @Mod(value = ModularMachineryRebornMekanism.MODID, dist = Dist.CLIENT)
 public class MMRMekanismClient {
@@ -37,6 +46,24 @@ public class MMRMekanismClient {
   }
 
   @SubscribeEvent
+  public void registerJeiComponents(final RegisterJeiComponentEvent event) {
+    event.register(RequirementTypeRegistration.CHEMICAL.get(), JeiChemicalComponent::new);
+  }
+
+  @SubscribeEvent
+  public void registerEmiComponents(final RegisterEmiComponentEvent event) {
+    event.register(RequirementTypeRegistration.CHEMICAL.get(), EmiChemicalComponent::new);
+  }
+
+  @SubscribeEvent
+  public void registerEmiStacks(final RegisterEmiRequirementToStackEvent event) {
+    event.register(
+        RequirementTypeRegistration.CHEMICAL.get(),
+        requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
+    );
+  }
+
+  /*@SubscribeEvent
   @OnlyIn(Dist.CLIENT)
   public void clientSetup(final FMLClientSetupEvent event) {
     if (Mods.isEMILoaded()) {
@@ -44,7 +71,7 @@ public class MMRMekanismClient {
     } else if (Mods.isJEILoaded()) {
       new MMRMekanismClientJeiIntegration(bus);
     }
-  }
+  }*/
 
   @SubscribeEvent
   public void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
