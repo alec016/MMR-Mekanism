@@ -7,11 +7,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+import static es.degrassi.mmreborn.ModularMachineryReborn.rootLC;
+
 public class ComponentRegistration {
 
   public static final DeferredRegister<ComponentType> MACHINE_COMPONENTS = DeferredRegister.create(ComponentType.REGISTRY_KEY, ModularMachineryRebornMekanism.MODID);
 
-  public static final Supplier<ComponentType> COMPONENT_CHEMICAL = MACHINE_COMPONENTS.register("chemical", ComponentType::create);
+  public static final Supplier<ComponentType> COMPONENT_CHEMICAL = MACHINE_COMPONENTS.register(rootLC("chemical"), ComponentType::create);
 
   public static void register(final IEventBus bus) {
     MACHINE_COMPONENTS.register(bus);

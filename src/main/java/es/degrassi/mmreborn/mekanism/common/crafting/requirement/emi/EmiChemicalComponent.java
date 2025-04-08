@@ -14,6 +14,7 @@ import es.degrassi.mmreborn.mekanism.client.requirement.ChemicalRendering;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import lombok.Getter;
+import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.text.EnumColor;
@@ -28,6 +29,7 @@ import net.minecraft.util.Mth;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @Getter
@@ -90,10 +92,10 @@ public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RecipeRequ
   private void collectTooltip(Consumer<Component> tooltipAdder) {
     ChemicalStack stack = requirement.requirement().required;
     Chemical chemical = stack.getChemical();
-    if (!chemical.isEmptyType()) {
-      tooltipAdder.accept(TextComponentUtil.build(chemical));
+    if (!Objects.equals(stack.getChemicalHolder().getKey(), MekanismAPI.EMPTY_CHEMICAL_KEY)) {
+      tooltipAdder.accept(TextComponentUtil.build(stack));
       tooltipAdder.accept(MekanismLang.GENERIC_MB.translateColored(EnumColor.GRAY, TextUtils.format(stack.getAmount())));
-      ChemicalUtil.addChemicalDataToTooltip(stack.getChemical(), false, tooltipAdder);
+      // ChemicalUtil.addChemicalDataToTooltip(stack.getChemical(), false, tooltipAdder);
     }
   }
 

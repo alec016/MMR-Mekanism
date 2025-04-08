@@ -112,7 +112,8 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RecipeRequ
             -1
         )
         .setCustomRenderer(MekanismJEI.TYPE_CHEMICAL, new ChemicalStackRenderer(getRequirement().requirement().amount, getWidth(), getHeight()))
-        .addIngredient(MekanismJEI.TYPE_CHEMICAL, new ChemicalStack(getRequirement().requirement().required.getChemical(), getRequirement().requirement().amount))
+        .addIngredient(MekanismJEI.TYPE_CHEMICAL,
+            new ChemicalStack(getRequirement().requirement().required.getChemicalHolder(), getRequirement().requirement().amount))
         .addRichTooltipCallback((slot, tooltip) -> tooltip.addAll(getTooltip(ingredients().get(0), TooltipFlag.NORMAL)));
   }
 }

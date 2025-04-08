@@ -12,7 +12,6 @@ import mekanism.api.chemical.attribute.ChemicalAttributeValidator;
 import mekanism.api.functions.ConstantPredicates;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -55,6 +54,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
             (chem, a) -> true,
             ConstantPredicates.alwaysTrue(),
             ChemicalAttributeValidator.ALWAYS_ALLOW,
+            null,
             null
         ) {
           @Override

@@ -1,6 +1,5 @@
 package es.degrassi.mmreborn.mekanism.data;
 
-import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -40,6 +39,9 @@ public class MMRMekanismTags {
   }
 
   public static class Items extends Tag<Item> {
+    public static final TagKey<Item> CHEMICAL = new Items(false, "chemicalhatch").get();
+    public static final TagKey<Item> CHEMICAL_INPUT = new Items(false, "chemicalinputhatch").get();
+    public static final TagKey<Item> CHEMICAL_OUTPUT = new Items(false, "chemicaloutputhatch").get();
     private Items(boolean isNeoForge, String name) {
       super(itemTag(name, isNeoForge));
     }
