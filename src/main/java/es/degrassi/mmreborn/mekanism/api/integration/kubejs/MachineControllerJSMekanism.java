@@ -6,6 +6,7 @@ import mekanism.api.chemical.ChemicalStack;
 import java.util.List;
 
 public interface MachineControllerJSMekanism {
+  /** CHEMICALS **/
   List<ChemicalStack> getChemicalsStored(IOType mode);
 
   long getChemicalCapacity(IOType mode);
@@ -15,4 +16,13 @@ public interface MachineControllerJSMekanism {
   ChemicalStack addChemical(ChemicalStack stack);
 
   ChemicalStack removeChemical(ChemicalStack stack);
+
+  /** HEAT **/
+  double getAverageHeat(IOType mode);
+
+  double getAverageTemperature(IOType mode);
+
+  void addHeat(double heat);
+
+  /** RADIATION **/
 }

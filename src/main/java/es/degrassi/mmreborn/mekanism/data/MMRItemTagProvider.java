@@ -41,12 +41,38 @@ public class MMRItemTagProvider extends ItemTagsProvider {
         BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get().asItem()
     );
 
+    tag(MMRMekanismTags.Items.HEAT_INPUT).add(
+        BlockRegistration.HEAT_INPUT_VENT_TINY.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_SMALL.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_NORMAL.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_REINFORCED.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_BIG.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_HUGE.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get().asItem(),
+        BlockRegistration.HEAT_INPUT_VENT_VACUUM.get().asItem()
+    );
+
+    tag(MMRMekanismTags.Items.HEAT_OUTPUT).add(
+        BlockRegistration.HEAT_OUTPUT_VENT_TINY.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_SMALL.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_NORMAL.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_BIG.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_HUGE.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get().asItem(),
+        BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get().asItem()
+    );
+
     tag(MMRMekanismTags.Items.CHEMICAL)
         .addTag(MMRMekanismTags.Items.CHEMICAL_INPUT)
         .addTag(MMRMekanismTags.Items.CHEMICAL_OUTPUT);
 
+    tag(MMRMekanismTags.Items.HEAT)
+        .addTag(MMRMekanismTags.Items.HEAT_INPUT)
+        .addTag(MMRMekanismTags.Items.HEAT_OUTPUT);
+
     tag(MMRTags.Items.ALL_CASINGS)
-        .addTag(MMRMekanismTags.Items.CHEMICAL_INPUT)
-        .addTag(MMRMekanismTags.Items.CHEMICAL_OUTPUT);
+        .addTag(MMRMekanismTags.Items.HEAT)
+        .addTag(MMRMekanismTags.Items.CHEMICAL);
   }
 }

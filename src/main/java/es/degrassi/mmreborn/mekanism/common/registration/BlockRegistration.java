@@ -3,7 +3,10 @@ package es.degrassi.mmreborn.mekanism.common.registration;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.block.BlockChemicalInputHatch;
 import es.degrassi.mmreborn.mekanism.common.block.BlockChemicalOutputHatch;
+import es.degrassi.mmreborn.mekanism.common.block.BlockHeatInputVent;
+import es.degrassi.mmreborn.mekanism.common.block.BlockHeatOutputVent;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
+import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -45,6 +48,40 @@ public class BlockRegistration {
       () -> new BlockChemicalOutputHatch(ChemicalHatchSize.LUDICROUS));
   public static final DeferredHolder<Block, BlockChemicalOutputHatch> CHEMICAL_OUTPUT_HATCH_VACUUM = BLOCKS.register("chemicaloutputhatch_" + ChemicalHatchSize.VACUUM.getSerializedName(),
       () -> new BlockChemicalOutputHatch(ChemicalHatchSize.VACUUM));
+
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_TINY = BLOCKS.register("heat_input_vent_" + ChemicalHatchSize.TINY.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.TINY));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_SMALL = BLOCKS.register("heat_input_vent_" + HeatVentSize.SMALL.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.SMALL));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_NORMAL = BLOCKS.register("heat_input_vent_" + HeatVentSize.NORMAL.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.NORMAL));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_REINFORCED = BLOCKS.register("heat_input_vent_" + HeatVentSize.REINFORCED.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.REINFORCED));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_BIG = BLOCKS.register("heat_input_vent_" + HeatVentSize.BIG.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.BIG));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_HUGE = BLOCKS.register("heat_input_vent_" + HeatVentSize.HUGE.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.HUGE));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_LUDICROUS = BLOCKS.register("heat_input_vent_" + HeatVentSize.LUDICROUS.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.LUDICROUS));
+  public static final DeferredHolder<Block, BlockHeatInputVent> HEAT_INPUT_VENT_VACUUM = BLOCKS.register("heat_input_vent_" + HeatVentSize.VACUUM.getSerializedName(),
+      () -> new BlockHeatInputVent(HeatVentSize.VACUUM));
+
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_TINY = BLOCKS.register("heat_output_vent_" + ChemicalHatchSize.TINY.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.TINY));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_SMALL = BLOCKS.register("heat_output_vent_" + HeatVentSize.SMALL.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.SMALL));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_NORMAL = BLOCKS.register("heat_output_vent_" + HeatVentSize.NORMAL.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.NORMAL));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_REINFORCED = BLOCKS.register("heat_output_vent_" + HeatVentSize.REINFORCED.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.REINFORCED));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_BIG = BLOCKS.register("heat_output_vent_" + HeatVentSize.BIG.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.BIG));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_HUGE = BLOCKS.register("heat_output_vent_" + HeatVentSize.HUGE.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.HUGE));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_LUDICROUS = BLOCKS.register("heat_output_vent_" + HeatVentSize.LUDICROUS.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.LUDICROUS));
+  public static final DeferredHolder<Block, BlockHeatOutputVent> HEAT_OUTPUT_VENT_VACUUM = BLOCKS.register("heat_output_vent_" + HeatVentSize.VACUUM.getSerializedName(),
+      () -> new BlockHeatOutputVent(HeatVentSize.VACUUM));
 
   public static void register(final IEventBus bus) {
     BLOCKS.register(bus);

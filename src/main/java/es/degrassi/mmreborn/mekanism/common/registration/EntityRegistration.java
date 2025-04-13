@@ -3,6 +3,8 @@ package es.degrassi.mmreborn.mekanism.common.registration;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.ChemicalOutputHatchEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.HeatInputVentEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.HeatOutputVentEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -43,6 +45,39 @@ public class EntityRegistration {
               BlockRegistration.CHEMICAL_OUTPUT_HATCH_HUGE.get(),
               BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS.get(),
               BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get()
+          ),
+          null)
+  );
+
+  public static final Supplier<BlockEntityType<HeatInputVentEntity>> HEAT_INPUT_VENT = ENTITY_TYPE.register(
+      "heat_vent_input",
+      () -> new BlockEntityType<>(
+          HeatInputVentEntity::new,
+          Set.of(
+              BlockRegistration.HEAT_INPUT_VENT_TINY.get(),
+              BlockRegistration.HEAT_INPUT_VENT_SMALL.get(),
+              BlockRegistration.HEAT_INPUT_VENT_NORMAL.get(),
+              BlockRegistration.HEAT_INPUT_VENT_REINFORCED.get(),
+              BlockRegistration.HEAT_INPUT_VENT_BIG.get(),
+              BlockRegistration.HEAT_INPUT_VENT_HUGE.get(),
+              BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get(),
+              BlockRegistration.HEAT_INPUT_VENT_VACUUM.get()
+          ),
+          null)
+  );
+  public static final Supplier<BlockEntityType<HeatOutputVentEntity>> HEAT_OUTPUT_VENT = ENTITY_TYPE.register(
+      "heat_vent_output",
+      () -> new BlockEntityType<>(
+          HeatOutputVentEntity::new,
+          Set.of(
+              BlockRegistration.HEAT_OUTPUT_VENT_TINY.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_SMALL.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_NORMAL.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_BIG.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_HUGE.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get(),
+              BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get()
           ),
           null)
   );

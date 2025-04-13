@@ -40,12 +40,38 @@ public class MMRBlockTagProvider extends BlockTagsProvider {
         BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get()
     );
 
+    tag(MMRMekanismTags.Blocks.HEAT_INPUT).add(
+        BlockRegistration.HEAT_INPUT_VENT_TINY.get(),
+        BlockRegistration.HEAT_INPUT_VENT_SMALL.get(),
+        BlockRegistration.HEAT_INPUT_VENT_NORMAL.get(),
+        BlockRegistration.HEAT_INPUT_VENT_REINFORCED.get(),
+        BlockRegistration.HEAT_INPUT_VENT_BIG.get(),
+        BlockRegistration.HEAT_INPUT_VENT_HUGE.get(),
+        BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get(),
+        BlockRegistration.HEAT_INPUT_VENT_VACUUM.get()
+    );
+
+    tag(MMRMekanismTags.Blocks.HEAT_OUTPUT).add(
+        BlockRegistration.HEAT_OUTPUT_VENT_TINY.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_SMALL.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_NORMAL.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_BIG.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_HUGE.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get(),
+        BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get()
+    );
+
     tag(MMRMekanismTags.Blocks.CHEMICAL)
         .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
         .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
 
+    tag(MMRMekanismTags.Blocks.HEAT)
+        .addTag(MMRMekanismTags.Blocks.HEAT_INPUT)
+        .addTag(MMRMekanismTags.Blocks.HEAT_OUTPUT);
+
     tag(MMRTags.Blocks.ALL_CASINGS)
-        .addTag(MMRMekanismTags.Blocks.CHEMICAL_INPUT)
-        .addTag(MMRMekanismTags.Blocks.CHEMICAL_OUTPUT);
+        .addTag(MMRMekanismTags.Blocks.CHEMICAL)
+        .addTag(MMRMekanismTags.Blocks.HEAT);
   }
 }

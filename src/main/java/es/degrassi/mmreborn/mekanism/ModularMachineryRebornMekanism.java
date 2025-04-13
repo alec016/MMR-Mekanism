@@ -1,8 +1,8 @@
 package es.degrassi.mmreborn.mekanism;
 
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
-import es.degrassi.mmreborn.mekanism.client.MMRMekanismClient;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
+import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.Registration;
@@ -34,6 +34,12 @@ public class ModularMachineryRebornMekanism {
 
   private void addConfig() {
     ConfigLoaded.add(ChemicalHatchSize.class, size -> size.setSize(MMRConfig.get().chemicalSize(size)));
+    ConfigLoaded.add(HeatVentSize.class, size -> {
+      size.setBaseTemp(MMRConfig.get().baseTemp(size));
+      size.setCapacity(MMRConfig.get().heatCapacity(size));
+      size.setInverseConductionCoefficient(MMRConfig.get().conductionCoefficient(size));
+      size.setInverseInsulationCoefficient(MMRConfig.get().insulationCoefficient(size));
+    });
   }
 
   private void registerCapabilities(final RegisterCapabilitiesEvent event) {
@@ -46,6 +52,16 @@ public class ModularMachineryRebornMekanism {
       Capabilities.CHEMICAL.block(),
       EntityRegistration.CHEMICAL_OUTPUT_HATCH.get(),
       (be, side) -> be.getTank()
+    );
+    event.registerBlockEntity(
+      Capabilities.HEAT,
+      EntityRegistration.HEAT_INPUT_VENT.get(),
+      (be, side) -> be
+    );
+    event.registerBlockEntity(
+      Capabilities.HEAT,
+      EntityRegistration.HEAT_OUTPUT_VENT.get(),
+      (be, side) -> be
     );
   }
 

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "modular_machinery_reborn_mekanism:heat_input_vent_tiny",
+    "modular_machinery_reborn_mekanism:heat_input_vent_small",
+    "modular_machinery_reborn_mekanism:heat_input_vent_normal",
+    "modular_machinery_reborn_mekanism:heat_input_vent_reinforced",
+    "modular_machinery_reborn_mekanism:heat_input_vent_big",
+    "modular_machinery_reborn_mekanism:heat_input_vent_huge",
+    "modular_machinery_reborn_mekanism:heat_input_vent_ludicrous",
+    "modular_machinery_reborn_mekanism:heat_input_vent_vacuum"
+  ]
+}

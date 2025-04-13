@@ -2,6 +2,7 @@ package es.degrassi.mmreborn.mekanism.common.network;
 
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateChemicalComponentPacket;
+import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateHeatComponentPacket;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -13,5 +14,6 @@ public class PacketManager {
   public static void register(final RegisterPayloadHandlersEvent event) {
     final PayloadRegistrar registrar = event.registrar(ModularMachineryRebornMekanism.MODID);
     registrar.playToClient(SUpdateChemicalComponentPacket.TYPE, SUpdateChemicalComponentPacket.CODEC, SUpdateChemicalComponentPacket::handle);
+    registrar.playToClient(SUpdateHeatComponentPacket.TYPE, SUpdateHeatComponentPacket.CODEC, SUpdateHeatComponentPacket::handle);
   }
 }

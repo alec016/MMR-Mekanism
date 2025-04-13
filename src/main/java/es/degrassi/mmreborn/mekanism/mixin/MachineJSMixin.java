@@ -1,10 +1,12 @@
 package es.degrassi.mmreborn.mekanism.mixin;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import es.degrassi.mmreborn.common.entity.MachineControllerEntity;
 import es.degrassi.mmreborn.common.integration.kubejs.function.MachineControllerJS;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.mekanism.api.integration.kubejs.MachineControllerJSMekanism;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.machine.component.HeatComponent;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.chemical.ChemicalStack;
@@ -125,4 +127,59 @@ public abstract class MachineJSMixin implements MachineControllerJSMekanism {
 
     return extracted.get();
   }
+
+  /** Heat Stuff **/
+  @Override
+  @Unique
+  @Final
+  public double getAverageHeat(IOType mode) {
+    return this.internal.getComponentManager()
+        .getFoundComponentsList()
+        .stream()
+        .filter(c -> c instanceof HeatComponent)
+        .map(c -> (HeatComponent) c)
+        .filter(c -> c.getIOType().equals(mode))
+        .mapToDouble(c -> c.getContainerProvider().getHeat())
+        .average()
+        .orElse(0.0D);
+  }
+
+  @Override
+  @Unique
+  @Final
+  public double getAverageTemperature(IOType mode) {
+    return this.internal.getComponentManager()
+        .getFoundComponentsList()
+        .stream()
+        .filter(c -> c instanceof HeatComponent)
+        .map(c -> (HeatComponent) c)
+        .filter(c -> c.getIOType().equals(mode))
+        .mapToDouble(c -> c.getContainerProvider().getTemperature())
+        .average()
+        .orElse(0.0D);
+  }
+
+  @Override
+  @Unique
+  @Final
+  public void addHeat(double heat) {
+    this.internal.getComponentManager()
+        .getFoundComponentsList()
+        .stream()
+        .filter(c -> c instanceof HeatComponent)
+        .map(c -> (HeatComponent) c)
+        .filter(c -> {
+          if (heat < 0)
+            return c.getIOType().isInput();
+          else
+            return !c.getIOType().isInput();
+        })
+        .findFirst()
+        .ifPresent(c -> {
+          if (heat == 0D) return;
+          c.getContainerProvider().handleHeat(heat);
+        });
+  }
+
+  /** Radiation Stuff **/
 }

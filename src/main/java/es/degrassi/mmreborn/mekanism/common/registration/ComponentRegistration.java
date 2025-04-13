@@ -14,6 +14,7 @@ public class ComponentRegistration {
   public static final DeferredRegister<ComponentType> MACHINE_COMPONENTS = DeferredRegister.create(ComponentType.REGISTRY_KEY, ModularMachineryRebornMekanism.MODID);
 
   public static final Supplier<ComponentType> COMPONENT_CHEMICAL = MACHINE_COMPONENTS.register(rootLC("chemical"), ComponentType::create);
+  public static final Supplier<ComponentType> COMPONENT_HEAT = MACHINE_COMPONENTS.register(rootLC("heat"), ComponentType::create);
 
   public static void register(final IEventBus bus) {
     MACHINE_COMPONENTS.register(bus);

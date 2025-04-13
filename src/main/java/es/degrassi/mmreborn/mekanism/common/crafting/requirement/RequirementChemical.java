@@ -7,7 +7,6 @@ import es.degrassi.mmreborn.api.crafting.ICraftingContext;
 import es.degrassi.mmreborn.api.crafting.requirement.IRequirement;
 import es.degrassi.mmreborn.api.crafting.requirement.IRequirementList;
 import es.degrassi.mmreborn.common.crafting.ComponentType;
-import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.common.machine.IOType;
@@ -23,7 +22,6 @@ import mekanism.api.recipes.ingredients.chemical.SingleChemicalIngredient;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Optional;
 
 public class RequirementChemical implements IRequirement<ChemicalComponent> {
@@ -34,7 +32,7 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
           NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(IRequirement::getMode),
           PositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new PositionedRequirement(0, 0)).forGetter(IRequirement::getPosition)
       ).apply(instance, (item, amount, mode, position) -> new RequirementChemical(mode, item, amount.orElse(1000L), position)),
-          "RequirementItem");
+          "RequirementChemical");
 
   public final ChemicalStack required;
   public final long amount;
@@ -78,6 +76,7 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
         ChemicalStack filled = handler.insert(required.copyWithAmount(amount), Action.SIMULATE, AutomationType.INTERNAL);
         yield filled.getAmount() + amount == amount;
       }
+      case NONE -> true;
     };
   }
 
@@ -149,18 +148,6 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
     json.addProperty("chemical", required.getTextComponent().getString());
     json.addProperty("amount", amount);
     return json;
-  }
-
-  @Override
-  public RequirementChemical deepCopyModified(List<RecipeModifier> modifiers) {
-    int amount = Math.round(RecipeModifier.applyModifiers(modifiers, this.getType(), this.getMode(), this.amount, false));
-    return new RequirementChemical(this.getMode(),
-        new SingleChemicalIngredient(ingredient.chemical()), amount, getPosition());
-  }
-
-  @Override
-  public RequirementChemical deepCopy() {
-    return new RequirementChemical(getMode(), new SingleChemicalIngredient(ingredient.chemical()), this.amount, getPosition());
   }
 
   @Override
