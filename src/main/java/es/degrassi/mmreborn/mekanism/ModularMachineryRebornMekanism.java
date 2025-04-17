@@ -1,5 +1,6 @@
 package es.degrassi.mmreborn.mekanism;
 
+import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
@@ -24,7 +25,8 @@ public class ModularMachineryRebornMekanism {
   public static final Logger LOGGER = LogManager.getLogger("Modular Machinery Reborn Mekanism");
 
   public ModularMachineryRebornMekanism(final ModContainer CONTAINER, final IEventBus MOD_BUS) {
-    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec());
+    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec(), String.format("%s/Mekanism/common.toml",
+        ModularMachineryReborn.MODID));
 
     Registration.register(MOD_BUS);
 
