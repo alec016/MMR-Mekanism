@@ -15,6 +15,12 @@
   "tooltip.machinery.chance.in.never": "不被消耗",
   "tooltip.machinery.chance.out.never": "不会产出",
 
+  "tooltip.chemicalhatch.empty": "空",
+  "tooltip.chemicalhatch.chemical": "[化学品]",
+  "tooltip.chemicalhatch.tank": "%smb / %smb",
+  "tooltip.chemicalhatch.tank.chemical": "%s / %s",
+  "tooltip.chemicalhatch.tank.info": "容积： %s mb",
+
   "block.modular_machinery_reborn_mekanism.chemicalinputhatch_tiny": "微型化学品输入仓",
   "block.modular_machinery_reborn_mekanism.chemicalinputhatch_small": "小型化学品输入仓",
   "block.modular_machinery_reborn_mekanism.chemicalinputhatch_normal": "中型型化学品输入仓",
