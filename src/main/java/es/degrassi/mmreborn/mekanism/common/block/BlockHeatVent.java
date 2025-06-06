@@ -34,6 +34,7 @@ public class BlockHeatVent extends BlockMachineComponent {
             .dynamicShape()
             .noOcclusion()
             .strength(2F, 10F)
+            .requiresCorrectToolForDrops()
             .sound(SoundType.METAL)
     );
     this.size = size;

@@ -63,6 +63,10 @@ public abstract class HeatVentEntity extends BlockEntityRestrictedTick implement
     this.lastEnvironmentalLoss = transfer.environmentTransfer();
   }
 
+  public double getHeatFillPercent() {
+    return (this.tank.getTemperature() - this.size.getBaseTemp()) / this.tank.getHeatCapacity();
+  }
+
   @Override
   public @Nullable HeatComponent provideComponent() {
     return new HeatComponent(getTank(), size.getBaseTemp(), getMode());

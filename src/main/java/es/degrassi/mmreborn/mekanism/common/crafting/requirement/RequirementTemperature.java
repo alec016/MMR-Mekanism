@@ -24,7 +24,7 @@ public class RequirementTemperature implements IRequirement<HeatComponent> {
       IntRange.CODEC.fieldOf("temperature").forGetter(req -> req.temp),
       NamedCodec.enumCodec(UnitDisplayUtils.TemperatureUnit.class).optionalFieldOf("unit", UnitDisplayUtils.TemperatureUnit.KELVIN).forGetter(requirement -> requirement.unit),
       PositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new PositionedRequirement(0, 0)).forGetter(IRequirement::getPosition)
-  ).apply(instance, RequirementTemperature::new), "RequirementHeat");
+  ).apply(instance, RequirementTemperature::new), "RequirementTemperature");
 
   public final IntRange temp;
   public final UnitDisplayUtils.TemperatureUnit unit;
@@ -67,7 +67,7 @@ public class RequirementTemperature implements IRequirement<HeatComponent> {
   private CraftingResult check(HeatComponent component, ICraftingContext context) {
     if(test(component, context))
       return CraftingResult.success();
-    return CraftingResult.error(Component.translatable("craftcheck.failure.chemical.temp.error", this.temp.toFormattedString() + this.unit.getSymbol(false)));
+    return CraftingResult.error(Component.translatable("craftcheck.failure.temp.error", this.temp.toFormattedString() + this.unit.getSymbol(false)));
   }
 
   @Override

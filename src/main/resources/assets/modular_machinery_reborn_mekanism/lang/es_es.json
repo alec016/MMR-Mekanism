@@ -8,7 +8,7 @@
   "craftcheck.failure.chemical.output.chemical": "El Químico en el tanque no coincide, necesario: %s pero se encontró %s!",
   "craftcheck.failure.chemical.output.space": "No hay suficiente espacio para la salida de químico(s)!, necesario: %s mB pero se encontró %s mB",
   "craftcheck.failure.heat.input": "Not enough stored heat, %s needed but %s found !",
-  "craftcheck.failure.chemical.temp.error": "Temperature required: %s",
+  "craftcheck.failure.temp.error": "Temperature required: %s",
 
   "component.missing.chemical.output": "No se ha encontrado Chemical Output Hatch!",
   "component.missing.chemical.input": "No se ha encontrado Chemical Input Hatch!",
@@ -19,6 +19,12 @@
   "tooltip.machinery.chance.out": "Probabilidad de producción: %s",
   "tooltip.machinery.chance.in.never": "No será consumido.",
   "tooltip.machinery.chance.out.never": "No será producido.",
+
+  "tooltip.chemicalhatch.empty": "Vacío",
+  "tooltip.chemicalhatch.chemical": "[Químico]",
+  "tooltip.chemicalhatch.tank": "%smb / %smb",
+  "tooltip.chemicalhatch.tank.chemical": "%s / %s",
+  "tooltip.chemicalhatch.tank.info": "Puede contener %s mb",
 
   "block.modular_machinery_reborn_mekanism.chemicalinputhatch_tiny": "Tiny Chemical Input Hatch",
   "block.modular_machinery_reborn_mekanism.chemicalinputhatch_small": "Small Chemical Input Hatch",

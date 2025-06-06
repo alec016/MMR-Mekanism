@@ -72,7 +72,8 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
         yield drained.is(ingredient.chemical()) && drained.getAmount() == required.getAmount();
       }
       case OUTPUT -> {
-        if (!handler.isEmpty() && !handler.getStack().is(required.getChemical())) yield false;
+        if (handler.isEmpty() && handler.getCapacity() >= required.getAmount()) yield true;
+        if (!handler.getStack().is(required.getChemical())) yield false;
         ChemicalStack filled = handler.insert(required.copyWithAmount(amount), Action.SIMULATE, AutomationType.INTERNAL);
         yield filled.getAmount() + amount == amount;
       }
