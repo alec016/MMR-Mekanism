@@ -1,7 +1,6 @@
 package es.degrassi.mmreborn.mekanism.common.block.prop;
 
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
-import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateChemicalComponentPacket;
 import lombok.Getter;

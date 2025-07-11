@@ -105,6 +105,16 @@ repositories {
     }
   }
   maven {
+    name = "OctoStudios"
+    url = uri("https://maven.octo-studios.com/releases")
+  }
+  maven { // TOP
+    url "https://maven.k-4u.nl"
+    content {
+      includeGroup "mcjty.theoneprobe"
+    }
+  }
+  maven {
     url "https://www.cursemaven.com"
     content {
       includeGroup "curse.maven"
