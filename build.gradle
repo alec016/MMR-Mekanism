@@ -4,16 +4,12 @@ plugins {
   id 'idea'
   id 'maven-publish'
   id 'net.neoforged.gradle.userdev' version '7.0.165'
-  id "me.shedaniel.unified-publishing" version "0.1.+"
+  id "es.degrassi.unified-publishing-with-mmr-bot" version "1.0.0"
   id "io.freefair.lombok" version "8.6"
 }
 
 tasks.named('wrapper', Wrapper).configure {
   distributionType = Wrapper.DistributionType.BIN
-}
-
-repositories {
-  mavenLocal()
 }
 
 base {
@@ -28,10 +24,6 @@ File transformer = rootProject.file("src/main/resources/META-INF/accesstransform
 
 if (transformer.exists()) {
   minecraft.accessTransformers.file transformer
-}
-
-tasks.build {
-  finalizedBy(tasks.publishToMavenLocal)
 }
 
 runs {
@@ -68,6 +60,8 @@ configurations {
 }
 
 repositories {
+  mavenCentral()
+  mavenLocal()
   maven {
     name = "Jared's maven"
     url = "https://maven.blamejared.com/"
@@ -146,7 +140,6 @@ repositories {
       includeGroup "es.degrassi"
     }
   }
-  mavenCentral()
 }
 
 dependencies {
@@ -264,7 +257,7 @@ idea {
   }
 }
 
-unifiedPublishing {
+unifiedPublishingWithMMRBot {
   project {
     displayName = "[NeoForge]ModularMachineyRebornMekanism-${minecraft_version}-${mod_version}"
     releaseType = "release"
@@ -274,20 +267,21 @@ unifiedPublishing {
     gameVersions = ["${minecraft_version}", "1.21"]
     gameLoaders = ["neoforge"]
     mainPublication jar
+    modid = mod_id
+    modVersion = "ModularMachineyRebornMekanism-${minecraft_version}-${mod_version}"
 
     var CURSE_API_KEY = System.getenv("CURSEFORGE")
     if (CURSE_API_KEY != null) {
-        curseforge {
-            token = CURSE_API_KEY
-            id = "1131856"
-            gameVersions.addAll "Java 21"
-            relations {
-                depends "modular-machinery-reborn"
-                depends "mekanism"
-                optional "kubejs"
-                optional "jei"
-            }
+      curseforge {
+        token = CURSE_API_KEY
+        id = "1131856"
+        relations {
+          depends "modular-machinery-reborn"
+          depends "mekanism"
+          optional "kubejs"
+          optional "jei"
         }
+      }
     }
 
     var MODRINTH_API_KEY = System.getenv("MODRINTH")
