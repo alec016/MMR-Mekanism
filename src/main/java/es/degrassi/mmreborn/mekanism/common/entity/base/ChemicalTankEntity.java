@@ -11,6 +11,7 @@ import es.degrassi.mmreborn.common.network.server.SUpdateMachineTexturePacket;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.registration.MachineHatchTypeRegistration;
 import lombok.Getter;
 import lombok.Setter;
 import mekanism.api.chemical.BasicChemicalTank;
@@ -28,7 +29,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Locale;
 
 @Getter
 @Setter
@@ -142,8 +142,26 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
   @Override
   public MachineHatchType getHatchType() {
     return switch(ioType) {
-      case INPUT -> MachineHatchType.valueOf("MODULAR_MACHINERY_REBORN_MEKANISM_CHEMICAL_INPUT_HATCH_" + hatchSize.getSerializedName().toUpperCase(Locale.ROOT));
-      case OUTPUT -> MachineHatchType.valueOf("MODULAR_MACHINERY_REBORN_MEKANISM_CHEMICAL_OUTPUT_HATCH_" + hatchSize.getSerializedName().toUpperCase(Locale.ROOT));
+      case INPUT -> (switch(hatchSize) {
+        case TINY -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_TINY;
+        case SMALL -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_SMALL;
+        case NORMAL -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_NORMAL;
+        case REINFORCED -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_REINFORCED;
+        case BIG -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_BIG;
+        case HUGE -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_HUGE;
+        case LUDICROUS -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_LUDICROUS;
+        case VACUUM -> MachineHatchTypeRegistration.CHEMICAL_INPUT_HATCH_VACUUM;
+      }).get();
+      case OUTPUT -> (switch(hatchSize) {
+        case TINY -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_TINY;
+        case SMALL -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_SMALL;
+        case NORMAL -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_NORMAL;
+        case REINFORCED -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_REINFORCED;
+        case BIG -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_BIG;
+        case HUGE -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_HUGE;
+        case LUDICROUS -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS;
+        case VACUUM -> MachineHatchTypeRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM;
+      }).get();
       default -> null;
     };
   }
