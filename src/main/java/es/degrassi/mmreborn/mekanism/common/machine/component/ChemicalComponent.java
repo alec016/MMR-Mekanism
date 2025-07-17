@@ -58,13 +58,8 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
             null
         ) {
           @Override
-          public void setStack(ChemicalStack stack) {
-
-          }
-
-          @Override
-          public void setStackUnchecked(ChemicalStack stack) {
-
+          public int getChemicalTanks() {
+            return handler.getChemicalTanks() + comp.handler.getChemicalTanks();
           }
 
           @Override
@@ -73,13 +68,11 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
           }
 
           @Override
-          public long setStackSize(long amount, Action action) {
-            return 0;
-          }
-
-          @Override
           public long growStack(long amount, Action action) {
-            return 0;
+            amount = handler.growStack(amount, action);
+            if (amount > 0)
+              amount = comp.handler.growStack(amount, action);
+            return amount;
           }
 
           @Override
@@ -142,7 +135,11 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
 
           @Override
           public ChemicalStack getStack() {
-            return handler.getStack().copyWithAmount(getStored());
+            if(!handler.isEmpty())
+              return handler.getStack().copyWithAmount(getStored());
+            if (!comp.handler.isEmpty())
+              return comp.handler.getStack().copyWithAmount(getStored());
+            return ChemicalStack.EMPTY;
           }
 
           @Override
