@@ -14,7 +14,7 @@ public class CreativeTabsRegistration {
   public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModularMachineryRebornMekanism.MODID);
 
   public static final Supplier<CreativeModeTab> MODULAR_MACHINERY_REBORN_TAB = CREATIVE_TABS.register("modular_machinery_reborn_mekanism", () -> CreativeModeTab.builder()
-    .title(Component.translatable("itemGroup.modular_machinery_reborn_mekanism.group"))
+    .title(Component.translatable("itemgroup.modular_machinery_reborn_mekanism.group"))
     .icon(MekanismBlocks.CREATIVE_CHEMICAL_TANK.asItem()::getDefaultInstance)
     .displayItems((params, output) -> ItemRegistration.ITEMS.getEntries().forEach(entry -> output.accept(entry.get()))).build()
   );
