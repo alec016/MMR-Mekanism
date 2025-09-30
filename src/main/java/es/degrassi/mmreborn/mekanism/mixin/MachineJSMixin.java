@@ -1,6 +1,5 @@
 package es.degrassi.mmreborn.mekanism.mixin;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import es.degrassi.mmreborn.common.entity.MachineControllerEntity;
 import es.degrassi.mmreborn.common.integration.kubejs.function.MachineControllerJS;
 import es.degrassi.mmreborn.common.machine.IOType;

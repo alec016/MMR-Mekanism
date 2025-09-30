@@ -8,9 +8,11 @@ import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.client.screen.ChemicalHatchScreen;
 import es.degrassi.mmreborn.mekanism.client.screen.HeatVentScreen;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalPerTickComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiHeatComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiTemperatureComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalComponent;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiChemicalPerTickComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiHeatComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.jei.JeiTemperatureComponent;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
@@ -34,11 +36,9 @@ import java.util.List;
 
 @Mod(value = ModularMachineryRebornMekanism.MODID, dist = Dist.CLIENT)
 public class MMRMekanismClient {
-  private final IEventBus bus;
 
   public MMRMekanismClient(final IEventBus bus) {
     bus.register(this);
-    this.bus = bus;
   }
 
   @SubscribeEvent
@@ -50,6 +50,7 @@ public class MMRMekanismClient {
   @SubscribeEvent
   public void registerJeiComponents(final RegisterJeiComponentEvent event) {
     event.register(RequirementTypeRegistration.CHEMICAL.get(), JeiChemicalComponent::new);
+    event.register(RequirementTypeRegistration.CHEMICAL_PER_TICK.get(), JeiChemicalPerTickComponent::new);
     event.register(RequirementTypeRegistration.HEAT.get(), JeiHeatComponent::new);
     event.register(RequirementTypeRegistration.TEMPERATURE.get(), JeiTemperatureComponent::new);
   }
@@ -57,6 +58,7 @@ public class MMRMekanismClient {
   @SubscribeEvent
   public void registerEmiComponents(final RegisterEmiComponentEvent event) {
     event.register(RequirementTypeRegistration.CHEMICAL.get(), EmiChemicalComponent::new);
+    event.register(RequirementTypeRegistration.CHEMICAL_PER_TICK.get(), EmiChemicalPerTickComponent::new);
     event.register(RequirementTypeRegistration.HEAT.get(), EmiHeatComponent::new);
     event.register(RequirementTypeRegistration.TEMPERATURE.get(), EmiTemperatureComponent::new);
   }
@@ -65,6 +67,10 @@ public class MMRMekanismClient {
   public void registerEmiStacks(final RegisterEmiRequirementToStackEvent event) {
     event.register(
         RequirementTypeRegistration.CHEMICAL.get(),
+        requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
+    );
+    event.register(
+        RequirementTypeRegistration.CHEMICAL_PER_TICK.get(),
         requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
     );
   }

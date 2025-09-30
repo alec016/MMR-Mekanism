@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 public class CreativeTabsRegistration {
+  private CreativeTabsRegistration() {}
   public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModularMachineryRebornMekanism.MODID);
 
   public static final Supplier<CreativeModeTab> MODULAR_MACHINERY_REBORN_TAB = CREATIVE_TABS.register("modular_machinery_reborn_mekanism", () -> CreativeModeTab.builder()

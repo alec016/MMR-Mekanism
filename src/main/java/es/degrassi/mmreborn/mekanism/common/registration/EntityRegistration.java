@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class EntityRegistration {
+  private EntityRegistration() {}
   public static final DeferredRegister<BlockEntityType<?>> ENTITY_TYPE = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ModularMachineryRebornMekanism.MODID);
 
   public static final Supplier<BlockEntityType<ChemicalInputHatchEntity>> CHEMICAL_INPUT_HATCH = ENTITY_TYPE.register(

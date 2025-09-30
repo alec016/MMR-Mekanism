@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = ModularMachineryRebornMekanism.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGeneration {
+  private DataGeneration() {}
 
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {

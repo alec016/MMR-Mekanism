@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ContainerRegistration {
+  private ContainerRegistration() {}
   public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, ModularMachineryRebornMekanism.MODID);
   public static final DeferredHolder<MenuType<?>, MenuType<ChemicalHatchContainer>> CHEMICAL_HATCH = CONTAINERS.register("chemical_hatch", () -> IMenuTypeExtension.create(ChemicalHatchContainer::new));
   public static final DeferredHolder<MenuType<?>, MenuType<HeatVentContainer>> HEAT_VENT = CONTAINERS.register("heat_vent", () -> IMenuTypeExtension.create(HeatVentContainer::new));

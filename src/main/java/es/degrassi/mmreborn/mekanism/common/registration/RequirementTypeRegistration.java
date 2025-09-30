@@ -5,6 +5,7 @@ import es.degrassi.mmreborn.api.crafting.requirement.IRequirement;
 import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemicalPerTick;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementHeat;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementTemperature;
 import net.neoforged.bus.api.IEventBus;
@@ -15,12 +16,17 @@ import java.util.function.Supplier;
 import static es.degrassi.mmreborn.ModularMachineryReborn.rootLC;
 
 public class RequirementTypeRegistration {
+  private RequirementTypeRegistration() {}
   public static final DeferredRegister<RequirementType<? extends IRequirement<?>>> MACHINE_REQUIREMENTS =
       DeferredRegister.create(RequirementType.REGISTRY_KEY, ModularMachineryReborn.MODID);
 
   public static final Supplier<RequirementType<RequirementChemical>> CHEMICAL =
       MACHINE_REQUIREMENTS.register(rootLC("chemical"),
       () -> RequirementType.inventory(RequirementChemical.CODEC));
+
+  public static final Supplier<RequirementType<RequirementChemicalPerTick>> CHEMICAL_PER_TICK =
+      MACHINE_REQUIREMENTS.register(rootLC("chemical_per_tick"),
+          () -> RequirementType.inventory(RequirementChemicalPerTick.CODEC));
 
   public static final Supplier<RequirementType<RequirementHeat>> HEAT =
       MACHINE_REQUIREMENTS.register(rootLC("heat"),

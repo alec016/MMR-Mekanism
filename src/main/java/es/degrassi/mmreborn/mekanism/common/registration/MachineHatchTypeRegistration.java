@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 import static es.degrassi.mmreborn.ModularMachineryReborn.rootLC;
 
 public class MachineHatchTypeRegistration {
+  private MachineHatchTypeRegistration() {}
 
   public static final DeferredRegister<MachineHatchType> MACHINE_COMPONENTS =
       DeferredRegister.create(MachineHatchType.REGISTRY_KEY, ModularMachineryRebornMekanism.MODID);

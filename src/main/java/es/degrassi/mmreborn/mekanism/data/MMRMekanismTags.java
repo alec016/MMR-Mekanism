@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class MMRMekanismTags {
+  private MMRMekanismTags() {}
   private static TagKey<Block> blockTag(String name, boolean isNeoForge) {
     return BlockTags.create(isNeoForge ? ResourceLocation.fromNamespaceAndPath("c", name) : ModularMachineryRebornMekanism.rl(name));
   }

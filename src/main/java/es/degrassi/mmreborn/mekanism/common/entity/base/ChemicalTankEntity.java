@@ -50,7 +50,8 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
   @Getter
   private static final ResourceLocation defaultBaseTexture = ModularMachineryReborn.rl("block/casing_plain");
 
-  public ChemicalTankEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, ChemicalHatchSize size, IOType ioType) {
+  protected ChemicalTankEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, ChemicalHatchSize size,
+                        IOType ioType) {
     super(type, pos, state);
     this.tank = size.buildTank(this, ioType.isInput(), !ioType.isInput());
     this.hatchSize = size;

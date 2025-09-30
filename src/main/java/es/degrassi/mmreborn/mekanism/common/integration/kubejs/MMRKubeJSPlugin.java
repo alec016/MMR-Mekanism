@@ -67,7 +67,7 @@ public class MMRKubeJSPlugin implements KubeJSPlugin {
           reader.skipWhitespace();
 
           if (amount < 1)
-            throw new IllegalArgumentException("Fluid amount smaller than 1 is not allowed!");
+            throw new IllegalArgumentException("Chemical amount smaller than 1 is not allowed!");
         }
         ResourceLocation chemicalId = ResourceLocation.read(reader);
         return new ChemicalStack(MekanismAPI.CHEMICAL_REGISTRY.getHolder(chemicalId).orElseThrow(() -> new KubeRuntimeException("Chemical " + chemicalId + " not found!")), amount);

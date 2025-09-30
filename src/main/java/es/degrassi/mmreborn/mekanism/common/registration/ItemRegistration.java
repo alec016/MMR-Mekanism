@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ItemRegistration {
+  private ItemRegistration() {}
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(ModularMachineryRebornMekanism.MODID);
 
   public static final DeferredHolder<Item, ChemicalHatchItem> CHEMICAL_INPUT_HATCH_TINY = ITEMS.register("chemicalinputhatch_" + ChemicalHatchSize.TINY.getSerializedName(),

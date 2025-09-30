@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class BlockRegistration {
+  private BlockRegistration() {}
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(ModularMachineryRebornMekanism.MODID);
 
   public static final DeferredHolder<Block, BlockChemicalInputHatch> CHEMICAL_INPUT_HATCH_TINY = BLOCKS.register("chemicalinputhatch_" + ChemicalHatchSize.TINY.getSerializedName(),

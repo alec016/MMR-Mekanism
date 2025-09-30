@@ -24,10 +24,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@SuppressWarnings("deprecation")
-public class BlockChemicalHatch extends BlockMachineComponent {
+public abstract class BlockChemicalHatch extends BlockMachineComponent {
   protected final ChemicalHatchSize size;
-  public BlockChemicalHatch(ChemicalHatchSize size) {
+  protected BlockChemicalHatch(ChemicalHatchSize size) {
     super(
       Properties.of()
         .dynamicShape()

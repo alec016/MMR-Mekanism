@@ -3,6 +3,7 @@ package es.degrassi.mmreborn.mekanism.common.registration;
 import net.neoforged.bus.api.IEventBus;
 
 public class Registration {
+  private Registration() {}
   public static void register(final IEventBus bus) {
     ComponentRegistration.register(bus);
     MachineHatchTypeRegistration.register(bus);

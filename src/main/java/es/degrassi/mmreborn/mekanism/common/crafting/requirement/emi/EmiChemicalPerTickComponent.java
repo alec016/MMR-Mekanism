@@ -11,7 +11,7 @@ import es.degrassi.mmreborn.common.crafting.requirement.emi.EmiComponent;
 import es.degrassi.mmreborn.common.crafting.requirement.emi.SlotTooltip;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.mekanism.client.requirement.ChemicalRendering;
-import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
+import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemicalPerTick;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import lombok.Getter;
 import mekanism.api.MekanismAPI;
@@ -21,7 +21,6 @@ import mekanism.api.text.EnumColor;
 import mekanism.api.text.TextComponentUtil;
 import mekanism.client.recipe_viewer.emi.ChemicalEmiStack;
 import mekanism.common.MekanismLang;
-import mekanism.common.util.ChemicalUtil;
 import mekanism.common.util.text.TextUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -33,10 +32,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 @Getter
-public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent, RequirementChemical>> implements ChemicalRendering, SlotTooltip, ChanceRendering {
+public class EmiChemicalPerTickComponent extends EmiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent,
+    RequirementChemicalPerTick>> implements ChemicalRendering, SlotTooltip, ChanceRendering {
   private int width = 16, height = 16;
   private EmiRecipe recipe;
-  public EmiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical> requirement) {
+  public EmiChemicalPerTickComponent(RecipeRequirement<ChemicalComponent, RequirementChemicalPerTick> requirement) {
     super(requirement, 0, 0);
   }
   @Override
@@ -96,6 +96,7 @@ public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RecipeRequ
       tooltipAdder.accept(TextComponentUtil.build(stack));
       tooltipAdder.accept(MekanismLang.GENERIC_MB.translateColored(EnumColor.GRAY, TextUtils.format(stack.getAmount())));
     }
+    tooltipAdder.accept(Component.translatable("modular_machinery_reborn.ingredient.perTick"));
   }
 
   @Override

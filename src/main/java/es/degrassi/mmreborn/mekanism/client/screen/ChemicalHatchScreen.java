@@ -19,7 +19,7 @@ import java.util.List;
 public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, ChemicalTankEntity> {
 
   public ChemicalHatchScreen(ChemicalHatchContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
-    super(pMenu, pPlayerInventory, pTitle);
+    super(pMenu, pPlayerInventory, pTitle, true);
   }
 
   @Override

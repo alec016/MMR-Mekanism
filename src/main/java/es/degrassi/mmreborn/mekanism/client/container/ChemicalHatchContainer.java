@@ -29,7 +29,7 @@ public class ChemicalHatchContainer extends ContainerBase<ChemicalTankEntity> {
     }, buf -> buf.writeBlockPos(machine.getBlockPos()));
   }
 
-  public ChemicalHatchContainer(int id, Inventory playerInv, ChemicalTankEntity entity) {
+  protected ChemicalHatchContainer(int id, Inventory playerInv, ChemicalTankEntity entity) {
     super(entity, playerInv.player, ContainerRegistration.CHEMICAL_HATCH.get(), id);
   }
 

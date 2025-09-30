@@ -30,7 +30,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public BasicChemicalTank getContainerProvider() {
+  public @NotNull BasicChemicalTank getContainerProvider() {
     return handler;
   }
 

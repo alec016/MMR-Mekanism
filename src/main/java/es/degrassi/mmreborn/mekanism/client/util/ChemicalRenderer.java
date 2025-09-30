@@ -7,6 +7,7 @@ import mekanism.client.render.MekanismRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 
 public class ChemicalRenderer {
+  private ChemicalRenderer() {}
   public static void renderChemical(GuiGraphics graphics, int posX, int posY, int width, int height, ChemicalStack stack, long capacity) {
     if(!stack.isEmpty()) {
       int desiredHeight = MathUtils.clampToInt((double)(height) * ((double)stack.getAmount() / (double)capacity));
