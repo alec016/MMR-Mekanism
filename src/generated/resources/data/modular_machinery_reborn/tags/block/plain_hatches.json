@@ -1,0 +1,17 @@
+{
+  "values": [
+    "modular_machinery_reborn_mekanism:chemicalinputhatch_tiny",
+    "modular_machinery_reborn_mekanism:chemicalinputhatch_small",
+    "modular_machinery_reborn_mekanism:chemicalinputhatch_normal",
+    "modular_machinery_reborn_mekanism:chemicaloutputhatch_tiny",
+    "modular_machinery_reborn_mekanism:chemicaloutputhatch_small",
+    "modular_machinery_reborn_mekanism:chemicaloutputhatch_normal",
+    "modular_machinery_reborn_mekanism:heat_input_vent_tiny",
+    "modular_machinery_reborn_mekanism:heat_input_vent_small",
+    "modular_machinery_reborn_mekanism:heat_input_vent_normal",
+    "modular_machinery_reborn_mekanism:heat_output_vent_tiny",
+    "modular_machinery_reborn_mekanism:heat_output_vent_small",
+    "modular_machinery_reborn_mekanism:heat_output_vent_normal",
+    "modular_machinery_reborn_mekanism:geiger_meter"
+  ]
+}

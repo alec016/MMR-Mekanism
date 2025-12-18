@@ -5,6 +5,8 @@ import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
+import es.degrassi.mmreborn.mekanism.common.data.config.ChemicalHatchConfig;
+import es.degrassi.mmreborn.mekanism.common.data.config.HeatVentConfig;
 import es.degrassi.mmreborn.mekanism.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.Registration;
 import mekanism.common.capabilities.Capabilities;
@@ -25,22 +27,30 @@ public class ModularMachineryRebornMekanism {
   public static final Logger LOGGER = LogManager.getLogger("Modular Machinery Reborn Mekanism");
 
   public ModularMachineryRebornMekanism(final ModContainer CONTAINER, final IEventBus MOD_BUS) {
-    CONTAINER.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec(), String.format("%s/Mekanism/common.toml",
-        ModularMachineryReborn.MODID));
+    initConfigs(CONTAINER);
+    addConfigLoaders();
 
     Registration.register(MOD_BUS);
-
-    addConfig();
     MOD_BUS.addListener(this::registerCapabilities);
   }
 
-  private void addConfig() {
-    ConfigLoaded.add(ChemicalHatchSize.class, size -> size.setSize(MMRConfig.get().chemicalSize(size)));
+  private static void initConfigs(final ModContainer container) {
+    container.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec(), config("common"));
+    container.registerConfig(ModConfig.Type.COMMON, ChemicalHatchConfig.getSpec(), config("chemical_hatch"));
+    container.registerConfig(ModConfig.Type.COMMON, HeatVentConfig.getSpec(), config("heat_vent"));
+  }
+
+  private static String config(String name) {
+    return String.format("%s/Mekanism/%s.toml", ModularMachineryReborn.MODID, name);
+  }
+
+  private void addConfigLoaders() {
+    ConfigLoaded.add(ChemicalHatchSize.class, size -> size.setSize(ChemicalHatchConfig.get().chemicalSize(size)));
     ConfigLoaded.add(HeatVentSize.class, size -> {
-      size.setBaseTemp(MMRConfig.get().baseTemp(size));
-      size.setCapacity(MMRConfig.get().heatCapacity(size));
-      size.setInverseConductionCoefficient(MMRConfig.get().conductionCoefficient(size));
-      size.setInverseInsulationCoefficient(MMRConfig.get().insulationCoefficient(size));
+      size.setBaseTemp(HeatVentConfig.get().baseTemp(size));
+      size.setCapacity(HeatVentConfig.get().heatCapacity(size));
+      size.setInverseConductionCoefficient(HeatVentConfig.get().conductionCoefficient(size));
+      size.setInverseInsulationCoefficient(HeatVentConfig.get().insulationCoefficient(size));
     });
   }
 

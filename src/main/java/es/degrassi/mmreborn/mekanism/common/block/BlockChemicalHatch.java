@@ -1,13 +1,17 @@
 package es.degrassi.mmreborn.mekanism.common.block;
 
 import es.degrassi.mmreborn.common.block.BlockMachineComponent;
+import es.degrassi.mmreborn.common.block.BlockTickEntity;
 import es.degrassi.mmreborn.mekanism.client.container.ChemicalHatchContainer;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
+import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.common.util.RedstoneHelper;
+import mekanism.common.lib.radiation.RadiationManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -24,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public abstract class BlockChemicalHatch extends BlockMachineComponent {
+public abstract class BlockChemicalHatch extends BlockMachineComponent implements BlockTickEntity {
   protected final ChemicalHatchSize size;
   protected BlockChemicalHatch(ChemicalHatchSize size) {
     super(
@@ -65,5 +69,15 @@ public abstract class BlockChemicalHatch extends BlockMachineComponent {
   @Override
   public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
     return RedstoneHelper.getRedstoneLevel(pLevel.getBlockEntity(pPos));
+  }
+
+  @Override
+  protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    if (!state.is(newState.getBlock()) && level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof ChemicalTankEntity tank) {
+      if (tank.getTank().getStack().isRadioactive() && MMRConfig.get().shouldEmitRadiation()) {
+        RadiationManager.get().dumpRadiation(serverLevel, pos, tank.getTank().getStack());
+      }
+    }
+    super.onRemove(state, level, pos, newState, movedByPiston);
   }
 }

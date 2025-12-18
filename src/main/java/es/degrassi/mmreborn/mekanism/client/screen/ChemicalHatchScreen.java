@@ -3,9 +3,18 @@ package es.degrassi.mmreborn.mekanism.client.screen;
 import com.google.common.collect.Lists;
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.client.screen.BaseScreen;
+import es.degrassi.mmreborn.client.screen.widget.IGuiWrapper;
+import es.degrassi.mmreborn.client.screen.widget.tabs.AutoInputTabWidget;
+import es.degrassi.mmreborn.client.screen.widget.tabs.AutoOutputTabWidget;
+import es.degrassi.mmreborn.client.screen.widget.tabs.ITabGroupScreen;
+import es.degrassi.mmreborn.client.screen.widget.tabs.TabGroupWidget;
+import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import es.degrassi.mmreborn.mekanism.client.container.ChemicalHatchContainer;
 import es.degrassi.mmreborn.mekanism.client.util.ChemicalRenderer;
+import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.ChemicalOutputHatchEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
+import lombok.Getter;
 import mekanism.api.chemical.ChemicalStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -16,8 +25,9 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
-public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, ChemicalTankEntity> {
-
+@Getter
+public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, ChemicalTankEntity> implements IGuiWrapper, ITabGroupScreen {
+  private TabGroupWidget tabs;
   public ChemicalHatchScreen(ChemicalHatchContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
     super(pMenu, pPlayerInventory, pTitle, true);
   }
@@ -25,6 +35,17 @@ public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, Chem
   @Override
   protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
     guiGraphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
+  }
+
+  @Override
+  protected void init() {
+    super.init();
+
+    tabs = TabGroupWidget.createLeft(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
+    if (this.entity.getMode().isInput()) tabs.addTab(new AutoInputTabWidget<>((ChemicalInputHatchEntity) this.entity));
+    else tabs.addTab(new AutoOutputTabWidget<>((ChemicalOutputHatchEntity) this.entity));
+
+    addRenderableWidget(tabs);
   }
 
   @Override

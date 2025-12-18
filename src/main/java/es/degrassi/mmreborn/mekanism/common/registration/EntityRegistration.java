@@ -3,6 +3,7 @@ package es.degrassi.mmreborn.mekanism.common.registration;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.ChemicalOutputHatchEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.GeigerMeterEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.HeatInputVentEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.HeatOutputVentEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,7 +32,8 @@ public class EntityRegistration {
               BlockRegistration.CHEMICAL_INPUT_HATCH_LUDICROUS.get(),
               BlockRegistration.CHEMICAL_INPUT_HATCH_VACUUM.get()
           ),
-          null)
+          null
+      )
   );
   public static final Supplier<BlockEntityType<ChemicalOutputHatchEntity>> CHEMICAL_OUTPUT_HATCH = ENTITY_TYPE.register(
       "chemical_hatch_output",
@@ -47,7 +49,8 @@ public class EntityRegistration {
               BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS.get(),
               BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get()
           ),
-          null)
+          null
+      )
   );
 
   public static final Supplier<BlockEntityType<HeatInputVentEntity>> HEAT_INPUT_VENT = ENTITY_TYPE.register(
@@ -64,7 +67,8 @@ public class EntityRegistration {
               BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get(),
               BlockRegistration.HEAT_INPUT_VENT_VACUUM.get()
           ),
-          null)
+          null
+      )
   );
   public static final Supplier<BlockEntityType<HeatOutputVentEntity>> HEAT_OUTPUT_VENT = ENTITY_TYPE.register(
       "heat_vent_output",
@@ -80,8 +84,19 @@ public class EntityRegistration {
               BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get(),
               BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get()
           ),
-          null)
+          null
+      )
   );
+
+  public static final Supplier<BlockEntityType<GeigerMeterEntity>> GEIGER_METER = ENTITY_TYPE.register(
+      "geiger_meter",
+      () -> new BlockEntityType<>(
+          GeigerMeterEntity::new,
+          Set.of(BlockRegistration.GEIGER_METER.get()),
+          null
+      )
+  );
+
   public static void register(final IEventBus bus) {
     ENTITY_TYPE.register(bus);
   }

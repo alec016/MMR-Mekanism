@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class RequirementChemicalPerTick implements IRequirement<ChemicalComponent> {
+public class RequirementChemicalPerTick implements IRequirement<ChemicalComponent, BasicChemicalTank> {
   public static final NamedCodec<RequirementChemicalPerTick> CODEC =
       NamedCodec.record(instance -> instance.group(
           NamedCodec.of(SingleChemicalIngredient.CODEC.codec()).fieldOf("chemical").forGetter(req -> req.ingredient),
@@ -32,7 +32,7 @@ public class RequirementChemicalPerTick implements IRequirement<ChemicalComponen
           NamedCodec.enumCodec(IOType.class).fieldOf("mode").forGetter(IRequirement::getMode),
           PositionedRequirement.POSITION_CODEC.optionalFieldOf("position", new PositionedRequirement(0, 0)).forGetter(IRequirement::getPosition)
       ).apply(instance, (item, amount, mode, position) -> new RequirementChemicalPerTick(mode, item, amount.orElse(1000L), position)),
-          "RequirementChemical");
+          "RequirementChemicalPerTick");
 
   public final ChemicalStack required;
   public final long amount;
@@ -52,12 +52,12 @@ public class RequirementChemicalPerTick implements IRequirement<ChemicalComponen
   }
 
   @Override
-  public RequirementType<RequirementChemicalPerTick> getType() {
+  public RequirementType<RequirementChemicalPerTick, ChemicalComponent, BasicChemicalTank> getType() {
     return RequirementTypeRegistration.CHEMICAL_PER_TICK.get();
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public ComponentType<BasicChemicalTank> getComponentType() {
     return ComponentRegistration.COMPONENT_CHEMICAL.get();
   }
 
@@ -109,8 +109,8 @@ public class RequirementChemicalPerTick implements IRequirement<ChemicalComponen
   private CraftingResult errorInput(long amount, ChemicalStack found, long amountFound) {
     return CraftingResult.error(Component.translatable(
         "craftcheck.failure.chemical.input",
-        Component.translatable("%sx %s", amount, required.getTextComponent()),
-        Component.translatable("%sx %s", amountFound, found.getTextComponent())
+        amount, required.getTextComponent(),
+        amountFound, found.getTextComponent()
     ));
   }
 

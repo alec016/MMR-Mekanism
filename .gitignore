@@ -119,4 +119,6 @@ runs/
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-CHANGELOG.md
+CHANGELOG*.md
+
+src/main/resources/assets/modular_machinery_reborn/textures/block/casing_*.png

@@ -6,6 +6,7 @@ import es.degrassi.mmreborn.common.machine.MachineComponent;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.mixin.BasicHeatCapacitorAccessor;
 import mekanism.common.capabilities.heat.BasicHeatCapacitor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class HeatComponent extends MachineComponent<BasicHeatCapacitor> {
@@ -19,18 +20,18 @@ public class HeatComponent extends MachineComponent<BasicHeatCapacitor> {
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public @NotNull ComponentType<BasicHeatCapacitor> getComponentType() {
     return ComponentRegistration.COMPONENT_HEAT.get();
   }
 
   @Override
-  public @Nullable BasicHeatCapacitor getContainerProvider() {
+  public @NotNull BasicHeatCapacitor getContainerProvider() {
     return handler;
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <C extends MachineComponent<?>> C merge(C c) {
+  public <C extends MachineComponent<BasicHeatCapacitor>> @NotNull C merge(@NotNull C c) {
     HeatComponent comp = (HeatComponent) c;
     return (C) new HeatComponent(
         new BasicHeatCapacitor(

@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class RequirementChemical implements IRequirement<ChemicalComponent> {
+public class RequirementChemical implements IRequirement<ChemicalComponent, BasicChemicalTank> {
   public static final NamedCodec<RequirementChemical> CODEC =
       NamedCodec.record(instance -> instance.group(
           NamedCodec.of(SingleChemicalIngredient.CODEC.codec()).fieldOf("chemical").forGetter(req -> req.ingredient),
@@ -52,12 +52,12 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
   }
 
   @Override
-  public RequirementType<RequirementChemical> getType() {
+  public RequirementType<RequirementChemical, ChemicalComponent, BasicChemicalTank> getType() {
     return RequirementTypeRegistration.CHEMICAL.get();
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public ComponentType<BasicChemicalTank> getComponentType() {
     return ComponentRegistration.COMPONENT_CHEMICAL.get();
   }
 
@@ -109,8 +109,8 @@ public class RequirementChemical implements IRequirement<ChemicalComponent> {
   private CraftingResult errorInput(long amount, ChemicalStack found, long amountFound) {
     return CraftingResult.error(Component.translatable(
         "craftcheck.failure.chemical.input",
-        Component.translatable("%sx %s", amount, required.getTextComponent()),
-        Component.translatable("%sx %s", amountFound, found.getTextComponent())
+        amount, required.getTextComponent(),
+        amountFound, found.getTextComponent()
     ));
   }
 

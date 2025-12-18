@@ -22,20 +22,4 @@ public class BlockChemicalInputHatch extends BlockChemicalHatch {
   public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
     return new ChemicalInputHatchEntity(blockPos, blockState, size);
   }
-
-  @Override
-  protected @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
-    List<ItemStack> drops = super.getDrops(state, builder);
-    switch (size) {
-      case TINY ->        drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_TINY.get().getDefaultInstance());
-      case SMALL ->       drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_SMALL.get().getDefaultInstance());
-      case NORMAL ->      drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_NORMAL.get().getDefaultInstance());
-      case REINFORCED ->  drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_REINFORCED.get().getDefaultInstance());
-      case BIG ->         drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_BIG.get().getDefaultInstance());
-      case HUGE ->        drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_HUGE.get().getDefaultInstance());
-      case LUDICROUS ->   drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_LUDICROUS.get().getDefaultInstance());
-      case VACUUM ->      drops.add(ItemRegistration.CHEMICAL_INPUT_HATCH_VACUUM.get().getDefaultInstance());
-    }
-    return drops;
-  }
 }

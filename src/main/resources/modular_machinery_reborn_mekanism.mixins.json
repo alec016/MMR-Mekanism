@@ -5,6 +5,7 @@
   "mixins": [
     "BasicChemicalTankAccessor",
     "BasicHeatCapacitorAccessor",
+    "ComponentManagerMixin",
     "KubeJSIntegrationMixin",
     "MachineJSMixin"
   ],

@@ -15,6 +15,7 @@ import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChem
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import lombok.Getter;
 import mekanism.api.MekanismAPI;
+import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.text.EnumColor;
@@ -33,10 +34,10 @@ import java.util.function.Consumer;
 
 @Getter
 public class EmiChemicalPerTickComponent extends EmiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent,
-    RequirementChemicalPerTick>> implements ChemicalRendering, SlotTooltip, ChanceRendering {
+    RequirementChemicalPerTick, BasicChemicalTank>> implements ChemicalRendering, SlotTooltip, ChanceRendering {
   private int width = 16, height = 16;
   private EmiRecipe recipe;
-  public EmiChemicalPerTickComponent(RecipeRequirement<ChemicalComponent, RequirementChemicalPerTick> requirement) {
+  public EmiChemicalPerTickComponent(RecipeRequirement<ChemicalComponent, RequirementChemicalPerTick, BasicChemicalTank> requirement) {
     super(requirement, 0, 0);
   }
   @Override

@@ -1,6 +1,5 @@
 package es.degrassi.mmreborn.mekanism.data;
 
-
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -12,7 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ModularMachineryRebornMekanism.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModularMachineryRebornMekanism.MODID)
 public class DataGeneration {
   private DataGeneration() {}
 
@@ -23,13 +22,24 @@ public class DataGeneration {
     ExistingFileHelper fileHelper = event.getExistingFileHelper();
     CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-    MMRBlockTagProvider blockTagProvider = generator.addProvider(
+    MMRMekanismBlockTagProvider blockTagProvider = generator.addProvider(
       event.includeServer(),
-      new MMRBlockTagProvider(packOutput, lookupProvider, fileHelper)
+      new MMRMekanismBlockTagProvider(packOutput, lookupProvider, fileHelper)
     );
     generator.addProvider(
       event.includeServer(),
-      new MMRItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper)
+      new MMRMekanismItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), fileHelper)
     );
+
+    generator.addProvider(
+        event.includeServer(),
+        new MMRMekanismLootTableProvider(packOutput, lookupProvider)
+    );
+
+    generator.addProvider(true, new MMRMekanismLangProvider(packOutput, "en_us"));
+    generator.addProvider(true, new MMRMekanismLangProvider(packOutput, "es_es"));
+    generator.addProvider(true, new MMRMekanismLangProvider(packOutput, "zh_cn"));
+
+    generator.addProvider(true, new MMRMekanismBlockStateProvider(packOutput, fileHelper));
   }
 }

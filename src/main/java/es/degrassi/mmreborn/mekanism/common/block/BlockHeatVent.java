@@ -1,11 +1,10 @@
 package es.degrassi.mmreborn.mekanism.common.block;
 
 import es.degrassi.mmreborn.common.block.BlockMachineComponent;
+import es.degrassi.mmreborn.common.block.BlockTickEntity;
 import es.degrassi.mmreborn.common.util.RedstoneHelper;
-import es.degrassi.mmreborn.mekanism.client.container.ChemicalHatchContainer;
 import es.degrassi.mmreborn.mekanism.client.container.HeatVentContainer;
 import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
-import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.HeatVentEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -26,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BlockHeatVent extends BlockMachineComponent {
+public abstract class BlockHeatVent extends BlockMachineComponent implements BlockTickEntity {
   protected final HeatVentSize size;
-  public BlockHeatVent(HeatVentSize size) {
+  protected BlockHeatVent(HeatVentSize size) {
     super(
         Properties.of()
             .dynamicShape()

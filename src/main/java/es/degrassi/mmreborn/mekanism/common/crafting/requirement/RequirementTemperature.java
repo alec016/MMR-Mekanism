@@ -15,11 +15,12 @@ import es.degrassi.mmreborn.mekanism.common.machine.component.HeatComponent;
 import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
 import lombok.Getter;
+import mekanism.common.capabilities.heat.BasicHeatCapacitor;
 import mekanism.common.util.UnitDisplayUtils;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class RequirementTemperature implements IRequirement<HeatComponent> {
+public class RequirementTemperature implements IRequirement<HeatComponent, BasicHeatCapacitor> {
   public static final NamedCodec<RequirementTemperature> CODEC = NamedCodec.record(instance -> instance.group(
       IntRange.CODEC.fieldOf("temperature").forGetter(req -> req.temp),
       NamedCodec.enumCodec(UnitDisplayUtils.TemperatureUnit.class).optionalFieldOf("unit", UnitDisplayUtils.TemperatureUnit.KELVIN).forGetter(requirement -> requirement.unit),
@@ -32,8 +33,8 @@ public class RequirementTemperature implements IRequirement<HeatComponent> {
   private final PositionedRequirement position;
 
   public RequirementTemperature(IntRange temp, UnitDisplayUtils.TemperatureUnit unit, PositionedRequirement position) {
-    if (RecipeModifier.blacklist.stream().noneMatch(r -> RequirementTypeRegistration.TEMPERATURE.get().equals(r)))
-      RecipeModifier.addToBlacklist(RequirementTypeRegistration.TEMPERATURE.get());
+    if (RecipeModifier.blacklist.stream().noneMatch(RequirementTypeRegistration.TEMPERATURE::equals))
+      RecipeModifier.addToBlacklist(RequirementTypeRegistration.TEMPERATURE);
     this.temp = temp;
     this.unit = unit;
     this.position = position;
@@ -45,12 +46,12 @@ public class RequirementTemperature implements IRequirement<HeatComponent> {
   }
 
   @Override
-  public RequirementType<RequirementTemperature> getType() {
+  public RequirementType<RequirementTemperature, HeatComponent, BasicHeatCapacitor> getType() {
     return RequirementTypeRegistration.TEMPERATURE.get();
   }
 
   @Override
-  public ComponentType getComponentType() {
+  public ComponentType<BasicHeatCapacitor> getComponentType() {
     return ComponentRegistration.COMPONENT_HEAT.get();
   }
 

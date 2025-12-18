@@ -1,0 +1,107 @@
+package es.degrassi.mmreborn.mekanism.data.lang;
+
+import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
+import es.degrassi.mmreborn.mekanism.data.MMRMekanismTags;
+
+public final class EnUsLang extends Lang {
+  @Override
+  protected void addTags() {
+    MMRMekanismTags.getAllTags().forEach(pair -> addTag(pair::getFirst, pair.getSecond()));
+  }
+
+  @Override
+  protected void addItemGroups() {
+    add("itemgroup." + mmk("group"), "Modular Machinery Reborn Mekanism");
+  }
+
+  @Override
+  protected void addIngredients() {
+    add(jeiIngredient("chemical.input"), "Require %s %s mB");
+    add(jeiIngredient("chemical.output"), "Produce %s %s mB");
+    add(jeiIngredient("heat"), "Heat: %s");
+    add(jeiIngredient("heat.input"), "Consume %sHeat");
+    add(jeiIngredient("heat.output"), "Produce %sHeat");
+    add(jeiIngredient("heat.pertick.input"), "Consume %sHeat/t");
+    add(jeiIngredient("heat.pertick.output"), "Produce %sHeat/t");
+    add(jeiIngredient("temp"), "Temperature required: %s");
+    add(jeiIngredient("radiation.input"), "Remove %s in a %s blocks radius");
+    add(jeiIngredient("radiation.pertick.input"), "Remove %s/t in a %s blocks radius");
+    add(jeiIngredient("radiation.output"), "Emit %s");
+    add(jeiIngredient("radiation.pertick.output"), "Emit %s/t");
+  }
+
+  @Override
+  protected void addComponents() {
+    add(missingComponent("chemical.output"), "No Chemical Output Hatch found!");
+    add(missingComponent("chemical.input"), "No Chemical Input Hatch found!");
+    add(missingComponent("heat.input"), "No Heat Input Vent found!");
+    add(missingComponent("heat.output"), "No Heat Output Vent found!");
+    add(missingComponent("radiation"), "No Geiger Meter found!");
+  }
+
+  @Override
+  protected void addTooltips() {
+    add(tooltip("chemicalhatch.empty"), "Empty");
+    add(tooltip("chemicalhatch.chemical"), "[Chemical]");
+    add(tooltip("chemicalhatch.tank"), "%smb / %s mb");
+    add(tooltip("chemicalhatch.tank.chemical"), "%s / %s");
+    add(tooltip("chemicalhatch.tank.info"), "Can hold %s mb");
+  }
+
+  @Override
+  protected void addCraftcheck() {
+    add(craftCheck("chemical.input"), "Missing chemical input! required %sx %s but found %sx %s");
+    add(craftCheck("chemical.output.space"), "Not enough space for chemical output(s)!, required: %s mB but found %s mB");
+    add(craftCheck("chemical.output.chemical"), "Chemical in tank doesn't match, required: %s but found %s!");
+    add(craftCheck("heat.input"), "Not enough stored heat, %s needed but %s found !");
+    add(craftCheck("temp.error"), "Temperature required: %s");
+    add(craftCheck("radiation"), "Not enough radiations: %s, %s needed !");
+  }
+
+  @Override
+  protected void addGuiTitles() {
+    add(mm(gui("title.chemical_hatch")), "Chemical Hatch");
+    add(mm(gui("title.heat_vent")), "Heat Vent");
+  }
+
+  @Override
+  protected void addBlocks() {
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_TINY, "Tiny Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_SMALL, "Small Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_NORMAL, "Normal Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_REINFORCED, "Reinforced Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_BIG, "Big Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_HUGE, "Huge Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_LUDICROUS, "Ludicrous Chemical Input Hatch");
+    addBlock(BlockRegistration.CHEMICAL_INPUT_HATCH_VACUUM, "Vacuum Chemical Input Hatch");
+
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_TINY, "Tiny Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_SMALL, "Small Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_NORMAL, "Normal Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_REINFORCED, "Reinforced Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_BIG, "Big Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_HUGE, "Huge Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS, "Ludicrous Chemical Output Hatch");
+    addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM, "Vacuum Chemical Output Hatch");
+
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_TINY, "Tiny Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_SMALL, "Small Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_NORMAL, "Normal Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_REINFORCED, "Reinforced Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_BIG, "Big Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_HUGE, "Huge Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_LUDICROUS, "Ludicrous Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT_VACUUM, "Vacuum Heat Input Vent");
+
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_TINY, "Tiny Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_SMALL, "Small Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_NORMAL, "Normal Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED, "Reinforced Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_BIG, "Big Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_HUGE, "Huge Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS, "Ludicrous Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_VACUUM, "Vacuum Heat Output Vent");
+
+    addBlock(BlockRegistration.GEIGER_METER, "Geiger Meter");
+  }
+}

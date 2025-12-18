@@ -25,7 +25,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public @NotNull ComponentType getComponentType() {
+  public @NotNull ComponentType<BasicChemicalTank> getComponentType() {
     return ComponentRegistration.COMPONENT_CHEMICAL.get();
   }
 
@@ -35,7 +35,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public <C extends MachineComponent<?>> boolean canMerge(C c) {
+  public <C extends MachineComponent<BasicChemicalTank>> boolean canMerge(C c) {
     ChemicalComponent comp = (ChemicalComponent) c;
     if (getIOType().isInput())
       return handler.getStack().is(comp.handler.getStack().getChemical());
@@ -45,7 +45,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <C extends MachineComponent<?>> C merge(C c) {
+  public <C extends MachineComponent<BasicChemicalTank>> C merge(C c) {
     ChemicalComponent comp = (ChemicalComponent) c;
     return (C) new ChemicalComponent(
         new BasicChemicalTank(

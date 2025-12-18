@@ -1,6 +1,7 @@
 package es.degrassi.mmreborn.mekanism.common.block.prop;
 
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
+import es.degrassi.mmreborn.common.entity.MachineControllerEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.HeatVentEntity;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateHeatComponentPacket;
 import lombok.Getter;
@@ -69,6 +70,11 @@ public enum HeatVentSize implements StringRepresentable, ConfigLoaded {
                 new ChunkPos(tileEntity.getBlockPos()),
                 new SUpdateHeatComponentPacket(tileEntity.getTank().getHeat(), tileEntity.getBlockPos())
             );
+            tileEntity.getControllerPosSet().forEach(pos -> {
+              if (tileEntity.getLevel().getBlockEntity(pos) instanceof MachineControllerEntity controller) {
+                controller.getProcessor().setMachineInventoryChanged();
+              }
+            });
           }
         }
     );

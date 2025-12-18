@@ -25,4 +25,9 @@ public interface MachineControllerJSMekanism {
   void addHeat(double heat);
 
   /** RADIATION **/
+  double getRadiations();
+
+  void addRadiations(double amount);
+
+  void removeRadiations(double amount, int radius);
 }

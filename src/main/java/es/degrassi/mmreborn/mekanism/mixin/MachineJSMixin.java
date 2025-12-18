@@ -6,6 +6,8 @@ import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.mekanism.api.integration.kubejs.MachineControllerJSMekanism;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.machine.component.HeatComponent;
+import es.degrassi.mmreborn.mekanism.common.machine.component.RadiationComponent;
+import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.chemical.ChemicalStack;
@@ -181,4 +183,31 @@ public abstract class MachineJSMixin implements MachineControllerJSMekanism {
   }
 
   /** Radiation Stuff **/
+  @Override
+  @Unique
+  @Final
+  public double getRadiations() {
+    return this.internal.getComponentManager().getComponent(ComponentRegistration.COMPONENT_RADIATION.get(), IOType.NONE)
+        .map(c -> (RadiationComponent) c)
+        .map(RadiationComponent::getRadiations)
+        .orElse(0.0D);
+  }
+
+  @Override
+  @Unique
+  @Final
+  public void addRadiations(double amount) {
+    this.internal.getComponentManager().getComponent(ComponentRegistration.COMPONENT_RADIATION.get(), IOType.NONE)
+        .map(c -> (RadiationComponent) c)
+        .ifPresent(component -> component.addRadiations(amount));
+  }
+
+  @Override
+  @Unique
+  @Final
+  public void removeRadiations(double amount, int radius) {
+    this.internal.getComponentManager().getComponent(ComponentRegistration.COMPONENT_RADIATION.get(), IOType.NONE)
+        .map(c -> (RadiationComponent) c)
+        .ifPresent(component -> component.removeRadiations(amount, radius));
+  }
 }

@@ -22,20 +22,4 @@ public class BlockHeatOutputVent extends BlockHeatVent {
   public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
     return new HeatOutputVentEntity(blockPos, blockState, size);
   }
-
-  @Override
-  protected @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
-    List<ItemStack> drops = super.getDrops(state, builder);
-    switch (size) {
-      case TINY ->        drops.add(ItemRegistration.HEAT_OUTPUT_VENT_TINY.get().getDefaultInstance());
-      case SMALL ->       drops.add(ItemRegistration.HEAT_OUTPUT_VENT_SMALL.get().getDefaultInstance());
-      case NORMAL ->      drops.add(ItemRegistration.HEAT_OUTPUT_VENT_NORMAL.get().getDefaultInstance());
-      case REINFORCED ->  drops.add(ItemRegistration.HEAT_OUTPUT_VENT_REINFORCED.get().getDefaultInstance());
-      case BIG ->         drops.add(ItemRegistration.HEAT_OUTPUT_VENT_BIG.get().getDefaultInstance());
-      case HUGE ->        drops.add(ItemRegistration.HEAT_OUTPUT_VENT_HUGE.get().getDefaultInstance());
-      case LUDICROUS ->   drops.add(ItemRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get().getDefaultInstance());
-      case VACUUM ->      drops.add(ItemRegistration.HEAT_OUTPUT_VENT_VACUUM.get().getDefaultInstance());
-    }
-    return drops;
-  }
 }

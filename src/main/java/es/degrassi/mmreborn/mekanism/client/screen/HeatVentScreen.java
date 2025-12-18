@@ -32,7 +32,7 @@ public class HeatVentScreen extends BaseScreen<HeatVentContainer, HeatVentEntity
   private final int textureWidth, textureHeight;
 
   public HeatVentScreen(HeatVentContainer pMenu, Inventory inv, Component title) {
-    super(pMenu, inv, title);
+    super(pMenu, inv, title, true);
     textureWidth = TextureSizeHelper.getWidth(RATE_BAR);
     textureHeight = TextureSizeHelper.getHeight(RATE_BAR);
   }

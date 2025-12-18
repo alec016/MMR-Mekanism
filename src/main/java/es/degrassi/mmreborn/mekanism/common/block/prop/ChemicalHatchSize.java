@@ -1,6 +1,7 @@
 package es.degrassi.mmreborn.mekanism.common.block.prop;
 
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
+import es.degrassi.mmreborn.common.entity.MachineControllerEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateChemicalComponentPacket;
 import lombok.Getter;
@@ -58,12 +59,18 @@ public enum ChemicalHatchSize implements StringRepresentable, ConfigLoaded {
         ConstantPredicates.alwaysTrue(),
         ChemicalAttributeValidator.ALWAYS_ALLOW,
         () -> {
-          if (tileEntity.getLevel() instanceof ServerLevel l)
+          if (tileEntity.getLevel() instanceof ServerLevel l) {
             PacketDistributor.sendToPlayersTrackingChunk(
                 l,
                 new ChunkPos(tileEntity.getBlockPos()),
                 new SUpdateChemicalComponentPacket(tileEntity.getTank().getStack(), tileEntity.getBlockPos())
             );
+            tileEntity.getControllerPosSet().forEach(pos -> {
+              if (tileEntity.getLevel().getBlockEntity(pos) instanceof MachineControllerEntity controller) {
+                controller.getProcessor().setMachineInventoryChanged();
+              }
+            });
+          }
         }
     );
   }

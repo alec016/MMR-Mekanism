@@ -15,13 +15,13 @@ import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChem
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import lombok.Getter;
 import mekanism.api.MekanismAPI;
+import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.text.EnumColor;
 import mekanism.api.text.TextComponentUtil;
 import mekanism.client.recipe_viewer.emi.ChemicalEmiStack;
 import mekanism.common.MekanismLang;
-import mekanism.common.util.ChemicalUtil;
 import mekanism.common.util.text.TextUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -33,10 +33,12 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 @Getter
-public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent, RequirementChemical>> implements ChemicalRendering, SlotTooltip, ChanceRendering {
+public class EmiChemicalComponent extends EmiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent,
+    RequirementChemical, BasicChemicalTank>> implements ChemicalRendering,
+    SlotTooltip, ChanceRendering {
   private int width = 16, height = 16;
   private EmiRecipe recipe;
-  public EmiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical> requirement) {
+  public EmiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical, BasicChemicalTank> requirement) {
     super(requirement, 0, 0);
   }
   @Override

@@ -14,6 +14,7 @@ import es.degrassi.mmreborn.common.integration.jei.category.drawable.DrawableWra
 import es.degrassi.mmreborn.common.util.Utils;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
+import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.client.recipe_viewer.jei.ChemicalStackRenderer;
 import mekanism.client.recipe_viewer.jei.MekanismJEI;
@@ -28,8 +29,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent, RequirementChemical>> {
-  public JeiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical> requirement) {
+public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RecipeRequirement<ChemicalComponent,
+    RequirementChemical, BasicChemicalTank>> {
+  public JeiChemicalComponent(RecipeRequirement<ChemicalComponent, RequirementChemical, BasicChemicalTank> requirement) {
     super(requirement, 0, 0);
   }
 
@@ -49,7 +51,6 @@ public class JeiChemicalComponent extends JeiComponent<ChemicalStack, RecipeRequ
   }
 
   @Override
-  @SuppressWarnings("removal")
   public @NotNull List<Component> getTooltip(@NotNull ChemicalStack ingredient, @NotNull TooltipFlag tooltipFlag) {
     List<Component> tooltip = super.getTooltip(ingredient, tooltipFlag);
     String mode = requirement.requirement().getMode().isInput() ? "input" : "output";

@@ -6,9 +6,12 @@ import dev.latvian.mods.kubejs.error.KubeRuntimeException;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.TypeWrapperRegistry;
 import dev.latvian.mods.rhino.Wrapper;
+import dev.latvian.mods.rhino.type.TypeInfo;
+import dev.latvian.mods.rhino.util.wrap.TypeWrapperFactory;
 import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
+import mekanism.common.util.UnitDisplayUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -17,9 +20,17 @@ import net.neoforged.neoforge.fluids.FluidType;
 
 public class MMRKubeJSPlugin implements KubeJSPlugin {
   @Override
+  @SuppressWarnings("unchecked")
   public void registerTypeWrappers(final TypeWrapperRegistry registry) {
-    if (!ModList.get().isLoaded("kubejs_mekanism"))
-      registry.register(ChemicalStack.class, (TypeWrapperRegistry.ContextFromFunction<ChemicalStack>) (ctx, o) -> of(o));
+    if (!isCMMekLoaded()) {
+      if (!ModList.get().isLoaded("kubejs_mekanism"))
+        registry.register(ChemicalStack.class, (TypeWrapperRegistry.ContextFromFunction<ChemicalStack>) (ctx, o) -> of(o));
+      registry.register(UnitDisplayUtils.TemperatureUnit.class, (TypeWrapperFactory<UnitDisplayUtils.TemperatureUnit>) TypeInfo.of(UnitDisplayUtils.TemperatureUnit.class));
+    }
+  }
+
+  private static boolean isCMMekLoaded() {
+    return ModList.get().isLoaded("custommachinerymekanism");
   }
 
   private static ChemicalStack of(Object o) {
