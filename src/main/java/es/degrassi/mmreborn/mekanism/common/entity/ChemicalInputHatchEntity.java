@@ -5,7 +5,11 @@ import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
 import es.degrassi.mmreborn.mekanism.common.entity.base.ChemicalTankEntity;
 import es.degrassi.mmreborn.mekanism.common.registration.EntityRegistration;
+import mekanism.api.Action;
+import mekanism.api.AutomationType;
+import mekanism.common.capabilities.Capabilities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ChemicalInputHatchEntity extends ChemicalTankEntity implements IAutoInputEntity {
@@ -19,6 +23,15 @@ public class ChemicalInputHatchEntity extends ChemicalTankEntity implements IAut
 
   @Override
   public void tickAutoInput() {
-
+    if (!shouldAutoInput) return;
+    for (var side : Direction.values()) {
+      var neighbour = getNeighbour(Capabilities.CHEMICAL.block(), side);
+      if (neighbour == null) continue;
+      var extracted = neighbour.extractChemical(Long.MAX_VALUE, Action.SIMULATE);
+      if (extracted.isEmpty()) continue;
+      if (!getTank().getStack().isEmpty() && !getTank().getStack().is(extracted.getChemical())) return;
+      extracted = getTank().insert(extracted, Action.EXECUTE, AutomationType.INTERNAL);
+      neighbour.extractChemical(extracted, Action.EXECUTE);
+    }
   }
 }

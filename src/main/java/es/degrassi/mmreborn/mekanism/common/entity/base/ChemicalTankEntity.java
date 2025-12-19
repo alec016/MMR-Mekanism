@@ -24,6 +24,8 @@ import es.degrassi.mmreborn.mekanism.common.machine.component.ChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.registration.MachineHatchTypeRegistration;
 import lombok.Getter;
 import lombok.Setter;
+import mekanism.api.Action;
+import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.IChemicalHandler;
 import mekanism.common.capabilities.Capabilities;
@@ -112,11 +114,25 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
         if (ioType == IOType.NONE) return;
         var tank = this.getTank();
         if (ioType.isInput()) {
-          if (!tank.getStack().isEmpty() && !tank.getStack().is(cap.getChemicalInTank(0).getChemical())) return;
-          // TODO: handle input of chemicals
+          var extracted = cap.extractChemical(Long.MAX_VALUE, Action.SIMULATE);
+          if (extracted.isEmpty()) return;
+          if (!tank.getStack().isEmpty() && !tank.getStack().is(extracted.getChemical())) return;
+          extracted = tank.insert(extracted, Action.EXECUTE, AutomationType.INTERNAL);
+          cap.extractChemical(extracted, Action.EXECUTE);
         } else if (ioType.isOutput()) {
           if (tank.getStack().isEmpty() || !tank.getStack().is(cap.getChemicalInTank(0).getChemical())) return;
-          // TODO: handle output of chemicals
+          var extracted = tank.extractChemical(Long.MAX_VALUE, Action.SIMULATE);
+          if (extracted.isEmpty()) return;
+          boolean isValid = false;
+          for (int i = 0; i < cap.getChemicalTanks(); i++) {
+            if (cap.isValid(i, extracted) || cap.getChemicalInTank(i).is(extracted.getChemical())) {
+              isValid = true;
+              break;
+            }
+          }
+          if (!isValid) return;
+          extracted = cap.insertChemical(extracted, Action.EXECUTE);
+          tank.extractChemical(extracted, Action.EXECUTE);
         }
       });
     });
