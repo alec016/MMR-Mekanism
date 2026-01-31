@@ -1,0 +1,16 @@
+files:
+  - source: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/es_es.json
+    ignore:
+      - '/src/main/resources/assets/modular_machinery_reborn_mekanism/lang/![es_es].json'
+    translation: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/%original_file_name%
+    multilingual: 1
+  - source: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/zh_cn.json
+    ignore:
+      - '/src/main/resources/assets/modular_machinery_reborn_mekanism/lang/![zn_zh].json'
+    translation: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/%original_file_name%
+    multilingual: 1
+  - source: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/pt_br.json
+    ignore:
+      - '/src/main/resources/assets/modular_machinery_reborn_mekanism/lang/![pt_br].json'
+    translation: /src/main/resources/assets/modular_machinery_reborn_mekanism/lang/%original_file_name%
+    multilingual: 1
