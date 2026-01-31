@@ -47,8 +47,6 @@ public class MMRMekanismTags {
     public static final TagKey<Block> CHEMICAL_OUTPUT = new Blocks(false, "chemicaloutputhatch", "Chemical Output Hatches").get();
 
     public static final TagKey<Block> HEAT = new Blocks(false, "heat_vent").get();
-    public static final TagKey<Block> HEAT_INPUT = new Blocks(false, "heat_input_vent").get();
-    public static final TagKey<Block> HEAT_OUTPUT = new Blocks(false, "heat_output_vent").get();
 
     private Blocks(boolean isNeoForge, String name) {
       this(isNeoForge, name, capitalize(name));
@@ -65,8 +63,6 @@ public class MMRMekanismTags {
     public static final TagKey<Item> CHEMICAL_OUTPUT = new Items(false, "chemicaloutputhatch", "Chemical Output Hatches").get();
 
     public static final TagKey<Item> HEAT = new Items(false, "heat_vent").get();
-    public static final TagKey<Item> HEAT_INPUT = new Items(false, "heat_input_vent").get();
-    public static final TagKey<Item> HEAT_OUTPUT = new Items(false, "heat_output_vent").get();
 
     private Items(boolean isNeoForge, String name) {
       this(isNeoForge, name, capitalize(name));

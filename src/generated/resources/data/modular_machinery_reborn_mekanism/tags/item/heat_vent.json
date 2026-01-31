@@ -1,6 +1,6 @@
 {
   "values": [
-    "#modular_machinery_reborn_mekanism:heat_input_vent",
-    "#modular_machinery_reborn_mekanism:heat_output_vent"
+    "modular_machinery_reborn_mekanism:heat_input_vent",
+    "modular_machinery_reborn_mekanism:heat_output_vent"
   ]
 }

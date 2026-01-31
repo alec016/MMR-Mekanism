@@ -9,16 +9,6 @@
     "modular_machinery_reborn_mekanism:chemicaloutputhatch_big",
     "modular_machinery_reborn_mekanism:chemicaloutputhatch_huge",
     "modular_machinery_reborn_mekanism:chemicaloutputhatch_ludicrous",
-    "modular_machinery_reborn_mekanism:chemicaloutputhatch_vacuum",
-    "modular_machinery_reborn_mekanism:heat_input_vent_reinforced",
-    "modular_machinery_reborn_mekanism:heat_input_vent_big",
-    "modular_machinery_reborn_mekanism:heat_input_vent_huge",
-    "modular_machinery_reborn_mekanism:heat_input_vent_ludicrous",
-    "modular_machinery_reborn_mekanism:heat_input_vent_vacuum",
-    "modular_machinery_reborn_mekanism:heat_output_vent_reinforced",
-    "modular_machinery_reborn_mekanism:heat_output_vent_big",
-    "modular_machinery_reborn_mekanism:heat_output_vent_huge",
-    "modular_machinery_reborn_mekanism:heat_output_vent_ludicrous",
-    "modular_machinery_reborn_mekanism:heat_output_vent_vacuum"
+    "modular_machinery_reborn_mekanism:chemicaloutputhatch_vacuum"
   ]
 }

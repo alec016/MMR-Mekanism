@@ -2,9 +2,12 @@ package es.degrassi.mmreborn.mekanism.common.entity.base;
 
 import com.google.common.collect.Maps;
 import es.degrassi.mmreborn.ModularMachineryReborn;
+import es.degrassi.mmreborn.api.capability.config.IOSideConfig;
+import es.degrassi.mmreborn.api.capability.config.IOSideMode;
+import es.degrassi.mmreborn.api.capability.config.ISideConfigComponent;
 import es.degrassi.mmreborn.api.network.ISyncable;
 import es.degrassi.mmreborn.api.network.ISyncableStuff;
-import es.degrassi.mmreborn.api.network.syncable.BooleanSyncable;
+import es.degrassi.mmreborn.api.network.syncable.IOSideConfigSyncable;
 import es.degrassi.mmreborn.client.integration.athena.model.hatch.HatchTextureData;
 import es.degrassi.mmreborn.common.entity.base.CapabilityInventoryEntity;
 import es.degrassi.mmreborn.common.entity.base.ColorableMachineComponentEntity;
@@ -15,8 +18,8 @@ import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
 import es.degrassi.mmreborn.common.entity.base.TextureableMachineEntity;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineHatchType;
+import es.degrassi.mmreborn.common.manager.handler.ItemHandler;
 import es.degrassi.mmreborn.common.network.server.SUpdateMachineTexturePacket;
-import es.degrassi.mmreborn.common.util.IOInventory;
 import es.degrassi.mmreborn.common.util.Utils;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
@@ -43,7 +46,6 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.ItemCapability;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -56,7 +58,8 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity implements MachineComponentEntity<ChemicalComponent>, TextureableMachineEntity,
-    CapabilityInventoryEntity<IChemicalHandler>, ITickEntity, IServerTickEntity, IAutoEntity<IChemicalHandler>, ISyncableStuff {
+    CapabilityInventoryEntity<IChemicalHandler>, ITickEntity, IServerTickEntity, IAutoEntity<IChemicalHandler>,
+    ISyncableStuff, ISideConfigComponent<IOSideMode> {
   private BasicChemicalTank tank;
   private IOType ioType;
   private ChemicalHatchSize hatchSize;
@@ -64,10 +67,12 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
   private ResourceLocation overlayTexture;
   private ResourceLocation defaultOverlayTexture;
   private static final ResourceLocation defaultBaseTexture = ModularMachineryReborn.rl("block/casing_plain");
-  private final IOInventory capabilityInventory;
+  private final ItemHandler capabilityInventory;
   private final long tickOffset = Utils.RAND.nextIntBetweenInclusive(0, Integer.MAX_VALUE - 1);
   private long lastCheckTick;
   private final Map<Direction, BlockCapabilityCache<IChemicalHandler, Direction>> neighbourStorages = Maps.newEnumMap(Direction.class);
+  private final IOSideConfig config;
+  private BlockPos controllerPos;
 
   protected ChemicalTankEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, ChemicalHatchSize size,
                         IOType ioType) {
@@ -78,8 +83,7 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
     this.defaultOverlayTexture = ModularMachineryRebornMekanism.rl("block/overlay_chemical" + ioType.getSerializedName() + "hatch_" + size.getSerializedName());
     this.overlayTexture = defaultOverlayTexture;
     this.capabilityInventory = createCapabilityInventory();
-    this.shouldAutoOutput = ioType.isOutput();
-    this.shouldAutoInput = ioType.isInput();
+    this.config = IOSideConfig.Template.DEFAULT_ALL_DISABLED.build(this);
   }
 
   @Override
@@ -157,8 +161,11 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
 
     this.baseTexture = compound.contains("baseTexture") ? ResourceLocation.parse(compound.getString("baseTexture")) : defaultBaseTexture;
     this.overlayTexture = compound.contains("overlayTexture") ? ResourceLocation.parse(compound.getString("overlayTexture")) : defaultOverlayTexture;
-    this.shouldAutoOutput = this.ioType.isOutput() && this.shouldAutoOutput;
-    this.shouldAutoInput = ioType.isInput() && shouldAutoInput;
+    this.config.deserialize(compound.getCompound("config"));
+
+    if (compound.contains("controllerPos")) {
+      controllerPos = BlockPos.of(compound.getLong("controllerPos"));
+    }
   }
 
   @Override
@@ -182,6 +189,9 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
       compound.putString("baseTexture", baseTexture.toString());
     if (overlayTexture != null)
       compound.putString("overlayTexture", overlayTexture.toString());
+    compound.put("config", this.config.serialize());
+    if (controllerPos != null)
+      compound.putLong("controllerPos", controllerPos.asLong());
   }
 
   @Override
@@ -190,7 +200,7 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
   }
 
   @Override
-  public HatchTextureData getTextureData(@NotNull String mode) {
+  public HatchTextureData getTextureData(String mode) {
     return MachineComponentEntity.super.getTextureData(mode).derive(
         "bg_all",
         baseTexture,
@@ -262,7 +272,6 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
 
   @Override
   public void getStuffToSync(Consumer<ISyncable<?, ?>> container) {
-    container.accept(BooleanSyncable.create(this::isShouldAutoInput, this::setShouldAutoInput));
-    container.accept(BooleanSyncable.create(this::isShouldAutoOutput, this::setShouldAutoOutput));
+    container.accept(IOSideConfigSyncable.create(this::getConfig, this.config::set));
   }
 }

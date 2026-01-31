@@ -2,7 +2,6 @@ package es.degrassi.mmreborn.mekanism.common.registration;
 
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.api.crafting.requirement.IRequirement;
-import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemical;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.RequirementChemicalPerTick;

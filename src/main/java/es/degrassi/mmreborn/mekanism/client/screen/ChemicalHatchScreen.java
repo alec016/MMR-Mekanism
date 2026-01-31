@@ -47,7 +47,7 @@ public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, Chem
   protected void init() {
     super.init();
 
-    tabs = TabGroupWidget.createLeft(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
+    tabs = TabGroupWidget.createRight(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
     if (this.entity.getMode().isInput()) tabs.addTab(new AutoInputTabWidget<>((ChemicalInputHatchEntity) this.entity));
     else tabs.addTab(new AutoOutputTabWidget<>((ChemicalOutputHatchEntity) this.entity));
 

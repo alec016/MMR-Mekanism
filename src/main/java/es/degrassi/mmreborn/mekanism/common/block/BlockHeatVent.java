@@ -4,18 +4,13 @@ import es.degrassi.mmreborn.common.block.BlockMachineComponent;
 import es.degrassi.mmreborn.common.block.BlockTickEntity;
 import es.degrassi.mmreborn.common.util.RedstoneHelper;
 import es.degrassi.mmreborn.mekanism.client.container.HeatVentContainer;
-import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.entity.base.HeatVentEntity;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,11 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public abstract class BlockHeatVent extends BlockMachineComponent implements BlockTickEntity {
-  protected final HeatVentSize size;
-  protected BlockHeatVent(HeatVentSize size) {
+  protected BlockHeatVent() {
     super(
         Properties.of()
             .dynamicShape()
@@ -35,14 +27,6 @@ public abstract class BlockHeatVent extends BlockMachineComponent implements Blo
             .strength(2F, 10F)
             .requiresCorrectToolForDrops()
             .sound(SoundType.METAL)
-    );
-    this.size = size;
-  }
-
-  @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag pTooltipFlag) {
-    tooltip.add(
-        Component.translatable("tooltip.heat_vent.tank.info", size.getCapacity()).withStyle(ChatFormatting.GRAY)
     );
   }
 

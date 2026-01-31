@@ -84,23 +84,9 @@ public final class EnUsLang extends Lang {
     addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS, "Ludicrous Chemical Output Hatch");
     addBlock(BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM, "Vacuum Chemical Output Hatch");
 
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_TINY, "Tiny Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_SMALL, "Small Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_NORMAL, "Normal Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_REINFORCED, "Reinforced Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_BIG, "Big Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_HUGE, "Huge Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_LUDICROUS, "Ludicrous Heat Input Vent");
-    addBlock(BlockRegistration.HEAT_INPUT_VENT_VACUUM, "Vacuum Heat Input Vent");
+    addBlock(BlockRegistration.HEAT_INPUT_VENT, "Heat Input Vent");
 
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_TINY, "Tiny Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_SMALL, "Small Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_NORMAL, "Normal Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED, "Reinforced Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_BIG, "Big Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_HUGE, "Huge Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS, "Ludicrous Heat Output Vent");
-    addBlock(BlockRegistration.HEAT_OUTPUT_VENT_VACUUM, "Vacuum Heat Output Vent");
+    addBlock(BlockRegistration.HEAT_OUTPUT_VENT, "Heat Output Vent");
 
     addBlock(BlockRegistration.GEIGER_METER, "Geiger Meter");
   }

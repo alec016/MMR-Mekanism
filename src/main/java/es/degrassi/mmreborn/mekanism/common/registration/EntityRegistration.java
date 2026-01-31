@@ -58,14 +58,7 @@ public class EntityRegistration {
       () -> new BlockEntityType<>(
           HeatInputVentEntity::new,
           Set.of(
-              BlockRegistration.HEAT_INPUT_VENT_TINY.get(),
-              BlockRegistration.HEAT_INPUT_VENT_SMALL.get(),
-              BlockRegistration.HEAT_INPUT_VENT_NORMAL.get(),
-              BlockRegistration.HEAT_INPUT_VENT_REINFORCED.get(),
-              BlockRegistration.HEAT_INPUT_VENT_BIG.get(),
-              BlockRegistration.HEAT_INPUT_VENT_HUGE.get(),
-              BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get(),
-              BlockRegistration.HEAT_INPUT_VENT_VACUUM.get()
+              BlockRegistration.HEAT_INPUT_VENT.get()
           ),
           null
       )
@@ -75,14 +68,7 @@ public class EntityRegistration {
       () -> new BlockEntityType<>(
           HeatOutputVentEntity::new,
           Set.of(
-              BlockRegistration.HEAT_OUTPUT_VENT_TINY.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_SMALL.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_NORMAL.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_BIG.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_HUGE.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get(),
-              BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get()
+              BlockRegistration.HEAT_OUTPUT_VENT.get()
           ),
           null
       )

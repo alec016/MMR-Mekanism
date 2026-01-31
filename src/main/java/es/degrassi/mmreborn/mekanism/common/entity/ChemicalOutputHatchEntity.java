@@ -22,8 +22,9 @@ public class ChemicalOutputHatchEntity extends ChemicalTankEntity implements IAu
 
   @Override
   public void tickAutoOutput() {
-    if (!shouldAutoOutput) return;
+    if (!getConfig().isEnabled()) return;
     for (var side : Direction.values()) {
+      if (!getConfig().canAutoIO(side)) return;
       var neighbour = getNeighbour(Capabilities.CHEMICAL.block(), side);
       if (neighbour == null) continue;
       if (getTank().getStack().isEmpty() || !getTank().getStack().is(neighbour.getChemicalInTank(0).getChemical())) return;

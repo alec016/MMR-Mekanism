@@ -3,10 +3,20 @@ package es.degrassi.mmreborn.mekanism.client.screen;
 import com.google.common.collect.Lists;
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.client.screen.BaseScreen;
+import es.degrassi.mmreborn.client.screen.widget.IGuiWrapper;
+import es.degrassi.mmreborn.client.screen.widget.tabs.AutoInputTabWidget;
+import es.degrassi.mmreborn.client.screen.widget.tabs.AutoOutputTabWidget;
+import es.degrassi.mmreborn.client.screen.widget.tabs.ITabGroupScreen;
+import es.degrassi.mmreborn.client.screen.widget.tabs.TabGroupWidget;
 import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.client.container.HeatVentContainer;
+import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.ChemicalOutputHatchEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.HeatInputVentEntity;
+import es.degrassi.mmreborn.mekanism.common.entity.HeatOutputVentEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.HeatVentEntity;
+import lombok.Getter;
 import mekanism.api.IIncrementalEnum;
 import mekanism.common.MekanismLang;
 import mekanism.common.config.MekanismConfig;
@@ -27,14 +37,27 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 @ParametersAreNonnullByDefault
-public class HeatVentScreen extends BaseScreen<HeatVentContainer, HeatVentEntity> {
+public class HeatVentScreen extends BaseScreen<HeatVentContainer, HeatVentEntity> implements IGuiWrapper, ITabGroupScreen {
   private static final ResourceLocation RATE_BAR = ModularMachineryRebornMekanism.rl("textures/gui/vertical_rate.png");
   private final int textureWidth, textureHeight;
+  @Getter
+  private TabGroupWidget tabs;
 
   public HeatVentScreen(HeatVentContainer pMenu, Inventory inv, Component title) {
     super(pMenu, inv, title, true);
     textureWidth = TextureSizeHelper.getWidth(RATE_BAR);
     textureHeight = TextureSizeHelper.getHeight(RATE_BAR);
+  }
+
+  @Override
+  protected void init() {
+    super.init();
+
+    tabs = TabGroupWidget.createRight(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
+    if (this.entity.getMode().isInput()) tabs.addTab(new AutoInputTabWidget<>((HeatInputVentEntity) this.entity));
+    else tabs.addTab(new AutoOutputTabWidget<>((HeatOutputVentEntity) this.entity));
+
+    addRenderableWidget(tabs);
   }
 
   @Override

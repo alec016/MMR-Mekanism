@@ -4,7 +4,6 @@ import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.data.BaseMMRBlockStateProvider;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
-import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.registration.BlockRegistration;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.data.PackOutput;
@@ -40,23 +39,9 @@ public class MMRMekanismBlockStateProvider extends BaseMMRBlockStateProvider {
     addHatch(BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS.get(), true, chemical(false, ChemicalHatchSize.LUDICROUS), false);
     addHatch(BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get(), true, chemical(false, ChemicalHatchSize.VACUUM), false);
 
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_TINY.get(), false, heat(true, HeatVentSize.TINY), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_SMALL.get(), false, heat(true, HeatVentSize.SMALL), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_NORMAL.get(), false, heat(true, HeatVentSize.NORMAL), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_REINFORCED.get(), true, heat(true, HeatVentSize.REINFORCED), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_BIG.get(), true, heat(true, HeatVentSize.BIG), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_HUGE.get(), true, heat(true, HeatVentSize.HUGE), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_LUDICROUS.get(), true, heat(true, HeatVentSize.LUDICROUS), false);
-    addHatch(BlockRegistration.HEAT_INPUT_VENT_VACUUM.get(), true, heat(true, HeatVentSize.VACUUM), false);
+    addHatch(BlockRegistration.HEAT_INPUT_VENT.get(), false, heat(true), false);
 
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_TINY.get(), false, heat(false, HeatVentSize.TINY), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_SMALL.get(), false, heat(false, HeatVentSize.SMALL), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_NORMAL.get(), false, heat(false, HeatVentSize.NORMAL), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_REINFORCED.get(), true, heat(false, HeatVentSize.REINFORCED), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_BIG.get(), true, heat(false, HeatVentSize.BIG), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_HUGE.get(), true, heat(false, HeatVentSize.HUGE), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_LUDICROUS.get(), true, heat(false, HeatVentSize.LUDICROUS), false);
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT_VACUUM.get(), true, heat(false, HeatVentSize.VACUUM), false);
+    addHatch(BlockRegistration.HEAT_OUTPUT_VENT.get(), false, heat(false), false);
 
     addHatch(BlockRegistration.GEIGER_METER.get(), false, ml("block/overlay_geiger_meter"), false);
   }
@@ -74,7 +59,7 @@ public class MMRMekanismBlockStateProvider extends BaseMMRBlockStateProvider {
     return ml("block/overlay_chemical" + (input ? "input" : "output") + "hatch_" + size.getSerializedName());
   }
 
-  private ResourceLocation heat(boolean input, HeatVentSize size) {
-    return ml("block/overlay_heat_" + (input ? "input" : "output") + "_vent_" + size.getSerializedName());
+  private ResourceLocation heat(boolean input) {
+    return ml("block/overlay_heat_" + (input ? "input" : "output") + "_vent");
   }
 }

@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "modular_machinery_reborn_mekanism:heat_output_vent_tiny"
+          "name": "modular_machinery_reborn_mekanism:heat_input_vent"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "modular_machinery_reborn_mekanism:blocks/heat_output_vent_tiny"
+  "random_sequence": "modular_machinery_reborn_mekanism:blocks/heat_input_vent"
 }

@@ -33,8 +33,6 @@ public class RequirementTemperature implements IRequirement<HeatComponent, Basic
   private final PositionedRequirement position;
 
   public RequirementTemperature(IntRange temp, UnitDisplayUtils.TemperatureUnit unit, PositionedRequirement position) {
-    if (RecipeModifier.blacklist.stream().noneMatch(RequirementTypeRegistration.TEMPERATURE::equals))
-      RecipeModifier.addToBlacklist(RequirementTypeRegistration.TEMPERATURE);
     this.temp = temp;
     this.unit = unit;
     this.position = position;

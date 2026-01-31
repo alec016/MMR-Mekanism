@@ -2,12 +2,17 @@ package es.degrassi.mmreborn.mekanism.common.entity.base;
 
 import com.google.common.collect.Maps;
 import es.degrassi.mmreborn.ModularMachineryReborn;
+import es.degrassi.mmreborn.api.capability.config.IOSideConfig;
+import es.degrassi.mmreborn.api.capability.config.IOSideMode;
+import es.degrassi.mmreborn.api.capability.config.ISideConfigComponent;
 import es.degrassi.mmreborn.api.network.DataType;
 import es.degrassi.mmreborn.api.network.ISyncable;
 import es.degrassi.mmreborn.api.network.ISyncableStuff;
-import es.degrassi.mmreborn.api.network.syncable.BooleanSyncable;
+import es.degrassi.mmreborn.api.network.syncable.IOSideConfigSyncable;
 import es.degrassi.mmreborn.client.integration.athena.model.hatch.HatchTextureData;
+import es.degrassi.mmreborn.common.entity.MachineControllerEntity;
 import es.degrassi.mmreborn.common.entity.base.ColorableMachineComponentEntity;
+import es.degrassi.mmreborn.common.entity.base.IAutoEntity;
 import es.degrassi.mmreborn.common.entity.base.IServerTickEntity;
 import es.degrassi.mmreborn.common.entity.base.ITickEntity;
 import es.degrassi.mmreborn.common.entity.base.MachineComponentEntity;
@@ -16,8 +21,8 @@ import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.machine.MachineHatchType;
 import es.degrassi.mmreborn.common.network.server.SUpdateMachineTexturePacket;
 import es.degrassi.mmreborn.common.util.Utils;
-import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.machine.component.HeatComponent;
+import es.degrassi.mmreborn.mekanism.common.network.server.component.SUpdateHeatComponentPacket;
 import es.degrassi.mmreborn.mekanism.common.registration.MachineHatchTypeRegistration;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +39,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -54,11 +60,11 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class HeatVentEntity extends ColorableMachineComponentEntity implements MachineComponentEntity<HeatComponent>, ISyncableStuff,
-    ITileHeatHandler, TextureableMachineEntity, ITickEntity, IServerTickEntity {
+    ITileHeatHandler, TextureableMachineEntity, ITickEntity, IServerTickEntity, ISideConfigComponent<IOSideMode>,
+    IAutoEntity<IHeatHandler> {
 
   private final BasicHeatCapacitor tank;
   private IOType mode;
-  private HeatVentSize size;
   private final Map<Direction, BlockCapabilityCache<IHeatHandler, Direction>> neighbourStorages = Maps.newEnumMap(Direction.class);
   private double lastEnvironmentalLoss;
 
@@ -69,17 +75,38 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
   private final long tickOffset = Utils.RAND.nextIntBetweenInclusive(0, Integer.MAX_VALUE - 1);
   private long lastCheckTick;
 
+  private BlockPos controllerPos;
+  private final IOSideConfig config;
+
   @Getter
   private static final ResourceLocation defaultBaseTexture = ModularMachineryReborn.rl("block/casing_plain");
 
-  protected HeatVentEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState blockState,
-                        HeatVentSize size, IOType mode) {
+  protected HeatVentEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState blockState, IOType mode) {
     super(entityType, pos, blockState);
     this.mode = mode;
-    this.size = size;
-    tank = size.buildTank(this, mode.isInput(), !mode.isInput());
-    this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent_" + size.getSerializedName());
+    tank = BasicHeatCapacitor.create(
+        119_360.0D,
+        1D,
+        0D,
+        () -> 300.0D,
+        () -> {
+          if (getLevel() instanceof ServerLevel l) {
+            PacketDistributor.sendToPlayersTrackingChunk(
+                l,
+                new ChunkPos(getBlockPos()),
+                new SUpdateHeatComponentPacket(getTank().getHeat(), getBlockPos())
+            );
+            getControllerPosSet().forEach(p -> {
+              if (getLevel().getBlockEntity(p) instanceof MachineControllerEntity controller) {
+                controller.getProcessor().setMachineInventoryChanged();
+              }
+            });
+          }
+        }
+    );
+    this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent");
     this.overlayTexture = defaultOverlayTexture;
+    this.config = IOSideConfig.Template.DEFAULT_ALL_DISABLED.build(this);
   }
 
   @Override
@@ -87,17 +114,18 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     IServerTickEntity.super.doRestrictedTick();
     this.tank.update();
     this.updateNeighbours();
+    if (!getConfig().isEnabled()) return;
     HeatAPI.HeatTransfer transfer = this.simulate();
     this.lastEnvironmentalLoss = transfer.environmentTransfer();
   }
 
   public double getHeatFillPercent() {
-    return (this.tank.getTemperature() - this.size.getBaseTemp()) / this.tank.getHeatCapacity();
+    return Mth.clamp(this.tank.getHeat() / this.tank.getHeatCapacity(), 0, 1);
   }
 
   @Override
   public @Nullable HeatComponent provideComponent() {
-    return new HeatComponent(getTank(), size.getBaseTemp(), getMode());
+    return new HeatComponent(getTank(), 300d, getMode());
   }
 
   @Override
@@ -105,11 +133,14 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     super.loadAdditional(nbt, pRegistries);
     nbt.put("handler", tank.serializeNBT(pRegistries));
     this.mode = nbt.getBoolean("input") ? IOType.INPUT : IOType.OUTPUT;
-    this.size = HeatVentSize.value(nbt.getString("size"));
-    this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent_" + size.getSerializedName());
+    this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent");
 
     this.baseTexture = nbt.contains("baseTexture") ? ResourceLocation.parse(nbt.getString("baseTexture")) : defaultBaseTexture;
     this.overlayTexture = nbt.contains("overlayTexture") ? ResourceLocation.parse(nbt.getString("overlayTexture")) : defaultOverlayTexture;
+    this.config.deserialize(nbt.getCompound("config"));
+    if (nbt.contains("controllerPos")) {
+      controllerPos = BlockPos.of(nbt.getLong("controllerPos"));
+    }
   }
 
   @Override
@@ -117,19 +148,20 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     super.saveAdditional(nbt, pRegistries);
     tank.deserializeNBT(pRegistries, nbt.getCompound("handler"));
     nbt.putBoolean("input", mode.isInput());
-    nbt.putString("size", this.size.getSerializedName());
     if (baseTexture != null)
       nbt.putString("baseTexture", baseTexture.toString());
     if (overlayTexture != null)
       nbt.putString("overlayTexture", overlayTexture.toString());
+    nbt.put("config", this.config.serialize());
+    if (controllerPos != null)
+      nbt.putLong("controllerPos", controllerPos.asLong());
   }
 
   @Override
   public void getStuffToSync(Consumer<ISyncable<?, ?>> container) {
     container.accept(DataType.createSyncable(Double.class, this.tank::getHeat, this.tank::setHeat));
     container.accept(DataType.createSyncable(Double.class, this::getLastEnvironmentalLoss, loss -> this.lastEnvironmentalLoss = loss));
-    container.accept(BooleanSyncable.create(this::isShouldAutoInput, this::setShouldAutoInput));
-    container.accept(BooleanSyncable.create(this::isShouldAutoOutput, this::setShouldAutoOutput));
+    container.accept(IOSideConfigSyncable.create(this::getConfig, this.config::set));
   }
 
   private void updateNeighbours() {
@@ -156,6 +188,7 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
 
   @Override
   public @Nullable IHeatHandler getAdjacent(Direction side) {
+    if (!getConfig().canAutoIO(side)) return null;
     return this.neighbourStorages.get(side) == null ? null : this.neighbourStorages.get(side).getCapability();
   }
 
@@ -216,26 +249,8 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
   @Override
   public MachineHatchType getHatchType() {
     return switch(mode) {
-      case INPUT -> (switch (size) {
-        case TINY -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_TINY;
-        case SMALL -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_SMALL;
-        case NORMAL -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_NORMAL;
-        case REINFORCED -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_REINFORCED;
-        case BIG -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_BIG;
-        case HUGE -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_HUGE;
-        case LUDICROUS -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_LUDICROUS;
-        case VACUUM -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH_VACUUM;
-      }).get();
-      case OUTPUT -> (switch(size) {
-        case TINY -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_TINY;
-        case SMALL -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_SMALL;
-        case NORMAL -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_NORMAL;
-        case REINFORCED -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_REINFORCED;
-        case BIG -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_BIG;
-        case HUGE -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_HUGE;
-        case LUDICROUS -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_LUDICROUS;
-        case VACUUM -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH_VACUUM;
-      }).get();
+      case INPUT -> MachineHatchTypeRegistration.HEAT_INPUT_HATCH.get();
+      case OUTPUT -> MachineHatchTypeRegistration.HEAT_OUTPUT_HATCH.get();
       default -> null;
     };
   }

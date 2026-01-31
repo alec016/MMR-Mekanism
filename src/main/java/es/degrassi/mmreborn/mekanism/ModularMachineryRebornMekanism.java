@@ -2,13 +2,13 @@ package es.degrassi.mmreborn.mekanism;
 
 import es.degrassi.mmreborn.ModularMachineryReborn;
 import es.degrassi.mmreborn.common.block.prop.ConfigLoaded;
+import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifierTargetEvent;
 import es.degrassi.mmreborn.mekanism.common.block.prop.ChemicalHatchSize;
-import es.degrassi.mmreborn.mekanism.common.block.prop.HeatVentSize;
 import es.degrassi.mmreborn.mekanism.common.data.MMRConfig;
 import es.degrassi.mmreborn.mekanism.common.data.config.ChemicalHatchConfig;
-import es.degrassi.mmreborn.mekanism.common.data.config.HeatVentConfig;
 import es.degrassi.mmreborn.mekanism.common.registration.EntityRegistration;
 import es.degrassi.mmreborn.mekanism.common.registration.Registration;
+import es.degrassi.mmreborn.mekanism.common.registration.RequirementTypeRegistration;
 import mekanism.common.capabilities.Capabilities;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -32,12 +32,20 @@ public class ModularMachineryRebornMekanism {
 
     Registration.register(MOD_BUS);
     MOD_BUS.addListener(this::registerCapabilities);
+    MOD_BUS.addListener(this::addToBlacklist);
+  }
+
+  private void addToBlacklist(RecipeModifierTargetEvent.Blacklist event) {
+    event.register(RequirementTypeRegistration.HEAT);
+    event.register(RequirementTypeRegistration.HEAT_PER_TICK);
+    event.register(RequirementTypeRegistration.TEMPERATURE);
+    event.register(RequirementTypeRegistration.RADIATION);
+    event.register(RequirementTypeRegistration.RADIATION_PER_TICK);
   }
 
   private static void initConfigs(final ModContainer container) {
     container.registerConfig(ModConfig.Type.COMMON, MMRConfig.getSpec(), config("common"));
     container.registerConfig(ModConfig.Type.COMMON, ChemicalHatchConfig.getSpec(), config("chemical_hatch"));
-    container.registerConfig(ModConfig.Type.COMMON, HeatVentConfig.getSpec(), config("heat_vent"));
   }
 
   private static String config(String name) {
@@ -46,12 +54,6 @@ public class ModularMachineryRebornMekanism {
 
   private void addConfigLoaders() {
     ConfigLoaded.add(ChemicalHatchSize.class, size -> size.setSize(ChemicalHatchConfig.get().chemicalSize(size)));
-    ConfigLoaded.add(HeatVentSize.class, size -> {
-      size.setBaseTemp(HeatVentConfig.get().baseTemp(size));
-      size.setCapacity(HeatVentConfig.get().heatCapacity(size));
-      size.setInverseConductionCoefficient(HeatVentConfig.get().conductionCoefficient(size));
-      size.setInverseInsulationCoefficient(HeatVentConfig.get().insulationCoefficient(size));
-    });
   }
 
   private void registerCapabilities(final RegisterCapabilitiesEvent event) {

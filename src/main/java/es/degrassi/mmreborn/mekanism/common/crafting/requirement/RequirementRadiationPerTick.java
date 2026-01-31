@@ -35,8 +35,6 @@ public class RequirementRadiationPerTick implements IRequirement<RadiationCompon
   private final int radius;
 
   public RequirementRadiationPerTick(IOType mode, double amount, int radius) {
-    if (RecipeModifier.blacklist.stream().noneMatch(RequirementTypeRegistration.RADIATION_PER_TICK::equals))
-      RecipeModifier.addToBlacklist(RequirementTypeRegistration.RADIATION_PER_TICK);
     this.mode = mode;
     this.amount = amount;
     this.radius = radius;

@@ -35,8 +35,6 @@ public class RequirementRadiation implements IRequirement<RadiationComponent, Vo
   private final int radius;
 
   public RequirementRadiation(IOType mode, double amount, int radius) {
-    if (RecipeModifier.blacklist.stream().noneMatch(RequirementTypeRegistration.RADIATION::equals))
-      RecipeModifier.addToBlacklist(RequirementTypeRegistration.RADIATION);
     this.mode = mode;
     this.amount = amount;
     this.radius = radius;

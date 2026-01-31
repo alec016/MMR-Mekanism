@@ -7,7 +7,6 @@ import es.degrassi.mmreborn.api.crafting.ICraftingContext;
 import es.degrassi.mmreborn.api.crafting.requirement.IRequirement;
 import es.degrassi.mmreborn.api.crafting.requirement.IRequirementList;
 import es.degrassi.mmreborn.common.crafting.ComponentType;
-import es.degrassi.mmreborn.common.crafting.modifier.RecipeModifier;
 import es.degrassi.mmreborn.common.crafting.requirement.PositionedRequirement;
 import es.degrassi.mmreborn.common.crafting.requirement.RequirementType;
 import es.degrassi.mmreborn.common.machine.IOType;
@@ -34,8 +33,6 @@ public class RequirementHeat implements IRequirement<HeatComponent, BasicHeatCap
   private final PositionedRequirement position;
 
   public RequirementHeat(double amount, IOType mode, PositionedRequirement position) {
-    if (RecipeModifier.blacklist.stream().noneMatch(RequirementTypeRegistration.HEAT::equals))
-      RecipeModifier.addToBlacklist(RequirementTypeRegistration.HEAT);
     this.amount = amount;
     this.mode = mode;
     this.position = position;

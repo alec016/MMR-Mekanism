@@ -7,7 +7,6 @@ import es.degrassi.mmreborn.mekanism.common.registration.ComponentRegistration;
 import es.degrassi.mmreborn.mekanism.mixin.BasicHeatCapacitorAccessor;
 import mekanism.common.capabilities.heat.BasicHeatCapacitor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class HeatComponent extends MachineComponent<BasicHeatCapacitor> {
   private final double baseTemp;
