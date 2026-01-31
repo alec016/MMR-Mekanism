@@ -39,9 +39,9 @@ public class MMRMekanismBlockStateProvider extends BaseMMRBlockStateProvider {
     addHatch(BlockRegistration.CHEMICAL_OUTPUT_HATCH_LUDICROUS.get(), true, chemical(false, ChemicalHatchSize.LUDICROUS), false);
     addHatch(BlockRegistration.CHEMICAL_OUTPUT_HATCH_VACUUM.get(), true, chemical(false, ChemicalHatchSize.VACUUM), false);
 
-    addHatch(BlockRegistration.HEAT_INPUT_VENT.get(), false, heat(true), false);
+    addHatch(BlockRegistration.HEAT_INPUT_VENT.get(), false, ml("block/overlay_heat_input_vent"), false);
 
-    addHatch(BlockRegistration.HEAT_OUTPUT_VENT.get(), false, heat(false), false);
+    addHatch(BlockRegistration.HEAT_OUTPUT_VENT.get(), false, ml("block/overlay_heat_output_vent"), false);
 
     addHatch(BlockRegistration.GEIGER_METER.get(), false, ml("block/overlay_geiger_meter"), false);
   }
@@ -57,9 +57,5 @@ public class MMRMekanismBlockStateProvider extends BaseMMRBlockStateProvider {
 
   private ResourceLocation chemical(boolean input, ChemicalHatchSize size) {
     return ml("block/overlay_chemical" + (input ? "input" : "output") + "hatch_" + size.getSerializedName());
-  }
-
-  private ResourceLocation heat(boolean input) {
-    return ml("block/overlay_heat_" + (input ? "input" : "output") + "_vent");
   }
 }

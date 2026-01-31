@@ -25,7 +25,7 @@ public class ChemicalInputHatchEntity extends ChemicalTankEntity implements IAut
   public void tickAutoInput() {
     if (!getConfig().isEnabled()) return;
     for (var side : Direction.values()) {
-      if (!getConfig().canAutoIO(side)) return;
+      if (!getConfig().canAutoIO(side)) continue;
       var neighbour = getNeighbour(Capabilities.CHEMICAL.block(), side);
       if (neighbour == null) continue;
       var extracted = neighbour.extractChemical(Long.MAX_VALUE, Action.SIMULATE);

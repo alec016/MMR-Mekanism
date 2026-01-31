@@ -84,6 +84,7 @@ public abstract class ChemicalTankEntity extends ColorableMachineComponentEntity
     this.overlayTexture = defaultOverlayTexture;
     this.capabilityInventory = createCapabilityInventory();
     this.config = IOSideConfig.Template.DEFAULT_ALL_DISABLED.build(this);
+    this.config.setCallback(this::configChanged);
   }
 
   @Override

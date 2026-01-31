@@ -9,7 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record SUpdateHeatComponentPacket(double heat, BlockPos pos) implements CustomPacketPayload {
+public record SUpdateHeatComponentPacket(double heat, double capacity, BlockPos pos) implements CustomPacketPayload {
 
   public static final Type<SUpdateHeatComponentPacket> TYPE = new Type<>(ModularMachineryReborn.rl("update_heat"));
 
@@ -21,6 +21,8 @@ public record SUpdateHeatComponentPacket(double heat, BlockPos pos) implements C
   public static final StreamCodec<RegistryFriendlyByteBuf, SUpdateHeatComponentPacket> CODEC = StreamCodec.composite(
       ByteBufCodecs.DOUBLE,
       SUpdateHeatComponentPacket::heat,
+      ByteBufCodecs.DOUBLE,
+      SUpdateHeatComponentPacket::capacity,
       BlockPos.STREAM_CODEC,
       SUpdateHeatComponentPacket::pos,
       SUpdateHeatComponentPacket::new
@@ -31,6 +33,7 @@ public record SUpdateHeatComponentPacket(double heat, BlockPos pos) implements C
       context.enqueueWork(() -> {
         if (context.player().level().getBlockEntity(packet.pos) instanceof HeatVentEntity entity) {
           entity.getTank().setHeat(packet.heat);
+          entity.getTank().setHeatCapacityFromPacket(packet.capacity);
         }
       });
   }

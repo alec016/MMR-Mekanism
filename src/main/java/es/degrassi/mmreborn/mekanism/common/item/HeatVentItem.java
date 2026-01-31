@@ -6,7 +6,7 @@ import es.degrassi.mmreborn.common.item.ItemHatch;
 import es.degrassi.mmreborn.common.machine.IOType;
 import es.degrassi.mmreborn.common.registration.DataComponentRegistration;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
-import es.degrassi.mmreborn.mekanism.common.block.BlockChemicalInputHatch;
+import es.degrassi.mmreborn.mekanism.common.block.BlockHeatInputVent;
 import es.degrassi.mmreborn.mekanism.common.block.BlockHeatVent;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ public class HeatVentItem extends ItemBlockMachineComponent implements ItemHatch
   }
 
   private static IOType fromBlock(Block block) {
-    return block instanceof BlockChemicalInputHatch ? IOType.INPUT : IOType.OUTPUT;
+    return block instanceof BlockHeatInputVent ? IOType.INPUT : IOType.OUTPUT;
   }
 
   @Override

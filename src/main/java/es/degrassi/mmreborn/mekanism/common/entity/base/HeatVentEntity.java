@@ -31,6 +31,7 @@ import mekanism.api.heat.IHeatCapacitor;
 import mekanism.api.heat.IHeatHandler;
 import mekanism.common.capabilities.Capabilities;
 import mekanism.common.capabilities.heat.BasicHeatCapacitor;
+import mekanism.common.capabilities.heat.CachedAmbientTemperature;
 import mekanism.common.capabilities.heat.ITileHeatHandler;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -85,16 +86,16 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     super(entityType, pos, blockState);
     this.mode = mode;
     tank = BasicHeatCapacitor.create(
-        119_360.0D,
-        1D,
-        0D,
-        () -> 300.0D,
+        100,
+        5,
+        10,
+        new CachedAmbientTemperature(this::getLevel, this::getBlockPos),
         () -> {
           if (getLevel() instanceof ServerLevel l) {
             PacketDistributor.sendToPlayersTrackingChunk(
                 l,
                 new ChunkPos(getBlockPos()),
-                new SUpdateHeatComponentPacket(getTank().getHeat(), getBlockPos())
+                new SUpdateHeatComponentPacket(getTank().getHeat(), getTank().getHeatCapacity(), getBlockPos())
             );
             getControllerPosSet().forEach(p -> {
               if (getLevel().getBlockEntity(p) instanceof MachineControllerEntity controller) {
@@ -107,6 +108,7 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent");
     this.overlayTexture = defaultOverlayTexture;
     this.config = IOSideConfig.Template.DEFAULT_ALL_DISABLED.build(this);
+    this.config.setCallback(this::configChanged);
   }
 
   @Override

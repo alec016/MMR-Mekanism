@@ -10,7 +10,6 @@ import es.degrassi.mmreborn.client.screen.widget.tabs.AutoOutputTabWidget;
 import es.degrassi.mmreborn.client.screen.widget.tabs.ITabGroupScreen;
 import es.degrassi.mmreborn.client.screen.widget.tabs.TabGroupWidget;
 import es.degrassi.mmreborn.client.util.GuiUtils;
-import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import es.degrassi.mmreborn.mekanism.client.container.ChemicalHatchContainer;
 import es.degrassi.mmreborn.mekanism.client.util.ChemicalRenderer;
 import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
@@ -47,7 +46,7 @@ public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, Chem
   protected void init() {
     super.init();
 
-    tabs = TabGroupWidget.createRight(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
+    tabs = TabGroupWidget.createRight(getGuiLeft() + getXSize(), getGuiTop());
     if (this.entity.getMode().isInput()) tabs.addTab(new AutoInputTabWidget<>((ChemicalInputHatchEntity) this.entity));
     else tabs.addTab(new AutoOutputTabWidget<>((ChemicalOutputHatchEntity) this.entity));
 
@@ -98,6 +97,11 @@ public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, Chem
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
     hasClicked = true;
+    for (var element : children()) {
+      if (element instanceof TabGroupWidget widget) {
+        if (widget.mouseClicked(mouseX, mouseY, button)) return true;
+      }
+    }
     GuiEventListener clickedChild = GuiUtils.findChild(children(), mouseX, mouseY, button, GuiEventListener::mouseClicked);
 
     if (clickedChild != null) {
@@ -109,11 +113,6 @@ public class ChemicalHatchScreen extends BaseScreen<ChemicalHatchContainer, Chem
     } else {
       //If we can't find a child, allow clearing whatever focus we currently have
       clearFocus();
-    }
-    for (var element : children()) {
-      if (element instanceof TabGroupWidget widget && widget.isMouseOver(mouseX, mouseY)) {
-        widget.onClick(mouseX, mouseY, button);
-      }
     }
     return super.mouseClicked(mouseX, mouseY, button);
   }

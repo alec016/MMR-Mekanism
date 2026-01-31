@@ -11,8 +11,6 @@ import es.degrassi.mmreborn.client.screen.widget.tabs.TabGroupWidget;
 import es.degrassi.mmreborn.common.util.TextureSizeHelper;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.client.container.HeatVentContainer;
-import es.degrassi.mmreborn.mekanism.common.entity.ChemicalInputHatchEntity;
-import es.degrassi.mmreborn.mekanism.common.entity.ChemicalOutputHatchEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.HeatInputVentEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.HeatOutputVentEntity;
 import es.degrassi.mmreborn.mekanism.common.entity.base.HeatVentEntity;
@@ -53,7 +51,7 @@ public class HeatVentScreen extends BaseScreen<HeatVentContainer, HeatVentEntity
   protected void init() {
     super.init();
 
-    tabs = TabGroupWidget.createRight(getGuiLeft() - TextureSizeHelper.getWidth(AutoOutputTabWidget.TAB), getGuiTop());
+    tabs = TabGroupWidget.createRight(getGuiLeft() + getXSize(), getGuiTop());
     if (this.entity.getMode().isInput()) tabs.addTab(new AutoInputTabWidget<>((HeatInputVentEntity) this.entity));
     else tabs.addTab(new AutoOutputTabWidget<>((HeatOutputVentEntity) this.entity));
 
@@ -133,6 +131,12 @@ public class HeatVentScreen extends BaseScreen<HeatVentContainer, HeatVentEntity
     int x1 = 15, y1 = 10;
     int offsetX = (this.width - this.getXSize()) / 2;
     int offsetZ = (this.height - this.getYSize()) / 2;
+
+    for (var element : children()) {
+      if (element instanceof TabGroupWidget widget) {
+        if (widget.mouseClicked(mouseX, mouseY, button)) return true;
+      }
+    }
 
     if (mouseX >= x1 + offsetX && mouseX <= x1 + textureWidth + offsetX && mouseY >= y1 + offsetZ && mouseY <= y1 + textureHeight + offsetZ) {
       if(button == 0)
