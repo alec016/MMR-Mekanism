@@ -77,13 +77,13 @@ public class RequirementHeat implements IRequirement<HeatComponent, BasicHeatCap
     IHeatCapacitor capacitor = component.getContainerProvider();
     if(capacitor.getHeat() < amount)
       return CraftingResult.error(Component.translatable("craftcheck.failure.heat.input", amount, capacitor.getHeat()));
-    capacitor.handleHeat(-amount);
+    component.handleHeatAndUpdate(-amount);
     return CraftingResult.success();
   }
 
   private CraftingResult processOutput(HeatComponent component, ICraftingContext context) {
     double amount = context.getModifiedValue((float) this.amount, this);
-    component.getContainerProvider().handleHeat(amount);
+    component.handleHeatAndUpdate(amount);
     return CraftingResult.success();
   }
 

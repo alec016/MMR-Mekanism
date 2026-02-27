@@ -86,24 +86,11 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
     super(entityType, pos, blockState);
     this.mode = mode;
     tank = BasicHeatCapacitor.create(
-        100,
-        5,
-        10,
+        1f,
+        1,
+        0,
         new CachedAmbientTemperature(this::getLevel, this::getBlockPos),
-        () -> {
-          if (getLevel() instanceof ServerLevel l) {
-            PacketDistributor.sendToPlayersTrackingChunk(
-                l,
-                new ChunkPos(getBlockPos()),
-                new SUpdateHeatComponentPacket(getTank().getHeat(), getTank().getHeatCapacity(), getBlockPos())
-            );
-            getControllerPosSet().forEach(p -> {
-              if (getLevel().getBlockEntity(p) instanceof MachineControllerEntity controller) {
-                controller.getProcessor().setMachineInventoryChanged();
-              }
-            });
-          }
-        }
+        this
     );
     this.defaultOverlayTexture = ModularMachineryReborn.rl("block/overlay_heat_" + mode.getSerializedName() + "_vent");
     this.overlayTexture = defaultOverlayTexture;
@@ -127,7 +114,7 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
 
   @Override
   public @Nullable HeatComponent provideComponent() {
-    return new HeatComponent(getTank(), 300d, getMode());
+    return new HeatComponent(getTank(), getMode());
   }
 
   @Override
@@ -179,18 +166,31 @@ public abstract class HeatVentEntity extends ColorableMachineComponentEntity imp
 
   @Override
   public List<IHeatCapacitor> getHeatCapacitors(@Nullable Direction direction) {
-    return Collections.singletonList(this.tank);
+    if(direction == null || this.config.canAutoIO(direction))
+      return Collections.singletonList(this.tank);
+    else
+      return Collections.emptyList();
   }
 
   @Override
   public void onContentsChanged() {
-    tank.onContentsChanged();
+    if (getLevel() instanceof ServerLevel l) {
+      PacketDistributor.sendToPlayersTrackingChunk(
+          l,
+          new ChunkPos(getBlockPos()),
+          new SUpdateHeatComponentPacket(getTank().getHeat(), getTank().getHeatCapacity(), getBlockPos())
+      );
+      getControllerPosSet().forEach(p -> {
+        if (getLevel().getBlockEntity(p) instanceof MachineControllerEntity controller) {
+          controller.getProcessor().setMachineInventoryChanged();
+        }
+      });
+    }
     setChanged();
   }
 
   @Override
   public @Nullable IHeatHandler getAdjacent(Direction side) {
-    if (!getConfig().canAutoIO(side)) return null;
     return this.neighbourStorages.get(side) == null ? null : this.neighbourStorages.get(side).getCapability();
   }
 

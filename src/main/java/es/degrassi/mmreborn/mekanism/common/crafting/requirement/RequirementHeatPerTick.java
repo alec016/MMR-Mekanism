@@ -59,10 +59,15 @@ public class RequirementHeatPerTick implements IRequirement<HeatComponent, Basic
 
   @Override
   public void gatherRequirements(IRequirementList<HeatComponent> list) {
-    switch (getMode()) {
-      case INPUT -> list.processEachTick(this::processInput);
-      case OUTPUT -> list.processEachTick(this::processOutput);
-    }
+    list.processEachTick(this::processTick);
+  }
+
+  private CraftingResult processTick(HeatComponent component, ICraftingContext context) {
+    return switch (getMode()) {
+      case INPUT -> processInput(component, context);
+      case OUTPUT -> processOutput(component, context);
+      default -> CraftingResult.pass();
+    };
   }
 
   @Override
@@ -77,13 +82,13 @@ public class RequirementHeatPerTick implements IRequirement<HeatComponent, Basic
     IHeatCapacitor capacitor = component.getContainerProvider();
     if(capacitor.getHeat() < amount)
       return CraftingResult.error(Component.translatable("craftcheck.failure.heat.input", amount, capacitor.getHeat()));
-    capacitor.handleHeat(-amount);
+    component.handleHeatAndUpdate(-amount);
     return CraftingResult.success();
   }
 
   private CraftingResult processOutput(HeatComponent component, ICraftingContext context) {
     double amount = context.getModifiedValue((float) this.amount, this);
-    component.getContainerProvider().handleHeat(amount);
+    component.handleHeatAndUpdate(amount);
     return CraftingResult.success();
   }
 
