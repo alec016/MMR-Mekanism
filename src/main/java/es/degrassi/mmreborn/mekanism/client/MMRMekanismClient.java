@@ -1,6 +1,7 @@
 package es.degrassi.mmreborn.mekanism.client;
 
 import es.degrassi.mmreborn.api.integration.emi.RegisterEmiComponentEvent;
+import es.degrassi.mmreborn.api.integration.emi.RegisterEmiRequirementToIngredientEvent;
 import es.degrassi.mmreborn.api.integration.emi.RegisterEmiRequirementToStackEvent;
 import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
@@ -79,6 +80,18 @@ public class MMRMekanismClient {
     event.register(
         RequirementTypeRegistration.CHEMICAL_PER_TICK.get(),
         requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
+    );
+  }
+
+  @SubscribeEvent
+  public void registerEmiIngredients(final RegisterEmiRequirementToIngredientEvent event) {
+    event.register(
+        RequirementTypeRegistration.CHEMICAL.get(),
+        req -> new ChemicalEmiStack(req.requirement().required.copyWithAmount(req.requirement().amount))
+    );
+    event.register(
+        RequirementTypeRegistration.CHEMICAL_PER_TICK.get(),
+        req -> new ChemicalEmiStack(req.requirement().required.copyWithAmount(req.requirement().amount))
     );
   }
 

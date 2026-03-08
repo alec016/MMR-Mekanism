@@ -25,12 +25,12 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public @NotNull ComponentType<BasicChemicalTank> getComponentType() {
+  public ComponentType<BasicChemicalTank> getComponentType() {
     return ComponentRegistration.COMPONENT_CHEMICAL.get();
   }
 
   @Override
-  public @NotNull BasicChemicalTank getContainerProvider() {
+  public BasicChemicalTank getContainerProvider() {
     return handler;
   }
 
@@ -152,7 +152,7 @@ public class ChemicalComponent extends MachineComponent<BasicChemicalTank> {
   }
 
   @Override
-  public int compareTo(@NotNull MachineComponent<BasicChemicalTank> o) {
+  public int compareTo(MachineComponent<BasicChemicalTank> o) {
     BasicChemicalTank one = getContainerProvider();
     BasicChemicalTank two = o.getContainerProvider();
     if (one.isEmpty() && two.isEmpty()) return 0;
