@@ -7,9 +7,12 @@ import es.degrassi.mmreborn.api.integration.jei.RegisterJeiComponentEvent;
 import es.degrassi.mmreborn.client.ModularMachineryRebornClient;
 import es.degrassi.mmreborn.common.block.BlockDynamicColor;
 import es.degrassi.mmreborn.common.item.ItemDynamicColor;
+import es.degrassi.mmreborn.common.util.Mods;
 import es.degrassi.mmreborn.mekanism.ModularMachineryRebornMekanism;
 import es.degrassi.mmreborn.mekanism.client.screen.ChemicalHatchScreen;
 import es.degrassi.mmreborn.mekanism.client.screen.HeatVentScreen;
+import es.degrassi.mmreborn.mekanism.client.xei.EmiRegistration;
+import es.degrassi.mmreborn.mekanism.client.xei.JeiRegistration;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiChemicalPerTickComponent;
 import es.degrassi.mmreborn.mekanism.common.crafting.requirement.emi.EmiHeatComponent;
@@ -45,54 +48,17 @@ public class MMRMekanismClient {
 
   public MMRMekanismClient(final IEventBus bus) {
     bus.register(this);
+    if (Mods.isEMILoaded()) {
+      bus.register(new EmiRegistration());
+    } else if (Mods.isJEILoaded()) {
+      bus.register(new JeiRegistration());
+    }
   }
 
   @SubscribeEvent
   public void registerMenuScreens(final RegisterMenuScreensEvent event) {
     event.register(ContainerRegistration.CHEMICAL_HATCH.get(), ChemicalHatchScreen::new);
     event.register(ContainerRegistration.HEAT_VENT.get(), HeatVentScreen::new);
-  }
-
-  @SubscribeEvent
-  public void registerJeiComponents(final RegisterJeiComponentEvent event) {
-    event.register(RequirementTypeRegistration.CHEMICAL.get(), JeiChemicalComponent::new);
-    event.register(RequirementTypeRegistration.CHEMICAL_PER_TICK.get(), JeiChemicalPerTickComponent::new);
-    event.register(RequirementTypeRegistration.HEAT.get(), JeiHeatComponent::new);
-    event.register(RequirementTypeRegistration.HEAT_PER_TICK.get(), JeiHeatPerTickComponent::new);
-    event.register(RequirementTypeRegistration.TEMPERATURE.get(), JeiTemperatureComponent::new);
-  }
-
-  @SubscribeEvent
-  public void registerEmiComponents(final RegisterEmiComponentEvent event) {
-    event.register(RequirementTypeRegistration.CHEMICAL.get(), EmiChemicalComponent::new);
-    event.register(RequirementTypeRegistration.CHEMICAL_PER_TICK.get(), EmiChemicalPerTickComponent::new);
-    event.register(RequirementTypeRegistration.HEAT.get(), EmiHeatComponent::new);
-    event.register(RequirementTypeRegistration.HEAT_PER_TICK.get(), EmiHeatPerTickComponent::new);
-    event.register(RequirementTypeRegistration.TEMPERATURE.get(), EmiTemperatureComponent::new);
-  }
-
-  @SubscribeEvent
-  public void registerEmiStacks(final RegisterEmiRequirementToStackEvent event) {
-    event.register(
-        RequirementTypeRegistration.CHEMICAL.get(),
-        requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
-    );
-    event.register(
-        RequirementTypeRegistration.CHEMICAL_PER_TICK.get(),
-        requirement -> List.of(new ChemicalEmiStack(requirement.requirement().required.copyWithAmount(requirement.requirement().amount)))
-    );
-  }
-
-  @SubscribeEvent
-  public void registerEmiIngredients(final RegisterEmiRequirementToIngredientEvent event) {
-    event.register(
-        RequirementTypeRegistration.CHEMICAL.get(),
-        req -> new ChemicalEmiStack(req.requirement().required.copyWithAmount(req.requirement().amount))
-    );
-    event.register(
-        RequirementTypeRegistration.CHEMICAL_PER_TICK.get(),
-        req -> new ChemicalEmiStack(req.requirement().required.copyWithAmount(req.requirement().amount))
-    );
   }
 
   @SubscribeEvent
