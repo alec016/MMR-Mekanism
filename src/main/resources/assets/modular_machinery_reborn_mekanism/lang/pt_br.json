@@ -1,0 +1,65 @@
+{
+  "itemgroup.modular_machinery_reborn_mekanism.group": "Modular Machinery Reborn Mekanism",
+
+  "modular_machinery_reborn.gui.title.chemical_hatch": "Escotilha de Químicos",
+
+  "craftcheck.failure.chemical.input": "Falta de entrada de químico! Requerido: %sx %s, mas encontrado: %sx %s",
+  "craftcheck.failure.chemical.output.space": "Espaço insuficiente para a(s) saída(s) de químicos! Requerido: %s mB, mas encontrado: %s mB",
+  "craftcheck.failure.chemical.output.chemical": "O químico no tanque não corresponde! Requerido: %s, mas encontrado: %s!",
+
+  "component.missing.chemical.output": "Nenhuma Escotilha de Saída de Químicos encontrada!",
+  "component.missing.chemical.input": "Nenhuma Escotilha de Entrada de Químicos encontrada!",
+
+  "tooltip.machinery.chance.in": "Chance de Consumo: %s",
+  "tooltip.machinery.chance.out": "Chance de Produção: %s",
+  "tooltip.machinery.chance.in.never": "Não é consumido.",
+  "tooltip.machinery.chance.out.never": "Nunca é produzido.",
+
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_tiny": "Escotilha de Entrada de Químicos Minúscula",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_small": "Escotilha de Entrada de Químicos Pequena",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_normal": "Escotilha de Entrada de Químicos Normal",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_reinforced": "Escotilha de Entrada de Químicos Reforçada",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_big": "Escotilha de Entrada de Químicos Grande",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_huge": "Escotilha de Entrada de Químicos Enorme",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_ludicrous": "Escotilha de Entrada de Químicos Absurda",
+  "block.modular_machinery_reborn_mekanism.chemicalinputhatch_vacuum": "Escotilha de Entrada de Químicos a Vácuo",
+
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_tiny": "Escotilha de Saída de Químicos Minúscula",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_small": "Escotilha de Saída de Químicos Pequena",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_normal": "Escotilha de Saída de Químicos Normal",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_reinforced": "Escotilha de Saída de Químicos Reforçada",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_big": "Escotilha de Saída de Químicos Grande",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_huge": "Escotilha de Saída de Químicos Enorme",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_ludicrous": "Escotilha de Saída de Químicos Absurda",
+  "block.modular_machinery_reborn_mekanism.chemicaloutputhatch_vacuum": "Escotilha de Saída de Químicos a Vácuo",
+
+  "text.autoconfig.modular_machinery_reborn.category.chemical_hatch": "Escotilha de Químicos",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY": "Escotilha de Químicos Minúscula",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.TINY.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL": "Escotilha de Químicos Pequena",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.SMALL.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL": "Escotilha de Químicos Normal",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.NORMAL.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED": "Escotilha de Químicos Reforçada",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.REINFORCED.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG": "Escotilha de Químicos Grande",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.BIG.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE": "Escotilha de Químicos Enorme",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.HUGE.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS": "Escotilha de Químicos Absurda",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.LUDICROUS.size": "Tamanho",
+
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM": "Escotilha de Químicos a Vácuo",
+  "text.autoconfig.modular_machinery_reborn.option.chemicalHatch.VACUUM.size": "Tamanho",
+
+  "modular_machinery_reborn.jei.ingredient.chemical.input": "Requer: %s %s mB",
+  "modular_machinery_reborn.jei.ingredient.chemical.output": "Produz: %s %s mB"
+}
+
